@@ -1,11 +1,31 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
-  return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p>welcome to my app</p>
+import { signIn, signOut, useSession } from "next-auth/react";
+
+const Home = () => {
+  const { data: session, status } = useSession();
+
+  const handleSignin = () => {
+    signIn("google");
+  };
+
+  const handleSignout = () => {
+    signOut();
+  };
+  // this if condition will check if the user is authenticated or not
+  if (status === "authenticated") {
+    return (
+      <div>
+        <h1>{session.user?.email}</h1>
+        <button onClick={handleSignout}>Logout</button>
       </div>
-    </main>
+    );
+  }
+  return (
+    <div>
+      <button onClick={handleSignin}>Login Button</button>
+    </div>
   );
-}
+};
+
+export default Home;
