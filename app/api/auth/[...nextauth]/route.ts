@@ -32,14 +32,15 @@ export const authOptions: NextAuthOptions = {
 
           if (res.ok) {
             const users = await res.json();
-            const user = users.filter(
+            const user = await users.filter(
               (user) =>
                 user.username === credentials.username &&
                 user.password === credentials.password,
             );
 
+            console.log(user[0]);
             if (user) {
-              return user;
+              return user[0];
             }
           }
         } catch (error) {
