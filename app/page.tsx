@@ -30,11 +30,17 @@ const Home = () => {
     redirect("/api/auth/signin"); // Utilisez redirect comme une fonction
     return null;
   }
+  const handleLogout = () => {
+    signOut();
+  };
   console.log(JSON.stringify(session));
   return (
     <div>
       <h1>Welcome to the home page</h1>
-      {/* Votre contenu de la page ici */}
+      {session ? session.user.email : null}
+      <button type="button" onClick={handleLogout}>
+        sign out
+      </button>
     </div>
   );
 };
