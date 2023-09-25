@@ -1,8 +1,8 @@
 "use client";
-// import { SessionProvider } from "next-auth/react";
 import { Poppins } from "next/font/google";
 import AuthProvider from "./components/AuthProvider";
-// import "normalize.css";
+import "./globals.css";
+
 const inter = Poppins({
   weight: ["300", "500", "600", "700"],
   subsets: ["latin"],

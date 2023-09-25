@@ -35,13 +35,21 @@ const Home = () => {
   };
   console.log(JSON.stringify(session));
   return (
-    <div>
-      <h1>Welcome to the home page</h1>
-      {session ? session.user.email : null}
-      <button type="button" onClick={handleLogout}>
-        sign out
-      </button>
-    </div>
+    <>
+      {session ? (
+        <div>
+          <h1>Welcome to the home page</h1>
+          <p>{session.user.email}</p>
+          <button
+            className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded"
+            type="button"
+            onClick={handleLogout}
+          >
+            sign out
+          </button>
+        </div>
+      ) : null}
+    </>
   );
 };
 
