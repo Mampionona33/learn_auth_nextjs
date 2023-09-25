@@ -38,9 +38,8 @@ export const authOptions: NextAuthOptions = {
                 user.password === credentials.password,
             );
 
-            // console.log(user[0].address);
             if (user) {
-              return user[0];
+              return user;
             }
           }
         } catch (error) {
