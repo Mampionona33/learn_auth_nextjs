@@ -6,8 +6,8 @@ import GoogleProvider from "next-auth/providers/google";
     read more: https://next-auth.js.org/configuration/options#secret
 
 */
-const handler = NextAuth({
-  // Configure one or more authentication providers
+
+export const authOptions: NextAuthOptions = {
   providers: [
     GoogleProvider({
       clientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!,
@@ -39,20 +39,12 @@ const handler = NextAuth({
             );
 
             if (user) {
-              // Utilisateur authentifié
-              return {
-                id: users[0].id,
-                name: users[0].name,
-                email: users[0].email,
-              };
+              return user;
             }
           }
         } catch (error) {
-          // Gérer les erreurs de requête, par exemple si l'API n'est pas accessible.
           console.error(error);
         }
-
-        // Si l'authentification échoue, retournez null
         return null;
       },
     }),
@@ -60,5 +52,7 @@ const handler = NextAuth({
   session: {
     maxAge: 60 * 60, // 1 hour
   },
-});
+};
+
+const handler = NextAuth(authOptions);
 export { handler as GET, handler as POST };
