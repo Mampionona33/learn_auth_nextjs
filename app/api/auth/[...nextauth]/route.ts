@@ -26,7 +26,8 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials, req) {
         try {
-          const res = await fetch("https://fakestoreapi.com/users", {
+          const userApiEndPoint = process.env.USER_API_END_POINT; //|| "https://fakestoreapi.com/users";
+          const res = await fetch(userApiEndPoint, {
             method: "GET",
           });
 
@@ -38,8 +39,8 @@ export const authOptions: NextAuthOptions = {
                 user.password === credentials.password,
             );
 
-            if (user) {
-              return user;
+            if (user.length > 0) {
+              return user[0];
             }
           }
         } catch (error) {
