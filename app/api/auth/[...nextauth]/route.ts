@@ -1,4 +1,5 @@
 import NextAuth from "next-auth";
+import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 /*
     Note: No secret provided since it's provided in .env.local
@@ -11,6 +12,49 @@ const handler = NextAuth({
     GoogleProvider({
       clientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!,
       clientSecret: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET!,
+    }),
+    CredentialsProvider({
+      type: "credentials",
+      name: "Credentials",
+      // `credentials` is used to generate a form on the sign in page.
+      // You can specify which fields should be submitted, by adding keys to the `credentials` object.
+      // e.g. domain, username, password, 2FA token, etc.
+      // You can pass any HTML attribute to the <input> tag through the object.
+      credentials: {
+        username: { label: "Username", type: "text", placeholder: "jsmith" },
+        password: { label: "Password", type: "password" },
+      },
+      async authorize(credentials, req) {
+        try {
+          const res = await fetch("https://fakestoreapi.com/users", {
+            method: "GET",
+          });
+
+          if (res.ok) {
+            const users = await res.json();
+            const user = users.filter(
+              (user) =>
+                user.username === credentials.username &&
+                user.password === credentials.password,
+            );
+
+            if (user) {
+              // Utilisateur authentifié
+              return {
+                id: users[0].id,
+                name: users[0].name,
+                email: users[0].email,
+              };
+            }
+          }
+        } catch (error) {
+          // Gérer les erreurs de requête, par exemple si l'API n'est pas accessible.
+          console.error(error);
+        }
+
+        // Si l'authentification échoue, retournez null
+        return null;
+      },
     }),
   ],
   session: {
