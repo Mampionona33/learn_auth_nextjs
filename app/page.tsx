@@ -8,9 +8,12 @@ const Home = () => {
     <div>
       <h1>Welcome to the home page</h1>
       {status === "authenticated" ? (
-        <p>{session.user?.email}</p>
+        <div>
+          <p>{session.user?.email}</p>
+          <button onClick={() => signOut()}>Singn Out</button>
+        </div>
       ) : (
-        <button onClick={() => signIn("google")}>Login Button</button>
+        <button onClick={() => signIn()}>Login Button</button>
       )}
     </div>
   );
