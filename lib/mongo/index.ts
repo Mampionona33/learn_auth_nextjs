@@ -1,9 +1,11 @@
 import { MongoClient } from "mongodb";
 
 const mongodbPassword = process.env.MONGO_PASSWORD || "Arc35b6FHQEIWOqb";
+const dbName = "gestion_etudiants"; 
+
 const URI =
   process.env.MONGODB_URI ||
-  `mongodb+srv://ramamps33:${mongodbPassword}@cluster0.vkfhid4.mongodb.net/?retryWrites=true&w=majority`;
+  `mongodb+srv://ramamps33:${mongodbPassword}@cluster0.vkfhid4.mongodb.net/${dbName}?retryWrites=true&w=majority`;
 
 const options = {};
 
