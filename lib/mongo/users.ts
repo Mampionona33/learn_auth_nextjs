@@ -17,7 +17,7 @@ class User {
     }
   }
 
-  public async getUsers() {
+  public async getAll() {
     try {
       if (!this.users) await this.init();
       const users = await this.users.find({}).toArray();

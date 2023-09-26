@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "@/node_modules/next/server";
 export async function GET() {
   const fetchedUsers = new User();
   try {
-    const { users, error } = await fetchedUsers.getUsers();
+    const { users, error } = await fetchedUsers.getAll();
     if (error) throw new Error(error);
     const result = NextResponse.json({ users });
     // console.log(result);
