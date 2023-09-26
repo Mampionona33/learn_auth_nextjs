@@ -29,6 +29,17 @@ class User {
     }
   }
 
+  public async getByEmail(userEmail: string | undefined | null) {
+    try {
+      if (!this.users) await this.init();
+      const query = { email: userEmail };
+      const searchUser = await this.users.findOne(query);
+      return searchUser;
+    } catch (error) {
+      return { error: "Failed to fetch user by email" };
+    }
+  }
+
   constructor() {
     (async () => {
       await this.init();
