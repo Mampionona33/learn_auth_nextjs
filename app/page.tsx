@@ -39,7 +39,7 @@ const Home = () => {
       {session ? (
         <div>
           <h1>Welcome to the home page</h1>
-          <p>{session.user.email}</p>
+          <p>{session.user!.email}</p>
           <button
             className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded"
             type="button"

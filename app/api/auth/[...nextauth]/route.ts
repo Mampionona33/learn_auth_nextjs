@@ -1,4 +1,4 @@
-import NextAuth from "next-auth";
+import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 /*
@@ -36,7 +36,7 @@ export const authOptions: NextAuthOptions = {
             const user = await users.filter(
               (user) =>
                 user.username === credentials.username &&
-                user.password === credentials.password,
+                user.password === credentials.password
             );
 
             if (user.length > 0) {
@@ -53,6 +53,7 @@ export const authOptions: NextAuthOptions = {
   session: {
     maxAge: 60 * 60, // 1 hour
   },
+  secret: process.env.NEXTAUTH_SECRET,
 };
 
 const handler = NextAuth(authOptions);

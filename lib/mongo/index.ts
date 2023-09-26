@@ -1,7 +1,7 @@
 import { MongoClient } from "mongodb";
 
 const mongodbPassword = process.env.MONGO_PASSWORD || "Arc35b6FHQEIWOqb";
-const dbName = "gestion_etudiants";
+const dbName = process.env.MONGODB_DB_NAME; 
 
 const URI =
   process.env.MONGODB_URI ||
