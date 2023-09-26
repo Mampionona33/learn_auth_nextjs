@@ -20,9 +20,9 @@ class User {
   public async getUsers() {
     try {
       if (!this.users) await this.init();
-      const users = await this.users.find({});
+      const users = await this.users.find({}).toArray();
       console.log(users);
-      
+
       return { users: users };
     } catch (error) {
       return { error: "Failed to fetch users" };

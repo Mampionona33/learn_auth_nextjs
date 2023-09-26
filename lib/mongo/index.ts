@@ -1,17 +1,19 @@
 import { MongoClient } from "mongodb";
 
 const mongodbPassword = process.env.MONGO_PASSWORD || "Arc35b6FHQEIWOqb";
-const dbName = "gestion_etudiants"; 
+const dbName = "gestion_etudiants";
 
 const URI =
   process.env.MONGODB_URI ||
   `mongodb+srv://ramamps33:${mongodbPassword}@cluster0.vkfhid4.mongodb.net/${dbName}?retryWrites=true&w=majority`;
 
-const options = {};
+const options = {
+  useUnifiedTopology: true,
+  useNewUrlParser: true,
+};
 
 if (!URI) throw new Error("Please add your Mongo URI to .env local");
 
-console.log(URI);
 let client = new MongoClient(URI, options);
 let clientPromise;
 
