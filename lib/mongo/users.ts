@@ -10,7 +10,7 @@ class User {
     try {
       this.client = await clientPromise;
       this.db = await this.client.db();
-      this.users = await this.db.collection("user");
+      this.users = await this.db.collection("users");
     } catch (error) {
       //   throw new Error( "Failed to stablish connection to database");
       throw error;
