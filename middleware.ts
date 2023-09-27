@@ -1,10 +1,17 @@
 import { NextRequestWithAuth, withAuth } from "next-auth/middleware";
-import redirectToResponsableHomepage from "./lib/middleware/redirectToResponsableHomepage";
 import { NextResponse } from "next/server";
 
 export default withAuth(async function middleware(req: NextRequestWithAuth) {
-  console.log("Middleware.ts is running");
-
-  await redirectToResponsableHomepage(req);
-  return NextResponse.next();
+  const token = req.nextauth.token!;
+  const pathname = req.nextUrl?.pathname;
+  const url = req.nextUrl;
+  if (
+    token.role &&
+    token.role.match(/responsable/gi) &&
+    pathname !== "/responsable"
+  ) {
+    const respHomePage = new URL("/responsable", req.url);
+    console.log("test");
+    return NextResponse.redirect(respHomePage);
+  }
 });
