@@ -6,14 +6,9 @@ export default withAuth(async function middleware(req: NextRequestWithAuth) {
   const pathname = req.nextUrl?.pathname;
   const url = req.nextUrl;
 
-  if (
-    token.role &&
-    token.role.match(/responsable/gi) &&
-    pathname !== "/responsable"
-  ) {
+  if (token.role && token.role.match(/responsable/gi) && pathname === "/") {
     const respHomePage = new URL("/responsable", req.url);
     console.log("test");
     return NextResponse.redirect(respHomePage);
   }
-  
 });
