@@ -1,36 +1,36 @@
 // Using server components
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "./api/auth/[...nextauth]/route";
-import { redirect } from "next/navigation";
-import User from "@/lib/mongo/users";
+// import { getServerSession } from "next-auth/next";
+// import { authOptions } from "./api/auth/[...nextauth]/route";
+// import { redirect } from "next/navigation";
+// import User from "@/lib/mongo/users";
 
-const Home = async () => {
-  const data = await getServerSession(authOptions);
-  const userHandler = new User();
+// const Home = async () => {
+//   const data = await getServerSession(authOptions);
+//   const userHandler = new User();
 
-  if (data == null) {
-    redirect("/api/auth/signin");
-  }
-  console.log(data.user);
-  const user = await userHandler.getByEmail(data.user?.email);
-  console.log(user);
+//   if (data == null) {
+//     redirect("/api/auth/signin");
+//   }
+//   // console.log(data.user);
+//   const user = await userHandler.getByEmail(data.user?.email);
+//   console.log(user);
 
-  const role = user.role;
+//   const role = user.role;
 
-  if (role === "responsable") {
-    redirect("/responsable");
-  }
+//   if (role === "responsable") {
+//     redirect("/responsable");
+//   }
 
-  console.log(JSON.stringify(user));
+//   console.log(JSON.stringify(user));
 
-  return (
-    <div>
-      <div>{JSON.stringify(data)}</div>
-    </div>
-  );
-};
+//   return (
+//     <div>
+//       <div>{JSON.stringify(data)}</div>
+//     </div>
+//   );
+// };
 
-export default Home;
+// export default Home;
 
 // IF using client component
 // "use client";
@@ -68,3 +68,13 @@ export default Home;
 // };
 
 // export default Home;
+
+const Home = () => {
+  return (
+    <>
+      <div>Home page</div>
+    </>
+  );
+};
+
+export default Home;

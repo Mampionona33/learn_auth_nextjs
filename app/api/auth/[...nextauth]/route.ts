@@ -1,3 +1,4 @@
+import User from "@/lib/mongo/users";
 import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
@@ -26,7 +27,9 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials, req) {
         try {
+          const userHandler = new User();
           const userApiEndPoint = process.env.USER_API_END_POINT; //|| "https://fakestoreapi.com/users";
+          // const userApiEndPoint = await userHandler.getAll();
           const res = await fetch(userApiEndPoint!, {
             method: "GET",
           });
@@ -36,7 +39,7 @@ export const authOptions: NextAuthOptions = {
             const user = await users.filter(
               (user: any) =>
                 user.username === credentials!.username &&
-                user.password === credentials!.password
+                user.password === credentials!.password,
             );
 
             if (user.length > 0) {
