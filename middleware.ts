@@ -6,6 +6,5 @@ export default withAuth(async function middleware(req: NextRequestWithAuth) {
   console.log("Middleware.ts is running");
 
   await redirectToResponsableHomepage(req);
-  console.log("dsfsqfq");
   return NextResponse.next();
 });
