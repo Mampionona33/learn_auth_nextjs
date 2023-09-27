@@ -1,3 +1,4 @@
+import Groupe_permission from "@/lib/mongo/groupe_permission";
 import User from "@/lib/mongo/users";
 import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
@@ -56,7 +57,7 @@ export const authOptions: NextAuthOptions = {
         try {
           const userHandler = new User();
           const users = await userHandler.getAll();
-          const user = await users.users.find(
+          const user = await users.users!.find(
             (user: any) =>
               user.username === credentials?.username &&
               user.password === credentials?.password
@@ -81,16 +82,25 @@ export const authOptions: NextAuthOptions = {
       if (user && token) {
         // Check if both user and token are defined
         const userHandler = new User();
+        const groupePermission = new Groupe_permission();
         const signedUser = await userHandler.getByEmail(token.email);
         if (signedUser && signedUser.groupe) {
-          // Check if signedUser and role are defined
-          token.role = signedUser.groupe;
+          // Check if signedUser and groupe are defined
+          token.groupe = signedUser.groupe;
+          const searchGroupePermission = await groupePermission.get(
+            signedUser.groupe
+          );
+          const userPermissions = Array.from(await searchGroupePermission).map(
+            (groupePerm) => groupePerm.permission
+          );
+          console.log(userPermissions);
         }
       }
       return token;
     },
     session({ session, token }) {
       if (token && session.user) {
+        // console.log(session.user);
         session.user.groupe = token.groupe;
       }
       return session;
