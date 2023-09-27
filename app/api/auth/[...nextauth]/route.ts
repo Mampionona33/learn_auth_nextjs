@@ -57,6 +57,26 @@ export const authOptions: NextAuthOptions = {
     maxAge: 60 * 60, // 1 hour
   },
   secret: process.env.NEXTAUTH_SECRET,
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user && token) {
+        // Check if both user and token are defined
+        const userHandler = new User();
+        const signedUser = await userHandler.getByEmail(token.email);
+        if (signedUser && signedUser.role) {
+          // Check if signedUser and role are defined
+          token.role = signedUser.role;
+        }
+      }
+      return token;
+    },
+    session({ session, token }) {
+      if (token && session.user) {
+        session.user.role = token.role;
+      }
+      return session;
+    },
+  },
 };
 
 const handler = NextAuth(authOptions);

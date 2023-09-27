@@ -1,17 +1,11 @@
-import authRedirection from "./lib/middleware/authRedirection";
-import { NextRequest, NextResponse } from "@/node_modules/next/server";
+import { withAuth } from "next-auth/middleware";
+import redirectToResponsableHomepage from "@lib/middleware/redirectToResponsableHomepage";
 
-export async function middleware(request: NextRequest) {
-  try {
-    await authRedirection(request);
-    return NextResponse.next();
-  } catch (error: any) {
-    // Handle errors, for example, log them or return an error response
-    console.error("Error in middleware:", error);
-    return new NextResponse.error(error.message);
-  }
-}
+export default withAuth(function middleware(req) {
+  //   console.log(req.nextauth.token);
+  redirectToResponsableHomepage(req);
+});
 
-export const config = {
-  matcher: ["/:path*"],
-};
+// export const config = {
+//   matcher: ["/:path*"],
+// };
