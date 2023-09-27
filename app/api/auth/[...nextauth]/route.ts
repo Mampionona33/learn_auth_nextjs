@@ -25,31 +25,50 @@ export const authOptions: NextAuthOptions = {
         username: { label: "Username", type: "text", placeholder: "jsmith" },
         password: { label: "Password", type: "password" },
       },
+      // async authorize(credentials, req) {
+      //   try {
+      //     const userHandler = new User();
+      //     const userApiEndPoint = process.env.USER_API_END_POINT; //|| "https://fakestoreapi.com/users";
+      //     // const userApiEndPoint = await userHandler.getAll();
+      //     const res = await fetch(userApiEndPoint!, {
+      //       method: "GET",
+      //     });
+
+      //     if (res.ok) {
+      //       const users = await res.json();
+      //       const user = await users.filter(
+      //         (user: any) =>
+      //           user.username === credentials!.username &&
+      //           user.password === credentials!.password
+      //       );
+
+      //       if (user.length > 0) {
+      //         return user[0];
+      //       }
+      //     }
+      //   } catch (error) {
+      //     console.error(error);
+      //   }
+      //   return null;
+      // },
+      // }),
       async authorize(credentials, req) {
         try {
           const userHandler = new User();
-          const userApiEndPoint = process.env.USER_API_END_POINT; //|| "https://fakestoreapi.com/users";
-          // const userApiEndPoint = await userHandler.getAll();
-          const res = await fetch(userApiEndPoint!, {
-            method: "GET",
-          });
-
-          if (res.ok) {
-            const users = await res.json();
-            const user = await users.filter(
-              (user: any) =>
-                user.username === credentials!.username &&
-                user.password === credentials!.password,
-            );
-
-            if (user.length > 0) {
-              return user[0];
-            }
+          const users = await userHandler.getAll();
+          const user = await users.users.find(
+            (user: any) =>
+              user.username === credentials?.username &&
+              user.password === credentials?.password
+          );
+          if (user) {
+            return user;
           }
+          return null;
         } catch (error) {
           console.error(error);
+          return null;
         }
-        return null;
       },
     }),
   ],
@@ -63,16 +82,16 @@ export const authOptions: NextAuthOptions = {
         // Check if both user and token are defined
         const userHandler = new User();
         const signedUser = await userHandler.getByEmail(token.email);
-        if (signedUser && signedUser.role) {
+        if (signedUser && signedUser.groupe) {
           // Check if signedUser and role are defined
-          token.role = signedUser.role;
+          token.role = signedUser.groupe;
         }
       }
       return token;
     },
     session({ session, token }) {
       if (token && session.user) {
-        session.user.role = token.role;
+        session.user.groupe = token.groupe;
       }
       return session;
     },
