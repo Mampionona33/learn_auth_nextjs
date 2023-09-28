@@ -17,10 +17,13 @@ class Mongo {
   public async get(query?: Filter<Document>) {
     try {
       await this.init();
+      console.log(query);
+
       const result = query
-        ? await this.collection!.find(query)
-        : await this.collection!.find({});
-      return await result.toArray();
+        ? await this.collection!.find(query).toArray()
+        : await this.collection!.find({}).toArray();
+      console.log(result);
+      return result;
     } catch (error) {
       return { error: `Failed to fetch ${this.collectionName}` };
     }
