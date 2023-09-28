@@ -7,7 +7,7 @@ export default withAuth(async function middleware(req: NextRequestWithAuth) {
   const url = req.nextUrl;
 
   if (token) {
-    // console.log(token);
+    console.log(token);
   }
 
   // if (token.role) {
