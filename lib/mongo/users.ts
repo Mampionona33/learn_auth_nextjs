@@ -12,24 +12,14 @@ class User {
 
   public async fetchAll() {
     try {
-      const result = await this.mongo.get();
-  
-      if (result instanceof Collection) {
-        this.users = result;
-        return { users: this.users };
-      } else {
-        throw new Error("Failed to initialize the 'users' collection.");
-      }
+      const users = await this.mongo.get();
+      return { users: users };
     } catch (error) {
       return { error: error };
     }
   }
-  
-  public get(){
-    return this.users
-  }
 
-  public async getByEmail(userEmail?: string) {
+  public async getByEmail(userEmail: string | undefined | null) {
     const query = { email: userEmail };
     return await this.mongo.get(query);
   }

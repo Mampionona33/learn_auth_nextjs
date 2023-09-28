@@ -12,7 +12,7 @@ class Permission {
 
   public async fetch(query?:Filter<Document>){
     try {
-      const result = await this.mongo.get(query);
+      // const result = await this.mongo.get(query);
      
     } catch (error) {
       return {error:error}

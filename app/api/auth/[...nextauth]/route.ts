@@ -64,9 +64,9 @@ export const authOptions: NextAuthOptions = {
           const searchGroupePermission = await groupePermission.get(
             signedUser.groupe,
           );
-          const userPermissions = Array.from(await searchGroupePermission).map(
-            (groupePerm) => groupePerm.permission,
-          );
+          // const userPermissions = Array.from(await searchGroupePermission).map(
+          //   (groupePerm) => groupePerm.permission,
+          // );
           // console.log(userPermissions);
         }
       }
