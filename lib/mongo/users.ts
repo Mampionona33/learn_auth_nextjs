@@ -1,30 +1,16 @@
-import { Collection, Db, MongoClient } from "mongodb";
-import clientPromise from "./index";
+import { Collection} from "mongodb";
 import init from "./init";
 
 class User {
-  // private client: MongoClient | null = null;
-  // private db: Db | null = null;
+  private collectionName : string = "users";
   private users: Collection | null = null;
-  private init = async ()=>  {await  init("users")};
-  // async init() {
-  //   if (this.db) return;
-  //   try {
-  //     this.client = await clientPromise;
-  //     this.db = await this.client.db();
-  //     this.users = await this.db.collection("users");
-  //   } catch (error) {
-  //     //   throw new Error( "Failed to stablish connection to database");
-  //     throw error;
-  //   }
-  // }
+  private init = async ()=>  {await  init(this.collectionName)};
+  
 
   public async getAll() {
     try {
       if (!this.users) await this.init;
       const users = await this.users!.find({}).toArray();
-      // console.log(users);
-
       return { users: users };
     } catch (error) {
       return { error: "Failed to fetch users" };
