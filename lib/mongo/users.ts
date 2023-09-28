@@ -57,26 +57,12 @@ class User {
     this.mongo = new Mongo(this.collectionName);
   }
 
-  // public async getAll() {
-  //   // try {
-  //   //   if (!this.users) {
-  //   //     await this.mongo.init();
-  //   //     this.users = this.mongo.getCollection();
-  //   //   }
-  //   //   const users = await this.users!.find({}).toArray();
-  //   //   return { users: users };
-  //   // } catch (error) {
-  //   //   return { error: "Failed to fetch users" };
-  //   // }
-  //   return await this.mongo.get(null);
-  // }
   public async getAll() {
     try {
       const users = await this.mongo.get();
-      // console.log("result",results);
-      return {users:users};
+      return { users: users };
     } catch (error) {
-      return {error:error};
+      return { error: error };
     }
   }
 

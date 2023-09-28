@@ -7,7 +7,6 @@ export async function GET() {
     const { users, error } = await fetchedUsers.getAll();
     if (error) throw new Error(error);
     const result = NextResponse.json({ users });
-    // console.log(result);
     return result;
   } catch (error: any) {
     return NextResponse.json({ error: error.message });
