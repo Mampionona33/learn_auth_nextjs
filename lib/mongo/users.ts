@@ -1,6 +1,5 @@
 import { Collection } from "mongodb";
 import Mongo from "./mongo";
-import get from "./get";
 
 class User {
   private collectionName: string = "users";
@@ -13,14 +12,24 @@ class User {
 
   public async fetchAll() {
     try {
-      const users = await this.mongo.get();
-      return { users: users };
+      const result = await this.mongo.get();
+  
+      if (result instanceof Collection) {
+        this.users = result;
+        return { users: this.users };
+      } else {
+        throw new Error("Failed to initialize the 'users' collection.");
+      }
     } catch (error) {
       return { error: error };
     }
   }
+  
+  public get(){
+    return this.users
+  }
 
-  public async getByEmail(userEmail: string | undefined | null) {
+  public async getByEmail(userEmail?: string) {
     const query = { email: userEmail };
     return await this.mongo.get(query);
   }

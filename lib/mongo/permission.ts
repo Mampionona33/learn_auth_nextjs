@@ -1,15 +1,23 @@
-import { Collection, Db, MongoClient, ObjectId } from "mongodb";
-import clientPromise from ".";
-import init from "./init";
+import { Collection, Db, Filter, MongoClient, ObjectId } from "mongodb";
+import Mongo from "./mongo";
 
 class Permission {
-  private permission: Collection | null = null;
-  private collectionName : string = "permission";
-  private init =async () => await init(this.collectionName);
+  private collection: Collection | null = null;
+  private collectionName: string = "permission";
+  private mongo : Mongo;
 
-  constructor(){
-    (async () => {
-      await this.init;
-    })();
+  constructor() {
+    this.mongo = new Mongo(this.collectionName)
+  }
+
+  public async fetch(query?:Filter<Document>){
+    try {
+      const result = await this.mongo.get(query);
+     
+    } catch (error) {
+      return {error:error}
+    }
   }
 }
+
+export default Permission
