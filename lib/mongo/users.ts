@@ -1,3 +1,33 @@
+import { Collection } from "mongodb";
+import Mongo from "./mongo";
+import get from "./get";
+
+class User {
+  private collectionName: string = "users";
+  private users: Collection | null = null;
+  private mongo: Mongo;
+
+  constructor() {
+    this.mongo = new Mongo(this.collectionName);
+  }
+
+  public async getAll() {
+    try {
+      const users = await this.mongo.get();
+      return { users: users };
+    } catch (error) {
+      return { error: error };
+    }
+  }
+
+  public async getByEmail(userEmail: string | undefined | null) {
+    const query = { email: userEmail };
+    return await this.mongo.get(query);
+  }
+}
+
+export default User;
+
 // import { Collection } from "mongodb";
 // import init from "./init";
 // import get from "./get";
@@ -44,32 +74,3 @@
 // }
 
 // export default User;
-import { Collection } from "mongodb";
-import Mongo from "./mongo";
-import get from "./get";
-
-class User {
-  private collectionName: string = "users";
-  private users: Collection | null = null;
-  private mongo: Mongo;
-
-  constructor() {
-    this.mongo = new Mongo(this.collectionName);
-  }
-
-  public async getAll() {
-    try {
-      const users = await this.mongo.get();
-      return { users: users };
-    } catch (error) {
-      return { error: error };
-    }
-  }
-
-  public async getByEmail(userEmail: string | undefined | null) {
-    const query = { email: userEmail };
-    return await this.mongo.get(query);
-  }
-}
-
-export default User;
