@@ -1,9 +1,9 @@
-import { Collection, Db, Filter, MongoClient, ObjectId } from "mongodb";
+import { Collection, Filter, Document } from "mongodb";
 import Mongo from "./mongo";
 
 class Permission {
-  private collection: Collection | null = null;
-  private collectionName: string = "permission";
+  private collection: Collection<Document> | null = null;
+  private collectionName: string = "permissions"; // Nom de la collection corrigé
   private mongo: Mongo;
 
   constructor() {
@@ -12,8 +12,8 @@ class Permission {
 
   public async fetch(query?: Filter<Document>) {
     try {
-      const permission = await this.mongo.get(query);
-      return { permission: permission };
+      const permissions = await this.mongo.get(query ? query : {});
+      return { permissions: permissions }; 
     } catch (error) {
       return { error: error };
     }
