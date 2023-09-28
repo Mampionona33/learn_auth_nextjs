@@ -1,9 +1,10 @@
 import { Collection} from "mongodb";
 import init from "./init";
+import get from "./get";
 
 class User {
   private collectionName : string = "users";
-  private users: Collection | null = null;
+  private users: Collection ={} as Collection;
   private init = async ()=>  {await  init(this.collectionName)};
   
 
@@ -17,16 +18,21 @@ class User {
     }
   }
 
-  public async getByEmail(userEmail: string | undefined | null) {
-    try {
-      if (!this.users) await this.init;
-      const query = { email: userEmail };
-      const searchUser = await this.users!.findOne(query);
-      return searchUser;
-    } catch (error) {
-      return { error: "Failed to fetch user by email" };
-    }
+ public async getByEmail(userEmail: string | undefined | null) {
+    const query = { email: userEmail };
+    return await get(query, this.users);
   }
+
+  // public async getByEmail(userEmail: string | undefined | null) {
+  //   try {
+  //     if (!this.users) await this.init;
+  //     const query = { email: userEmail };
+  //     const searchUser = await this.users!.findOne(query);
+  //     return searchUser;
+  //   } catch (error) {
+  //     return { error: "Failed to fetch user by email" };
+  //   }
+  // }
 
   constructor() {
     (async () => {
