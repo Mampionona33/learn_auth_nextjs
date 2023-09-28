@@ -37,7 +37,8 @@ export const authOptions: NextAuthOptions = {
               user.password === credentials?.password,
           );
           if (user) {
-            return user;
+            // Assurez-vous que l'utilisateur a un champ "groupe" dans son objet
+            return { ...user, groupe: user.groupe || null };
           }
           return null;
         } catch (error) {
@@ -58,8 +59,9 @@ export const authOptions: NextAuthOptions = {
         const userHandler = new User();
         const groupePermission = new Groupe_permission();
         const signedUser = await userHandler.getByEmail(token.email);
-        // console.log(signedUser);
+        console.log(signedUser);
         if (signedUser && signedUser.groupe) {
+          console.log("test");
           // Check if signedUser and groupe are defined
           token.groupe = signedUser.groupe;
           const searchGroupePermission = await groupePermission.get(
