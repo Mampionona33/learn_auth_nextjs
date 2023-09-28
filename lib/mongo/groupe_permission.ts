@@ -12,7 +12,8 @@ class Groupe_permission {
 
   public async get(groupeId: string | undefined | null) {
     try {
-      const groupe_permission = await this.mongo.get({groupe:groupeId});
+      const groupe_permission = await this.mongo.get({groupe:new ObjectId(groupeId)});
+      console.log(groupe_permission)
       return groupe_permission;
     } catch (error) {
       return {error:  `Failed to fetch groupe_permission by${groupeId}`}

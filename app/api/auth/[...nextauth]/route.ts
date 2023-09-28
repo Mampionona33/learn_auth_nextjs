@@ -58,16 +58,13 @@ export const authOptions: NextAuthOptions = {
         const userHandler = new User();
         const groupePermission = new Groupe_permission();
         const signedUser = await userHandler.getByEmail(token.email);
+        // console.log(signedUser);
         if (signedUser && signedUser.groupe) {
           // Check if signedUser and groupe are defined
           token.groupe = signedUser.groupe;
           const searchGroupePermission = await groupePermission.get(
             signedUser.groupe,
           );
-          // const userPermissions = Array.from(await searchGroupePermission).map(
-          //   (groupePerm) => groupePerm.permission,
-          // );
-          // console.log(userPermissions);
         }
       }
       return token;
