@@ -1,42 +1,26 @@
-import { Collection, Db, Filter, MongoClient, ObjectId, Document } from "mongodb";
+import { Collection, Filter, Document } from "mongodb";
 import clientPromise from ".";
 
 class Mongo {
-  private db: Db | null = null;
-  private client: MongoClient | null = null;
-  private collection: Collection | null = null;
-  private collectionName: string = "";
+  private collection: Collection<Document> | null = null;
 
-  constructor(collectionName: string) {
-    this.collectionName = collectionName;
-    (async () => {
-      await this.init();
-    })();
-  }
+  constructor(private collectionName: string) {}
 
-  public async init() {
-    if (this.db) return;
-    try {
-      this.client = await clientPromise;
-      this.db = await this.client.db();
-      this.collection = await this.db.collection(this.collectionName);
-      return this.collection;
-    } catch (error) {
-      throw error;
+  private async init() {
+    if (!this.collection) {
+      const client = await clientPromise;
+      const db = client.db();
+      this.collection = db.collection(this.collectionName);
     }
   }
 
-  public getCollection() {
-    return this.collection;
-  }
-
-  public async get(query: Filter<Document> | undefined | null) {
+  public async get(query: Filter<Document> | null) {
     try {
-      if (!this.collection) await this.init();
-      const result = await (query
-        ? this.collection!.find(query)
-        : this.collection!.find());
-      return result.toArray(); 
+      await this.init();
+      const result = query
+        ? await this.collection!.find(query)
+        : await this.collection!.find({});
+      return await result.toArray();
     } catch (error) {
       return { error: `Failed to fetch ${this.collectionName}` };
     }
