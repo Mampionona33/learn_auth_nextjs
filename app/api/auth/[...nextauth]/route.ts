@@ -26,33 +26,7 @@ export const authOptions: NextAuthOptions = {
         username: { label: "Username", type: "text", placeholder: "jsmith" },
         password: { label: "Password", type: "password" },
       },
-      // async authorize(credentials, req) {
-      //   try {
-      //     const userHandler = new User();
-      //     const userApiEndPoint = process.env.USER_API_END_POINT; //|| "https://fakestoreapi.com/users";
-      //     // const userApiEndPoint = await userHandler.getAll();
-      //     const res = await fetch(userApiEndPoint!, {
-      //       method: "GET",
-      //     });
 
-      //     if (res.ok) {
-      //       const users = await res.json();
-      //       const user = await users.filter(
-      //         (user: any) =>
-      //           user.username === credentials!.username &&
-      //           user.password === credentials!.password
-      //       );
-
-      //       if (user.length > 0) {
-      //         return user[0];
-      //       }
-      //     }
-      //   } catch (error) {
-      //     console.error(error);
-      //   }
-      //   return null;
-      // },
-      // }),
       async authorize(credentials, req) {
         try {
           const userHandler = new User();
