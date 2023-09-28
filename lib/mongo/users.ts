@@ -11,7 +11,7 @@ class User {
     this.mongo = new Mongo(this.collectionName);
   }
 
-  public async getAll() {
+  public async fetchAll() {
     try {
       const users = await this.mongo.get();
       return { users: users };

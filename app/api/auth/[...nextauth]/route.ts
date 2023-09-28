@@ -30,7 +30,7 @@ export const authOptions: NextAuthOptions = {
       async authorize(credentials, req) {
         try {
           const userHandler = new User();
-          const users = await userHandler.getAll();
+          const users = await userHandler.fetchAll();
           const user = await users.users!.find(
             (user: any) =>
               user.username === credentials?.username &&
