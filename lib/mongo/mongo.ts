@@ -1,4 +1,4 @@
-import { Collection, Db, MongoClient, ObjectId } from "mongodb";
+import { Collection, Db, Filter, MongoClient, ObjectId, Document } from "mongodb";
 import clientPromise from ".";
 
 class Mongo {
@@ -9,9 +9,9 @@ class Mongo {
 
   constructor(collectionName: string) {
     this.collectionName = collectionName;
-    async () => {
-      await this.init;
-    };
+    (async () => {
+      await this.init();
+    })();
   }
 
   public async init() {
@@ -23,6 +23,22 @@ class Mongo {
       return this.collection;
     } catch (error) {
       throw error;
+    }
+  }
+
+  public getCollection() {
+    return this.collection;
+  }
+
+  public async get(query: Filter<Document> | undefined) {
+    try {
+      if (!this.collection) await this.init();
+      const result = await (query
+        ? this.collection!.find(query)
+        : this.collection!.find());
+      return result.toArray(); 
+    } catch (error) {
+      return { error: `Failed to fetch ${this.collectionName}` };
     }
   }
 }

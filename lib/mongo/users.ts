@@ -46,6 +46,7 @@
 // export default User;
 import { Collection } from "mongodb";
 import Mongo from "./mongo";
+import get from "./get";
 
 class User {
   private collectionName: string = "users";
@@ -62,7 +63,7 @@ class User {
         await this.mongo.init();
         this.users = this.mongo.getCollection();
       }
-      const users = await this.users.find({}).toArray();
+      const users = await this.users!.find({}).toArray();
       return { users: users };
     } catch (error) {
       return { error: "Failed to fetch users" };
@@ -71,7 +72,7 @@ class User {
 
   public async getByEmail(userEmail: string | undefined | null) {
     const query = { email: userEmail };
-    return await get(query, this.users);
+    return await this.mongo.get(query);
   }
 }
 
