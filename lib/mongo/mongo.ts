@@ -30,7 +30,7 @@ class Mongo {
     return this.collection;
   }
 
-  public async get(query: Filter<Document> | undefined) {
+  public async get(query: Filter<Document> | undefined | null) {
     try {
       if (!this.collection) await this.init();
       const result = await (query
