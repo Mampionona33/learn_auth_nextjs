@@ -1,9 +1,28 @@
+import { Collection, Db, MongoClient, ObjectId } from "mongodb";
+import clientPromise from ".";
+
 class Mongo {
-    constructor() {
-        
-    }
+  private db: Db | null = null;
+  private client: MongoClient | null = null;
+  private collection: Collection | null = null;
+  private collectionName : string ="";
 
-    public init(){
 
+  constructor(collectionName:string) {
+    this.collectionName = collectionName
+  }
+
+  public async init() {
+    if(this.db) return;
+    try {
+        this.client = await clientPromise;
+        this.db = await this.client.db();
+        this.collection = await this.db.collection(this.collectionName)
+        return this.collection;
+    } catch (error) {
+        throw error
     }
+  }
 }
+
+export default Mongo;

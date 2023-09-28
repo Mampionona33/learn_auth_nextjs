@@ -1,12 +1,14 @@
-import { Collection} from "mongodb";
+import { Collection } from "mongodb";
 import init from "./init";
 import get from "./get";
+import Mongo from "./mongo";
 
 class User {
-  private collectionName : string = "users";
-  private users: Collection ={} as Collection;
-  private init = async ()=>  {await  init(this.collectionName)};
-  
+  private collectionName: string = "users";
+  private users: Collection = {} as Collection;
+  // private init = async ()=>  {await  init(this.collectionName)};
+  private mongo = new Mongo(this.collectionName);
+  private init = async () => await this.mongo.init();
 
   public async getAll() {
     try {
@@ -18,7 +20,7 @@ class User {
     }
   }
 
- public async getByEmail(userEmail: string | undefined | null) {
+  public async getByEmail(userEmail: string | undefined | null) {
     const query = { email: userEmail };
     return await get(query, this.users);
   }
