@@ -31,14 +31,21 @@ export const authOptions: NextAuthOptions = {
         try {
           const userHandler = new User();
           const users = await userHandler.fetchAll();
-          const user = await users.users!.find(
-            (user: any) =>
-              user.username === credentials?.username &&
-              user.password === credentials?.password
-          );
-          if (user && user.groupe) {
-            // console.log("signed user", user);
-            return { ...user, groupe: user.groupe || null };
+          // const user = await users.users!.find(
+          //   (user: any) =>
+          //     user.username === credentials?.username &&
+          //     user.password === credentials?.password
+          // );
+
+          if (Array.isArray(users.users)) {
+            const user = users.users.find(
+              (user) =>
+                user.username === credentials?.username &&
+                user.password === credentials?.password
+            );
+            if (user && user.groupe) {
+              return { ...user, groupe: user.groupe || null };
+            }
           }
           return null;
         } catch (error) {
@@ -58,9 +65,13 @@ export const authOptions: NextAuthOptions = {
         // Check if both user and token are defined
         const userHandler = new User();
         const signedUser = await userHandler.getByEmail(token.email);
-        // console.log("signedUser", signedUser[0].email);
-        if (signedUser && signedUser[0].groupe) {
-          // Check if signedUser and groupe are defined
+
+        if (
+          Array.isArray(signedUser) &&
+          signedUser.length > 0 &&
+          signedUser[0].groupe
+        ) {
+          // Check if signedUser is an array with at least one element and has 'groupe'
           token.groupe = signedUser[0].groupe;
         }
       }
@@ -68,7 +79,7 @@ export const authOptions: NextAuthOptions = {
     },
     session({ session, token }) {
       if (token && session.user) {
-        session.user.groupe = token.groupe;
+        session.user = { ...session.user, groupe: token.groupe };
       }
       return session;
     },
