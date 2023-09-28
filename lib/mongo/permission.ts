@@ -3,7 +3,7 @@ import Mongo from "./mongo";
 
 class Permission {
   private collection: Collection<Document> | null = null;
-  private collectionName: string = "permissions"; // Nom de la collection corrigé
+  private collectionName: string = "permissions";
   private mongo: Mongo;
 
   constructor() {
@@ -13,7 +13,7 @@ class Permission {
   public async fetch(query?: Filter<Document>) {
     try {
       const permissions = await this.mongo.get(query ? query : {});
-      return { permissions: permissions }; 
+      return { permissions: permissions };
     } catch (error) {
       return { error: error };
     }
