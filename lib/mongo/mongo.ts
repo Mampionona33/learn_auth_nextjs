@@ -14,7 +14,7 @@ class Mongo {
     }
   }
 
-  public async get(query: Filter<Document> | null) {
+  public async get(query?: Filter<Document>) {
     try {
       await this.init();
       const result = query

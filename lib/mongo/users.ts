@@ -72,11 +72,11 @@ class User {
   // }
   public async getAll() {
     try {
-      const result = await this.mongo.get(null);
+      const users = await this.mongo.get();
       // console.log("result",results);
-      return result;
+      return {users:users};
     } catch (error) {
-      return error;
+      return {error:error};
     }
   }
 
