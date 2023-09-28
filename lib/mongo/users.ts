@@ -19,10 +19,11 @@ class User {
     }
   }
 
+  public getAll(): Collection | null {
+    return this.users;
+  }
 
-  public
-  
-   public async getByEmail(userEmail: string | undefined | null) {
+  public async getByEmail(userEmail: string | undefined | null) {
     const query = { email: userEmail };
     return await this.mongo.get(query);
   }
@@ -75,4 +76,5 @@ export default User;
 //   }
 // }
 
+// export default User;
 // export default User;
