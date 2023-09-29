@@ -10,13 +10,16 @@ class User {
     this.mongo = new Mongo(this.collectionName);
   }
 
-  public async fetchAll() {
+  private async fetch(query?: FilterQuery<any>) {
     try {
-      const users = await this.mongo.get();
-      return { users: users };
+      return await this.mongo.get(query);
     } catch (error) {
-      return { error: error };
+      throw new Error(`Failed to fetch data: ${error}`);
     }
+  }
+
+  public async fetchAll() {
+    return { users: await this.fetch() };
   }
 
   public getAll(): Collection | null {

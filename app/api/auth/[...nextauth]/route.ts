@@ -31,17 +31,12 @@ export const authOptions: NextAuthOptions = {
         try {
           const userHandler = new User();
           const users = await userHandler.fetchAll();
-          // const user = await users.users!.find(
-          //   (user: any) =>
-          //     user.username === credentials?.username &&
-          //     user.password === credentials?.password
-          // );
 
           if (Array.isArray(users.users)) {
             const user = users.users.find(
               (user) =>
                 user.username === credentials?.username &&
-                user.password === credentials?.password
+                user.password === credentials?.password,
             );
             if (user && user.groupe) {
               return { ...user, groupe: user.groupe || null };
@@ -71,7 +66,6 @@ export const authOptions: NextAuthOptions = {
           signedUser.length > 0 &&
           signedUser[0].groupe
         ) {
-          // Check if signedUser is an array with at least one element and has 'groupe'
           token.groupe = signedUser[0].groupe;
         }
       }
