@@ -10,7 +10,8 @@ function SignIn() {
     redirect.push("/"); // Remplacez '/tableau-de-bord' par le chemin de votre choix
     return null; // Assurez-vous de renvoyer null pour éviter le rendu de la page de connexion
   }
-
+  // Custom Login Page in Next-Auth and Next.js 13 Authentication : Complete Step-by-Step Tutorial
+  // https://www.youtube.com/watch?v=hADeo48SATU
   // Le reste du contenu de votre page de connexion par défaut
   return (
     <div>
