@@ -1,6 +1,7 @@
 "use client";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
+import LoginForm from "../../../components/LoginForm";
 
 function SignIn() {
   const { data: session } = useSession();
@@ -12,9 +13,9 @@ function SignIn() {
   // Custom Login Page in Next-Auth and Next.js 13 Authentication : Complete Step-by-Step Tutorial
   // https://www.youtube.com/watch?v=hADeo48SATU
   return (
-    <div>
-      <h1>Page de connexion</h1>
-    </div>
+    <>
+      <LoginForm />
+    </>
   );
 }
 
