@@ -61,12 +61,13 @@ export const authOptions: NextAuthOptions = {
         const userHandler = new User();
         const signedUser = await userHandler.getByEmail(token.email);
 
-        if (
-          Array.isArray(signedUser) &&
-          signedUser.length > 0 &&
-          signedUser[0].groupe
-        ) {
-          token.groupe = signedUser[0].groupe;
+        if (Array.isArray(signedUser) && signedUser.length > 0) {
+          if (signedUser[0].groupe) {
+            token.groupe = signedUser[0].groupe;
+          }
+          if (signedUser[0]._id) {
+            token._id = signedUser[0]._id;
+          }
         }
       }
       return token;
