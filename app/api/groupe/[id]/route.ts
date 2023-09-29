@@ -10,7 +10,7 @@ export async function GET(req: NextApiRequest,{params}) {
       const query = {_id:new ObjectId(id)}
       try {
       const groupes = await groupe.fetch(query);
-      return NextResponse.json({ groupes });
+      return NextResponse.json({ groupe });
     } catch (error) {
       return NextResponse.json({ error: error });
     }
