@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 
 export default withAuth(async function middleware(req: NextRequestWithAuth) {
   const token = req.nextauth.token;
+  const pathname = req.nextUrl.pathname;
 
   try {
     if (token) {
@@ -40,6 +41,7 @@ export default withAuth(async function middleware(req: NextRequestWithAuth) {
         const groupe = await groupeResponse.json();
 
         console.log("user logged:", groupe);
+        console.log("pathname:", pathname);
 
         // Vous pouvez maintenant vérifier si le groupe correspond à un rôle responsable et rediriger en conséquence
         // if (groupe[0].name.match(/responsable/gi)) {
