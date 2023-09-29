@@ -1,6 +1,6 @@
 import { signIn, signOut, useSession } from "next-auth/react";
 
-export default Navbar = () => {
+const Navbar = () => {
   const { data: session, status } = useSession();
   const handleLogout = () => {
     signOut();
@@ -19,3 +19,5 @@ export default Navbar = () => {
     </>
   );
 };
+
+export default Navbar;

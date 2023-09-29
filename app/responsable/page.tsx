@@ -2,6 +2,7 @@
 
 import { signIn, signOut, useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
+import Navbar from "../components/Navbar";
 
 const ResponsableHomePage = () => {
   const { data: session, status } = useSession();
@@ -19,6 +20,7 @@ const ResponsableHomePage = () => {
         <div>
           <h1>Welcome to the ResponsableHomePage page</h1>
           <p>{session.user!.email}</p>
+          <Navbar/>
         </div>
       ) : null}
     </>
