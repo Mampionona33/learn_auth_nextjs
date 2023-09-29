@@ -6,10 +6,10 @@ async function handler(req: NextApiRequest) {
   const groupe = new Groupe();
   if (req.method == "GET") {
     try {
-      const groupe = await groupe.fetch();
-      return NextResponse.json({ groupe });
+      const groupes = await groupe.fetch();
+      return NextResponse.json({ groupes });
     } catch (error) {
-      return NextResponse.json({ error: "failed to load groupe" });
+      return NextResponse.json({ error: error });
     }
   }else{
     return NextResponse.json({ message: "hello from permission api" });
