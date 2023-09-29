@@ -1,14 +1,11 @@
 import Groupe from "@/lib/mongo/groupe";
-import { NextApiRequest, NextApiResponse } from "next";
-import { URLSearchParams } from "next/dist/compiled/@edge-runtime/primitives/url";
+import { NextApiRequest } from "next";
 import { NextResponse } from "next/server";
 
-async function handler(req: NextApiRequest) {
+export async function GET(req: NextApiRequest) {
   const groupe = new Groupe();
   if (req.method == "GET") {
-    const query = req.query
-    // const serachParams = url.
-    console.log(query);
+   
     try {
       const groupes = await groupe.fetch();
       return NextResponse.json({ groupes });
@@ -20,4 +17,3 @@ async function handler(req: NextApiRequest) {
   }
 }
 
-export { handler as GET, handler as POST };
