@@ -10,8 +10,9 @@ class User {
     this.mongo = new Mongo(this.collectionName);
   }
 
-  private async fetch(query?: FilterQuery<any>) {
+  public async fetch(query?: FilterQuery<any>) {
     try {
+      // console.log("query", query);
       return await this.mongo.get(query);
     } catch (error) {
       throw new Error(`Failed to fetch data: ${error}`);
