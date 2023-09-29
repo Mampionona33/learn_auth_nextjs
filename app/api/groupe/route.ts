@@ -5,13 +5,14 @@ import { NextResponse } from "next/server";
 async function handler(req: NextApiRequest) {
   const groupe = new Groupe();
   if (req.method == "GET") {
+    console.log("req.searchParams:", req.url);
     try {
       const groupes = await groupe.fetch();
       return NextResponse.json({ groupes });
     } catch (error) {
       return NextResponse.json({ error: error });
     }
-  }else{
+  } else {
     return NextResponse.json({ message: "hello from permission api" });
   }
 }
