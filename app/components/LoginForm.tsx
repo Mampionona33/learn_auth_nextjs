@@ -1,4 +1,15 @@
+import { ChangeEvent, useState } from "react";
+
 const LoginForm = () => {
+  const [formValues, setFormValues] = useState({
+    username: "",
+    password: "",
+  });
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setFormValues({ ...formValues, [name]: value });
+  };
   return (
     <div className="flex h-screen items-center justify-center">
       <div className="shadow p-3 rounded">
@@ -10,6 +21,8 @@ const LoginForm = () => {
               type="text"
               name="username"
               id="username"
+              value={formValues.username}
+              onChange={handleChange}
               required
             />
           </div>
@@ -20,6 +33,8 @@ const LoginForm = () => {
               type="password"
               name="password"
               id="password"
+              value={formValues.password}
+              onChange={handleChange}
               required
             />
           </div>
