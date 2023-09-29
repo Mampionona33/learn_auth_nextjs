@@ -50,6 +50,9 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   ],
+  pages: {
+    signIn: "/api/auht/signin",
+  },
   session: {
     maxAge: 60 * 60, // 1 hour
   },

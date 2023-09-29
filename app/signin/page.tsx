@@ -1,13 +1,15 @@
-"use client";
+'use client'
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 
-function SignIn() {
-  const { data: session } = useSession();
+
+const  SignIn = () => {
+  const { data: session, status } = useSession();
+  console.log('session',session)
 
   // Vérifiez si l'utilisateur est déjà connecté
-  if (session) {
-    redirect.push("/"); // Remplacez '/tableau-de-bord' par le chemin de votre choix
+  if (session && session.user) {
+    redirect("/"); 
     return null; // Assurez-vous de renvoyer null pour éviter le rendu de la page de connexion
   }
 
