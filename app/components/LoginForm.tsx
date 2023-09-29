@@ -4,9 +4,7 @@ const LoginForm = () => {
       <div className="shadow p-3 rounded">
         <form className="flex items-center flex-col gap-1">
           <div className="input-group input-group-sm mb-3">
-            <span className="input-group-text" htmlFor="username">
-              Username
-            </span>
+            <span className="input-group-text">Username</span>
             <input
               className="form-control"
               type="text"
