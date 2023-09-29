@@ -4,7 +4,6 @@ import { NextResponse } from "next/server";
 
 export async function GET(req: NextApiRequest) {
   const groupe = new Groupe();
-
   if (req.method == "GET") {
     try {
       const groupes = await groupe.fetch();
