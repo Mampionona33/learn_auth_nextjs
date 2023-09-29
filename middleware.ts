@@ -2,44 +2,54 @@ import { NextRequestWithAuth, withAuth } from "next-auth/middleware";
 import { NextResponse } from "next/server";
 
 export default withAuth(async function middleware(req: NextRequestWithAuth) {
-  const token = req.nextauth.token!;
-  const pathname = req.nextUrl?.pathname;
-  const url = req.nextUrl;
+  const token = req.nextauth.token;
 
-  if (token) {
-    try {
+  try {
+    if (token) {
       // Vous devrez ajuster l'URL de votre API utilisateur en fonction de votre configuration
-      const response = await fetch(
+      const userResponse = await fetch(
         `${process.env.NEXTAUTH_URL}/api/users/${token._id}`,
       );
 
-      if (!response.ok) {
+      if (!userResponse.ok) {
         console.error(
-          `Fetching user role failed with status ${response.status}`,
+          `Fetching user role failed with status ${userResponse.status}`,
         );
         return NextResponse.error();
       }
 
-      const user = await response.json();
-      console.log(user);
-    } catch (error) {
-      console.error("Error while fetching user role:", error);
-      return NextResponse.error();
-    }
-  }
+      const user = await userResponse.json();
 
-  // if (token.role) {
-  //   console.log("token.role", token.role);
-  //   // if (token.role.match(/responsable/gi)) {
-  //   //   if (pathname === "/") {
-  //   //     const respHomePage = new URL("/responsable", req.url);
-  //   //     return NextResponse.redirect(respHomePage);
-  //   //   }
-  //   // }
-  // } else {
-  //   if (pathname === "/responsable") {
-  //     const homePage = new URL("/", req.url);
-  //     return NextResponse.redirect(homePage);
-  //   }
-  // }
+      // Assurez-vous que userLogged est un tableau non vide avant d'accéder à ses propriétés
+      const userLogged = user.user;
+      if (userLogged && userLogged.length > 0) {
+        const groupeId = userLogged[0].groupe;
+
+        // Vous devrez ajuster l'URL de votre API groupe en fonction de votre configuration
+        const groupeResponse = await fetch(
+          `${process.env.NEXTAUTH_URL}/api/groupe/${groupeId}`,
+        );
+
+        if (!groupeResponse.ok) {
+          console.error(
+            `Fetching groupe failed with status ${groupeResponse.status}`,
+          );
+          return NextResponse.error();
+        }
+
+        const groupe = await groupeResponse.json();
+
+        console.log("user logged:", groupe);
+
+        // Vous pouvez maintenant vérifier si le groupe correspond à un rôle responsable et rediriger en conséquence
+        // if (groupe[0].name.match(/responsable/gi)) {
+        //   const respHomePage = new URL("/responsable", req.url);
+        //   return NextResponse.redirect(respHomePage);
+        // }
+      }
+    }
+  } catch (error) {
+    console.error("Error while fetching user role:", error);
+    return NextResponse.error();
+  }
 });
