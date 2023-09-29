@@ -6,8 +6,8 @@ async function handler(req: NextApiRequest) {
   const groupe = new Groupe();
   if (req.method == "GET") {
     // console.log("req.searchParams:", req.url);
-    const serachParams = req.nextUrl.searchParams;
-    const query = serachParams.get("query");
+    const url = req.url
+    const serachParams = url?.search
     console.log(serachParams);
     try {
       const groupes = await groupe.fetch();
