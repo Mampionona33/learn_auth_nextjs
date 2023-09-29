@@ -10,7 +10,6 @@ export default withAuth(async function middleware(req: NextRequestWithAuth) {
 
   try {
     if (token) {
-      // Vous devrez ajuster l'URL de votre API utilisateur en fonction de votre configuration
       const userResponse = await fetch(
         `${process.env.NEXTAUTH_URL}/api/users/${token._id}`,
       );
