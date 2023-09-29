@@ -6,10 +6,9 @@ import { NextResponse } from "next/server";
 async function handler(req: NextApiRequest) {
   const groupe = new Groupe();
   if (req.method == "GET") {
-    // console.log("req.searchParams:", req.url);
-    const url = req.url
-    const serachParams = URLSearchParams
-    console.log(serachParams);
+    const query = req.query
+    // const serachParams = url.
+    console.log(query);
     try {
       const groupes = await groupe.fetch();
       return NextResponse.json({ groupes });
