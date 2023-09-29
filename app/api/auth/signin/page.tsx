@@ -1,10 +1,11 @@
 'use client'
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import { useSession } from "next-auth/client";
+
 
 function SignIn() {
   const router = useRouter();
-  const [session] = useSession();
+  const {data:session} = useSession();
 
   // Vérifiez si l'utilisateur est déjà connecté
   if (session) {
