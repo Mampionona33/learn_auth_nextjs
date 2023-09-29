@@ -2,11 +2,13 @@ import Groupe from "@/lib/mongo/groupe";
 import { NextApiRequest } from "next";
 import { NextResponse } from "next/server";
 
-export async function GET(req: NextApiRequest) {
+export async function GET(req: NextApiRequest, { params }) {
   const groupe = new Groupe();
+  const id = params.id;
+  const query = { _id: new ObjectId(id) };
   if (req.method == "GET") {
     try {
-      const groupes = await groupe.fetch();
+      const groupes = await groupe.fetch(query);
       return NextResponse.json({ groupes });
     } catch (error) {
       return NextResponse.json({ error: error });
