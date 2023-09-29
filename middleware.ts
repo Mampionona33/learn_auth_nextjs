@@ -4,9 +4,9 @@ import { NextResponse } from "next/server";
 export default withAuth(async function middleware(req: NextRequestWithAuth) {
   const token = req.nextauth.token;
   const pathname = req.nextUrl.pathname;
-  const basedUrl = req.nextUrl.origin;
+  const basedUrl = req.nextUrl;
 
-  console.log("req:",basedUrl);
+  console.log("req:", basedUrl);
 
   try {
     if (token) {
