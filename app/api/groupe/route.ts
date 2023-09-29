@@ -1,10 +1,9 @@
 import Groupe from "@/lib/mongo/groupe";
-import { NextRequest, NextResponse } from "next/server";
+import { NextApiRequest } from "next";
+import { NextResponse } from "next/server";
 
-export async function GET(req: NextRequest ) {
+export async function GET(req: NextApiRequest) {
   const groupe = new Groupe();
-  const { searchParams } = req.nextUrl;
-  console.log(searchParams);
 
   if (req.method == "GET") {
     try {
