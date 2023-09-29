@@ -12,20 +12,13 @@ const ResponsableHomePage = () => {
   const handleLogout = () => {
     signOut();
   };
-  console.log(JSON.stringify(session));
+  // console.log(JSON.stringify(session));
   return (
     <>
       {session ? (
         <div>
           <h1>Welcome to the ResponsableHomePage page</h1>
           <p>{session.user!.email}</p>
-          <button
-            className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded"
-            type="button"
-            onClick={handleLogout}
-          >
-            sign out
-          </button>
         </div>
       ) : null}
     </>
