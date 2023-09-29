@@ -7,8 +7,8 @@ export default withAuth(async function middleware(req: NextRequestWithAuth) {
   const basedUrl = req.nextUrl;
 
   // console.log("req:", basedUrl);
-  console.log(token);
-  // if (token && pathname.match(/api\/auth\/signin/gi)) {
+  // console.log(token);
+  // if (token && token._id && /^(\/api\/auth\/signin)/gi.test(pathname)) {
   //   const respHomePage = new URL("/responsable", req.url);
   //   return NextResponse.redirect(respHomePage);
   // }
@@ -16,12 +16,12 @@ export default withAuth(async function middleware(req: NextRequestWithAuth) {
   try {
     if (token) {
       const userResponse = await fetch(
-        `${process.env.NEXTAUTH_URL}/api/users/${token._id}`
+        `${process.env.NEXTAUTH_URL}/api/users/${token._id}`,
       );
 
       if (!userResponse.ok) {
         console.error(
-          `Fetching user role failed with status ${userResponse.status}`
+          `Fetching user role failed with status ${userResponse.status}`,
         );
         return NextResponse.error();
       }
@@ -33,12 +33,12 @@ export default withAuth(async function middleware(req: NextRequestWithAuth) {
         const groupeId = userLogged[0].groupe;
 
         const groupeResponse = await fetch(
-          `${process.env.NEXTAUTH_URL}/api/groupe/${groupeId}`
+          `${process.env.NEXTAUTH_URL}/api/groupe/${groupeId}`,
         );
 
         if (!groupeResponse.ok) {
           console.error(
-            `Fetching groupe failed with status ${groupeResponse.status}`
+            `Fetching groupe failed with status ${groupeResponse.status}`,
           );
           return NextResponse.error();
         }
