@@ -18,9 +18,9 @@ const ResponsableHomePage = () => {
     <>
       {session ? (
         <div>
+          <Navbar />
           <h1>Welcome to the ResponsableHomePage page</h1>
-          <p>{session.user!.email}</p>
-          <Navbar/>
+          
         </div>
       ) : null}
     </>
