@@ -10,7 +10,7 @@ export async function GET(req: NextApiRequest, { params }) {
   if (req.method == "GET") {
     try {
       const user = await userHandler.fetch(query);
-      return NextResponse.json({ user });
+      return NextResponse.json({ user: user });
     } catch (error) {
       return NextResponse.json({ error: error });
     }
