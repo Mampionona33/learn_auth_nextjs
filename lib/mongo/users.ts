@@ -1,4 +1,4 @@
-import { Collection } from "mongodb";
+import { Collection, Filter } from "mongodb";
 import Mongo from "./mongo";
 
 class User {
@@ -10,7 +10,7 @@ class User {
     this.mongo = new Mongo(this.collectionName);
   }
 
-  public async fetch(query?: FilterQuery<any>) {
+  public async fetch(query?: Filter<any>) {
     try {
       return await this.mongo.get(query);
     } catch (error) {
