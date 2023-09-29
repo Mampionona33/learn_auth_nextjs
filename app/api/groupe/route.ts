@@ -1,11 +1,12 @@
 import Groupe from "@/lib/mongo/groupe";
-import { NextApiRequest } from "next";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: NextApiRequest) {
+export async function GET(req: NextRequest ) {
   const groupe = new Groupe();
+  const { searchParams } = req.nextUrl;
+  console.log(searchParams);
+
   if (req.method == "GET") {
-   
     try {
       const groupes = await groupe.fetch();
       return NextResponse.json({ groupes });
@@ -16,4 +17,3 @@ export async function GET(req: NextApiRequest) {
     return NextResponse.json({ message: "hello from permission api" });
   }
 }
-
