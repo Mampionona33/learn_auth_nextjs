@@ -22,7 +22,7 @@ class Mongo {
       const result = query
         ? await this.collection!.find(query).toArray()
         : await this.collection!.find({}).toArray();
-      console.log(result);
+      // console.log(result);
       return result;
     } catch (error) {
       return { error: `Failed to fetch ${this.collectionName}` };

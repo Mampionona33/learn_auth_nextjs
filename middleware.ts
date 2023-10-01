@@ -6,22 +6,15 @@ export default withAuth(async function middleware(req: NextRequestWithAuth) {
   const pathname = req.nextUrl.pathname;
   const basedUrl = req.nextUrl;
 
-  // console.log("req:", basedUrl);
-  // console.log(token);
-  // if (token && token._id && /^(\/api\/auth\/signin)/gi.test(pathname)) {
-  //   const respHomePage = new URL("/responsable", req.url);
-  //   return NextResponse.redirect(respHomePage);
-  // }
-
   try {
     if (token) {
       const userResponse = await fetch(
-        `${process.env.NEXTAUTH_URL}/api/users/${token._id}`,
+        `${process.env.NEXTAUTH_URL}/api/users/${token._id}`
       );
 
       if (!userResponse.ok) {
         console.error(
-          `Fetching user role failed with status ${userResponse.status}`,
+          `Fetching user role failed with status ${userResponse.status}`
         );
         return NextResponse.error();
       }
@@ -33,12 +26,12 @@ export default withAuth(async function middleware(req: NextRequestWithAuth) {
         const groupeId = userLogged[0].groupe;
 
         const groupeResponse = await fetch(
-          `${process.env.NEXTAUTH_URL}/api/groupe/${groupeId}`,
+          `${process.env.NEXTAUTH_URL}/api/groupe/${groupeId}`
         );
 
         if (!groupeResponse.ok) {
           console.error(
-            `Fetching groupe failed with status ${groupeResponse.status}`,
+            `Fetching groupe failed with status ${groupeResponse.status}`
           );
           return NextResponse.error();
         }
@@ -47,8 +40,12 @@ export default withAuth(async function middleware(req: NextRequestWithAuth) {
 
         const groupeName = await groupe.groupes[0].name;
 
-        if (groupeName.match(/responsable/gi) && pathname === "/") {
-          const respHomePage = new URL("/responsable", req.url);
+        // if (groupeName.match(/responsable/gi) && pathname === "/") {
+        //   const respHomePage = new URL("/dashboard", req.url);
+        //   return NextResponse.redirect(respHomePage);
+        // }
+        if (pathname === "/") {
+          const respHomePage = new URL("/dashboard", req.url);
           return NextResponse.redirect(respHomePage);
         }
       }
