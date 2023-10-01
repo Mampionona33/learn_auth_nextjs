@@ -61,14 +61,14 @@ model study {
 }
 
 model users {
-  id       String       @id @default(auto()) @map("_id") @db.ObjectId
-  v        Int          @map("__v")
-  address  UsersAddress
-  email    String
-  groupe   String?      @db.ObjectId
-  id_      Int          @map("id")
+  id       String        @id @default(auto()) @map("_id") @db.ObjectId
+  v        Int?          @map("__v")
+  address  UsersAddress?
+  email    String?
+  groupe   String?       @db.ObjectId
+  id_      Int?          @map("id")
   name     UsersName
-  password String
-  phone    String
-  username String
+  password String?
+  phone    String?
+  username String        @unique
 }

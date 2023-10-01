@@ -1,8 +1,10 @@
 import Groupe_permission from "@/lib/mongo/groupe_permission";
 import User from "@/lib/mongo/users";
+import { PrismaClient } from "@prisma/client";
 import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
+
 /*
     Note: No secret provided since it's provided in .env.local
     read more: https://next-auth.js.org/configuration/options#secret
@@ -29,19 +31,34 @@ export const authOptions: NextAuthOptions = {
 
       async authorize(credentials, req) {
         try {
-          const userHandler = new User();
-          const users = await userHandler.fetchAll();
+          const prisma = new PrismaClient();
+          // const userHandler = new User();
+          // const users = await userHandler.fetchAll();
+          const users = await prisma.users.findMany();
+          // console.log("userList in /auth/nextauth/route.ts:", users);
 
-          if (Array.isArray(users.users)) {
-            const user = users.users.find(
-              (user) =>
-                user.username === credentials?.username &&
-                user.password === credentials?.password,
-            );
-            if (user && user.groupe) {
-              return { ...user, groupe: user.groupe || null };
-            }
+          const user = await prisma.users.findFirst({
+            where: {
+              username: credentials?.username,
+              password: credentials?.password,
+            },
+          });
+
+          if (user) {
+            console.log("user logged :", user);
+            return user;
           }
+
+          // if (Array.isArray(users.users)) {
+          //   const user = users.users.find(
+          //     (user) =>
+          //       user.username === credentials?.username &&
+          //       user.password === credentials?.password
+          //   );
+          //   // if (user && user.groupe) {
+          //   //   return { ...user, groupe: user.groupe || null };
+          //   // }
+          // }
           return null;
         } catch (error) {
           console.error(error);
@@ -57,31 +74,6 @@ export const authOptions: NextAuthOptions = {
     maxAge: 60 * 60, // 1 hour
   },
   secret: process.env.NEXTAUTH_SECRET,
-  callbacks: {
-    async jwt({ token, user }) {
-      if (user && token) {
-        // Check if both user and token are defined
-        const userHandler = new User();
-        const signedUser = await userHandler.getByEmail(token.email);
-
-        if (Array.isArray(signedUser) && signedUser.length > 0) {
-          if (signedUser[0].groupe) {
-            token.groupe = signedUser[0].groupe;
-          }
-          if (signedUser[0]._id) {
-            token._id = signedUser[0]._id;
-          }
-        }
-      }
-      return token;
-    },
-    session({ session, token }) {
-      if (token && session.user) {
-        session.user = { ...session.user, groupe: token.groupe };
-      }
-      return session;
-    },
-  },
 };
 
 const handler = NextAuth(authOptions);
