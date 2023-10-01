@@ -45,7 +45,7 @@ export const authOptions: NextAuthOptions = {
           });
 
           if (user) {
-            console.log("user logged :", user);
+            // Include all user data in the token
             return user;
           }
 
