@@ -6,7 +6,6 @@ import { NextResponse } from "next/server";
 export async function GET(req: NextApiRequest, { params }) {
   const groupe = new Groupe();
   const id = params.id;
-  console.log(id);
   const query = { _id: new ObjectId(id) };
   if (req.method == "GET") {
     try {

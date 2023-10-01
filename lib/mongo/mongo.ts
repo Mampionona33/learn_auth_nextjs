@@ -17,7 +17,7 @@ class Mongo {
   public async get(query?: Filter<Document>) {
     try {
       await this.init();
-      console.log(query);
+      // console.log(query);
 
       const result = query
         ? await this.collection!.find(query).toArray()

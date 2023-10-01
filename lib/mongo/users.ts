@@ -29,7 +29,7 @@ class User {
   public async getByEmail(userEmail: string | undefined | null) {
     const query = { email: userEmail };
     const result = await this.mongo.get(query);
-    console.log(result);
+    // console.log(result);
     return result;
   }
 }

@@ -7,7 +7,7 @@ import Navbar from "../components/Navbar";
 const Dashboard = () => {
   const { data: session, status } = useSession();
   if (status === "unauthenticated") {
-    redirect("/api/auth/signin"); // Utilisez redirect comme une fonction
+    redirect("/api/auth/signin");
     return null;
   }
   const handleLogout = () => {
