@@ -48,7 +48,11 @@ const LoginForm = () => {
   return (
     <div className="flex h-screen items-center justify-center">
       <div className="shadow p-3 rounded">
-        <form className="flex items-center flex-col gap-1" onSubmit={onSubmit}>
+        <form
+          className="flex items-center flex-col gap-1"
+          method="POST"
+          onSubmit={onSubmit}
+        >
           <div className="input-group input-group-sm mb-3">
             <span className="input-group-text">Username</span>
             <input
