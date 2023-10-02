@@ -12,7 +12,7 @@ import { NextRequestWithAuth } from "next-auth/middleware";
 //   }
 // }
 
-export default async function handler(req: NextRequestWithAuth) {
+export async function GET(req: NextRequestWithAuth) {
   if (req.method == "GET") {
     try {
       const users = await prisma.users.findMany();
