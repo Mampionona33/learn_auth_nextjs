@@ -9,8 +9,8 @@ const Navbar = () => {
     <>
       <nav className="navbar bg-primary " data-bs-theme="dark">
         {session ? (
-          <div className="container-fluid">
-            <p className="text-white">{session.user!.email}</p>
+          <div className="container-fluid d-flex align-middle">
+            <p className="text-white m-0">{session.user!.email}</p>
             <button
               className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded"
               type="button"
