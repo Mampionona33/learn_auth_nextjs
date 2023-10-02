@@ -57,25 +57,6 @@ export const authOptions: NextAuthOptions = {
           return Promise.resolve(null);
         }
       },
-      callbacks: {
-        async signIn({ user, account, profile, email, credentials }) {
-          console.log('fire signin Callback');
-          return true;
-        },
-        async redirect({ url, baseUrl }) {
-          console.log('fire redirect Callback');
-          return baseUrl;
-        },
-        async session({ session, user, token }) {
-          console.log('fire SESSION Callback');
-          return session;
-        },
-        async jwt({ token, user, account, profile, isNewUser }) {
-          console.log('fire jwt Callback');
-    
-          return token;
-        },
-      },
     }),
   ],
 
@@ -85,7 +66,7 @@ export const authOptions: NextAuthOptions = {
 
   session: {
     maxAge: 60 * 60, // 1 hour
-    strategy :"jwt",
+    strategy: "jwt",
   },
   secret: process.env.NEXTAUTH_SECRET,
 };
