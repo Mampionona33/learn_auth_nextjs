@@ -69,7 +69,7 @@
 
 // export default Home;
 
-const Home = () => {
+const Home = async () => {
   return (
     <>
       <div>Home page</div>

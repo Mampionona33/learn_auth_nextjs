@@ -1,11 +1,9 @@
-import User from "@/lib/mongo/users";
-import { NextRequest, NextResponse } from "@/node_modules/next/server";
+import {  NextResponse } from "@/node_modules/next/server";
+import prisma from "@/lib/prisma/prisma";
 
 export async function GET() {
-  const fetchedUsers = new User();
   try {
-    const { users, error } = await fetchedUsers.fetchAll();
-    if (error) throw new Error(error);
+    const users= await prisma.users.findMany();
     const result = NextResponse.json({ users });
     return result;
   } catch (error: any) {
