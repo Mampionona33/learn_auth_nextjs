@@ -64,7 +64,7 @@ model users {
   id       String        @id @default(auto()) @map("_id") @db.ObjectId
   v        Int?          @map("__v")
   address  UsersAddress?
-  email    String?
+  email    String        @unique
   groupe   String?       @db.ObjectId
   id_      Int?          @map("id")
   name     UsersName
