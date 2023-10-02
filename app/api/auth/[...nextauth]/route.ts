@@ -58,25 +58,34 @@ export const authOptions: NextAuthOptions = {
         }
       },
       callbacks: {
-        async jwt({ token, user }) {
-          if (typeof user !== typeof undefined) token.user = user;
-          return token;
+        async signIn({ user, account, profile, email, credentials }) {
+          console.log('fire signin Callback');
+          return true;
         },
-        async session({ session, token, user }) {
-          if (token?.user) {
-            session.user = token.user;
-          }
+        async redirect({ url, baseUrl }) {
+          console.log('fire redirect Callback');
+          return baseUrl;
+        },
+        async session({ session, user, token }) {
+          console.log('fire SESSION Callback');
           return session;
+        },
+        async jwt({ token, user, account, profile, isNewUser }) {
+          console.log('fire jwt Callback');
+    
+          return token;
         },
       },
     }),
   ],
+
   pages: {
     signIn: "/api/auth/signin",
   },
 
   session: {
     maxAge: 60 * 60, // 1 hour
+    strategy :"jwt",
   },
   secret: process.env.NEXTAUTH_SECRET,
 };
