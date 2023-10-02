@@ -49,16 +49,6 @@ export const authOptions: NextAuthOptions = {
             return user;
           }
 
-          // if (Array.isArray(users.users)) {
-          //   const user = users.users.find(
-          //     (user) =>
-          //       user.username === credentials?.username &&
-          //       user.password === credentials?.password
-          //   );
-          //   // if (user && user.groupe) {
-          //   //   return { ...user, groupe: user.groupe || null };
-          //   // }
-          // }
           return null;
         } catch (error) {
           console.error(error);
