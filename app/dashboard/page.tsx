@@ -10,7 +10,7 @@ import prisma from "@/lib/prisma/prisma";
 
 const Dashboard = () => {
   const { data: session, status } = useSession();
-  console.log(session?.user)
+  console.log(session)
 
   if (status === "unauthenticated") {
     redirect("/api/auth/signin");

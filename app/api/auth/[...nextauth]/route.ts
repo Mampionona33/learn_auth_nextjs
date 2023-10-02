@@ -46,28 +46,19 @@ export const authOptions: NextAuthOptions = {
 
           if (user) {
             // Include all user data in the token
-            // return {...user, id:user.id};
-            
-            return user
+            return Promise.resolve(user);
           }
 
-          return null;
+          return Promise.resolve(null);
         } catch (error) {
           console.error(error);
-          return null;
+          return Promise.resolve(null);
         }
       },
       callbacks: {
         async jwt({ token, user }) {
           if (user && token) {
-            // Check if both user and token are defined
-            // const userHandler = new User();
-            // const signedUser = await userHandler.getByEmail(token.email);
-            const signedUser = await prisma?.users.findUnique(token.email);
-            if (signedUser && signedUser.id) {
-              console.log(signedUser);
-              token.id = signedUser.id;
-            }
+            token.user.id = user.id; 
           }
           return token;
         },
