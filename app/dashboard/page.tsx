@@ -13,12 +13,6 @@ const Dashboard = () => {
     const fetchData = async () => {
       const origine = window.location.origin;
       console.log(session?.user);
-      // if (session?.user?._id) {
-      //   const response = await fetch(`${origine}/${session?.user?._id})`);
-      //   const data = await response.json();
-      //   console.log(data);
-      // }
-    };
 
     fetchData();
   }, [session]);
