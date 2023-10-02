@@ -19,7 +19,7 @@ const LoginForm = () => {
       setLoading(true);
 
       const res = await signIn("credentials", {
-        redirect: true,
+        redirect: false,
         username: formValues.username,
         password: formValues.password,
         callbackUrl,
