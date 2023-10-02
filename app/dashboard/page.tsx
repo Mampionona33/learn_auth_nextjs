@@ -17,24 +17,21 @@ const Dashboard = () => {
   }
 
   useEffect(() => {
-    if (session) {
-      // Check if user's email is available
-      if (session.user?.id) {
-        fetch(`/api/users/${session.user.id}`)
-          .then((res) => res.json())
-          .then((data) => {
-            setUserData(data);
-            setLoading(false);
-          })
-          .catch((error) => {
-            console.error("Error fetching user data:", error);
-            setLoading(false);
-          });
-      } else {
-        setLoading(false);
-      }
+    if (session && session.user?.id) {
+      fetch(`/api/users/${session.user.id}`)
+        .then((res) => res.json())
+        .then((data) => {
+          setUserData(data);
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.error("Error fetching user data:", error);
+          setLoading(false);
+        });
+    } else {
+      setLoading(false);
     }
-  }, [session]);
+  }, [session, session?.user]);
 
   if (isLoading) return <p>Loading...</p>;
   if (!userData) return <p>No profile data</p>;
@@ -46,7 +43,6 @@ const Dashboard = () => {
       {session ? (
         <div>
           <Navbar />
-          {/* <h1>Welcome to the dashboard page</h1> */}
           <div className="container-sm min-vh-100 p-3">
             <Card />
           </div>
