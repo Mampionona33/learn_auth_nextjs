@@ -46,7 +46,9 @@ export const authOptions: NextAuthOptions = {
 
           if (user) {
             // Include all user data in the token
-            return user;
+            // return {...user, id:user.id};
+            
+            return user
           }
 
           return null;
@@ -54,6 +56,27 @@ export const authOptions: NextAuthOptions = {
           console.error(error);
           return null;
         }
+      },
+      callbacks: {
+        async jwt({ token, user }) {
+          if (user && token) {
+            // Check if both user and token are defined
+            // const userHandler = new User();
+            // const signedUser = await userHandler.getByEmail(token.email);
+            const signedUser = await prisma?.users.findUnique(token.email);
+            if (signedUser && signedUser.id) {
+              console.log(signedUser);
+              token.id = signedUser.id;
+            }
+          }
+          return token;
+        },
+        session({ session, token }) {
+          if (token && session.user) {
+            session.user.id = token.id;
+          }
+          return session;
+        },
       },
     }),
   ],
