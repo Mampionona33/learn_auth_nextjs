@@ -32,7 +32,6 @@ export const authOptions: NextAuthOptions = {
 
       async authorize(credentials, req) {
         try {
-          
           // const userHandler = new User();
           // const users = await userHandler.fetchAll();
           const users = await prisma.users.findMany();
@@ -45,14 +44,14 @@ export const authOptions: NextAuthOptions = {
             },
           });
 
-          
-          if (user) {
-            console.log(user);
+          if (user !== null) {
+            console.log(user.id);
+            return user;
             // Include all user data in the token
-            return Promise.resolve(user);
+            // return Promise.resolve(user);
           }
-
-          return Promise.resolve(null);
+          return null;
+          // return Promise.resolve(null);
         } catch (error) {
           console.error(error);
           return Promise.resolve(null);
@@ -60,14 +59,12 @@ export const authOptions: NextAuthOptions = {
       },
       callbacks: {
         async jwt({ token, user }) {
-          if (user && token) {
-            token.user.id = user.id;
-          }
+          if (typeof user !== typeof undefined) token.user = user;
           return token;
         },
-        session({ session, token }) {
-          if (token && session.user) {
-            session.user.id = token.id;
+        async session({ session, token, user }) {
+          if (token?.user) {
+            session.user = token.user;
           }
           return session;
         },
@@ -75,8 +72,9 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   pages: {
-    signIn: "/api/auht/signin",
+    signIn: "/api/auth/signin",
   },
+
   session: {
     maxAge: 60 * 60, // 1 hour
   },
