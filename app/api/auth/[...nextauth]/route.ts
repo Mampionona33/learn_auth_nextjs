@@ -34,7 +34,7 @@ export const authOptions: NextAuthOptions = {
         try {
           // const userHandler = new User();
           // const users = await userHandler.fetchAll();
-          const users = await prisma.users.findMany();
+          // const users = await prisma.users.findMany();
           // console.log("userList in /auth/nextauth/route.ts:", users);
 
           const user = await prisma.users.findFirst({
@@ -45,13 +45,9 @@ export const authOptions: NextAuthOptions = {
           });
 
           if (user !== null) {
-            console.log(user.id);
             return user;
-            // Include all user data in the token
-            // return Promise.resolve(user);
           }
           return null;
-          // return Promise.resolve(null);
         } catch (error) {
           console.error(error);
           return Promise.resolve(null);
@@ -73,7 +69,7 @@ export const authOptions: NextAuthOptions = {
     },
     async session({ session, token }) {
       if(token){
-        session.user.id = token.id
+        session.user!.id = token.id
       }
       return session;
     },
