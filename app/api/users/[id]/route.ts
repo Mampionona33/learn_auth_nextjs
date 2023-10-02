@@ -2,7 +2,6 @@ import { NextApiRequest } from "next";
 import { NextResponse } from "next/server";
 
 export async function GET(req: NextApiRequest, { params }) {
-  const id = params.id;
   if (req.method == "GET") {
     try {
       const user = prisma?.users.findFirst({where:{id:params}})
