@@ -4,6 +4,7 @@ import { PrismaClient } from "@prisma/client";
 import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
+import prisma from "@/lib/prisma/prisma";
 
 /*
     Note: No secret provided since it's provided in .env.local
@@ -31,7 +32,7 @@ export const authOptions: NextAuthOptions = {
 
       async authorize(credentials, req) {
         try {
-          const prisma = new PrismaClient();
+          
           // const userHandler = new User();
           // const users = await userHandler.fetchAll();
           const users = await prisma.users.findMany();
@@ -44,7 +45,9 @@ export const authOptions: NextAuthOptions = {
             },
           });
 
+          
           if (user) {
+            console.log(user);
             // Include all user data in the token
             return Promise.resolve(user);
           }
