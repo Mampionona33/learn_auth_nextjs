@@ -3,7 +3,7 @@ import { Poppins } from "next/font/google";
 import AuthProvider from "./components/AuthProvider";
 import "./globals.css";
 import "bootstrap/dist/css/bootstrap.css";
-import("bootstrap/dist/js/bootstrap");
+import "bootstrap/dist/js/bootstrap";
 
 const inter = Poppins({
   weight: ["300", "500", "600", "700"],
