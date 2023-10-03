@@ -7,8 +7,8 @@ const Navbar = () => {
   };
   return (
     <>
-      <nav className="navbar bg-primary " data-bs-theme="dark">
-        {session ? (
+      {session ? (
+        <nav className="navbar bg-primary " data-bs-theme="dark">
           <div className="container-fluid d-flex align-middle">
             <p className="text-white m-0">{session.user!.email}</p>
             <button
@@ -19,8 +19,8 @@ const Navbar = () => {
               sign out
             </button>
           </div>
-        ) : null}
-      </nav>
+        </nav>
+      ) : null}
     </>
   );
 };
