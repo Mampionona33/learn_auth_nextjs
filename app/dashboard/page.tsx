@@ -43,7 +43,7 @@ const Dashboard = () => {
       {session ? (
         <div>
           <Navbar />
-          <div className="container-sm min-vh-100 p-3">
+          <div className="container-sm max-vh-100 p-3">
             <Card />
           </div>
         </div>
