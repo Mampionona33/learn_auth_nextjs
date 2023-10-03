@@ -4,6 +4,7 @@ import AuthProvider from "./components/AuthProvider";
 import "./globals.css";
 import "bootstrap/dist/css/bootstrap.css";
 import { useEffect } from "react";
+import Navbar from "./components/Navbar";
 
 const inter = Poppins({
   weight: ["300", "500", "600", "700"],
@@ -15,15 +16,18 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  useEffect(()=>{
-import ("bootstrap/dist/js/bootstrap");
-  },[])
-  
+  useEffect(() => {
+    import("bootstrap/dist/js/bootstrap");
+  }, []);
+
   return (
     <html lang="en">
       <body className={inter.className}>
         <main>
-          <AuthProvider>{children}</AuthProvider>
+          <AuthProvider>
+            <Navbar />
+            {children}
+          </AuthProvider>
         </main>
       </body>
     </html>

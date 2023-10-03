@@ -42,7 +42,7 @@ const Dashboard = () => {
     <>
       {session ? (
         <div>
-          <Navbar />
+          {/* <Navbar /> */}
           <div className="container-sm max-vh-100 p-3">
             <Card />
           </div>
