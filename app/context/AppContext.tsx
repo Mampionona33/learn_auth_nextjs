@@ -1,17 +1,25 @@
-import { createContext, useContext, useReducer, useMemo } from "react";
+import { createContext, useContext, useReducer, useMemo, ReactNode } from "react";
+import { IUser } from "./interfaceUser";
 
-const AppContext = createContext();
+// Définissez un type générique pour createContext
+const AppContext = createContext<{
+  appState: AppState;
+  dispatch: React.Dispatch<any>;
+} | undefined>(undefined);
+
+type AppState = {
+  user: IUser | null;
+};
 
 const initialState = {
-  user: null,
+  user: null
 };
 
 export const ActionTypes = {
   SET_USER: "SET_USER",
 };
 
-// Créez un réducteur pour gérer l'état de l'application
-const appReducer = (state, action) => {
+const appReducer = (state: AppState, action: { type: string; payload: any }) => {
   const { type, payload } = action;
   switch (type) {
     case ActionTypes.SET_USER:
@@ -21,7 +29,7 @@ const appReducer = (state, action) => {
   }
 };
 
-export function AppContextProvider({ children }) {
+export function AppContextProvider({ children }: { children: ReactNode }) {
   const [appState, dispatch] = useReducer(appReducer, initialState);
 
   const contextValue = useMemo(() => {
@@ -35,5 +43,9 @@ export function AppContextProvider({ children }) {
 
 // Créez un hook personnalisé pour accéder au contexte
 export function useAppContext() {
-  return useContext(AppContext);
+  const context = useContext(AppContext);
+  if (context === undefined) {
+    throw new Error("useAppContext must be used within an AppContextProvider");
+  }
+  return context;
 }

@@ -2,14 +2,15 @@
 
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
-import Navbar from "../components/Navbar";
 import { useEffect, useState } from "react";
 import Card from "../components/Card";
+import { ActionTypes, useAppContext } from "../context/AppContext";
 
 const Dashboard = () => {
   const { data: session, status } = useSession();
   const [userData, setUserData] = useState(null);
   const [isLoading, setLoading] = useState(true);
+  const { dispatch, appState } = useAppContext();
 
   if (status === "unauthenticated") {
     redirect("/api/auth/signin");
@@ -17,32 +18,55 @@ const Dashboard = () => {
   }
 
   useEffect(() => {
+    let mount = true;
+  
     if (session && session.user?.id) {
-      fetch(`/api/users/${session.user.id}`)
-        .then((res) => res.json())
-        .then((data) => {
-          setUserData(data);
-          setLoading(false);
-        })
-        .catch((error) => {
+      const fetchData = async () => {
+        try {
+          const res = await fetch(`/api/users/${session.user.id}`);
+          const data = await res.json();
+  
+          if (mount) {
+            setUserData(data);
+            setLoading(false);
+            if(!appState.user){
+              dispatch({ type: ActionTypes.SET_USER, payload: data.user });
+            }
+          }
+        } catch (error) {
           console.error("Error fetching user data:", error);
-          setLoading(false);
-        });
+  
+          if (mount) {
+            setLoading(false);
+          }
+        }
+      };
+      fetchData();
     } else {
-      setLoading(false);
+      if (mount) {
+        setLoading(false);
+      }
     }
-  }, [session, session?.user]);
+  
+    // La fonction de nettoyage
+    return () => {
+      mount = false;
+    };
+  }, [appState, session]);
+  
 
   if (isLoading) return <p>Loading...</p>;
   if (!userData) return <p>No profile data</p>;
 
-  console.log("userData", userData);
+  if(appState.user){
+    console.log("user", appState.user)
+  }
+  
 
   return (
     <>
       {session ? (
         <div>
-          {/* <Navbar /> */}
           <div className="container-sm max-vh-100 p-3">
             <Card />
           </div>

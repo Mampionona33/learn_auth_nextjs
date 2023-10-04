@@ -5,6 +5,7 @@ import "./globals.css";
 import "bootstrap/dist/css/bootstrap.css";
 import { useEffect } from "react";
 import Navbar from "./components/Navbar";
+import { AppContextProvider } from "./context/AppContext";
 
 const inter = Poppins({
   weight: ["300", "500", "600", "700"],
@@ -25,8 +26,10 @@ export default function RootLayout({
       <body className={inter.className}>
         <main>
           <AuthProvider>
-            <Navbar />
-            {children}
+            <AppContextProvider>
+              <Navbar />
+              {children}
+            </AppContextProvider>
           </AuthProvider>
         </main>
       </body>
