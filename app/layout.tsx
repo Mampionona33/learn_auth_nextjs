@@ -32,8 +32,10 @@ export default function RootLayout({
             <AppContextProvider>
               <Navbar />
               <div className="container-fluid">
-                <div className="">
-                  <Sidebar />
+                <div className="row">
+                  <div className="col-md-2 d-none d-md-block">
+                    <Sidebar />
+                  </div>
                   {children}
                 </div>
               </div>
