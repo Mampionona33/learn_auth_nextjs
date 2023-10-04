@@ -65,7 +65,7 @@ const Dashboard = () => {
     <>
       {session ? (
         // <div className="col-md-9 ml-sm-auto col-lg-10 p-4 ml-14">
-        <div className="col-md-2 d-none d-md-block">
+        <div className="col-md-9 ml-sm-auto col-lg-10 px-4">
           <Card />
         </div>
       ) : null}
