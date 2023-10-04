@@ -19,23 +19,23 @@ const Dashboard = () => {
 
   useEffect(() => {
     let mount = true;
-  
+
     if (session && session.user?.id) {
       const fetchData = async () => {
         try {
           const res = await fetch(`/api/users/${session.user.id}`);
           const data = await res.json();
-  
+
           if (mount) {
             setUserData(data);
             setLoading(false);
-            if(!appState.user){
+            if (!appState.user) {
               dispatch({ type: ActionTypes.SET_USER, payload: data.user });
             }
           }
         } catch (error) {
           console.error("Error fetching user data:", error);
-  
+
           if (mount) {
             setLoading(false);
           }
@@ -47,29 +47,25 @@ const Dashboard = () => {
         setLoading(false);
       }
     }
-  
+
     // La fonction de nettoyage
     return () => {
       mount = false;
     };
   }, [appState, session]);
-  
 
   if (isLoading) return <p>Loading...</p>;
   if (!userData) return <p>No profile data</p>;
 
-  if(appState.user){
-    console.log("user", appState.user)
+  if (appState.user) {
+    console.log("user", appState.user);
   }
-  
 
   return (
     <>
       {session ? (
-        <div>
-          <div className="container-sm max-vh-100 p-3">
-            <Card />
-          </div>
+        <div className="col-md-9 ml-sm-auto col-lg-10 p-4">
+          <Card />
         </div>
       ) : null}
     </>

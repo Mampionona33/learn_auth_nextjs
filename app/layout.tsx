@@ -5,7 +5,9 @@ import "./globals.css";
 import "bootstrap/dist/css/bootstrap.css";
 import { useEffect } from "react";
 import Navbar from "./components/Navbar";
+import Sidebar from "./components/Sidebar";
 import { AppContextProvider } from "./context/AppContext";
+// import { useState } from "react";
 
 const inter = Poppins({
   weight: ["300", "500", "600", "700"],
@@ -17,6 +19,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  // const [isLoginPage, setLoginPage] = useState(false);
   useEffect(() => {
     import("bootstrap/dist/js/bootstrap");
   }, []);
@@ -28,7 +31,12 @@ export default function RootLayout({
           <AuthProvider>
             <AppContextProvider>
               <Navbar />
-              {children}
+              <div className="container-fluid">
+                <div className="">
+                  <Sidebar />
+                  {children}
+                </div>
+              </div>
             </AppContextProvider>
           </AuthProvider>
         </main>
