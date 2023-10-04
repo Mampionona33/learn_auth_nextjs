@@ -1,10 +1,8 @@
-import Groupe_permission from "@/lib/mongo/groupe_permission";
-import User from "@/lib/mongo/users";
-import { PrismaClient } from "@prisma/client";
 import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import prisma from "@/lib/prisma/prisma";
+import { IUser } from "@/app/context/interfaceUser";
 
 /*
     Note: No secret provided since it's provided in .env.local
@@ -45,7 +43,10 @@ export const authOptions: NextAuthOptions = {
           });
 
           if (user !== null) {
-            return user;
+            const extendedUser :IUser ={
+              ...user
+            }
+            return extendedUser;
           }
           return null;
         } catch (error) {
