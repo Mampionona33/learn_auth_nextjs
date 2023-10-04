@@ -30,15 +30,17 @@ export default function RootLayout({
         <main>
           <AuthProvider>
             <AppContextProvider>
+            <div className="d-flex flex-col h-screen">
               <Navbar />
               <div className="container-fluid">
                 <div className="row ">
-                  <div className="col-md-2 d-none d-md-block">
+                  <div className="col-md-2 d-none d-md-block p-0">
                     <Sidebar />
                   </div>
                   {children}
                 </div>
               </div>
+            </div>
             </AppContextProvider>
           </AuthProvider>
         </main>

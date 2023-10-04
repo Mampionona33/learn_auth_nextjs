@@ -12,17 +12,12 @@ const Dashboard = () => {
   const [isLoading, setLoading] = useState(true);
   const { dispatch, appState } = useAppContext();
 
-  if (status === "unauthenticated") {
-    redirect("/api/auth/signin");
-    return null;
-  }
-
   useEffect(() => {
     let mount = true;
 
-    if (session && session.user?.id) {
-      const fetchData = async () => {
-        try {
+    const fetchData = async () => {
+      try {
+        if (session && session.user?.id && !appState.user) {
           const res = await fetch(`/api/users/${session.user.id}`);
           const data = await res.json();
 
@@ -33,29 +28,35 @@ const Dashboard = () => {
               dispatch({ type: ActionTypes.SET_USER, payload: data.user });
             }
           }
-        } catch (error) {
-          console.error("Error fetching user data:", error);
-
+        } else {
           if (mount) {
             setLoading(false);
           }
         }
-      };
-      fetchData();
-    } else {
-      if (mount) {
-        setLoading(false);
-      }
-    }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
 
-    // La fonction de nettoyage
+        if (mount) {
+          setLoading(false);
+        }
+      }
+    };
+
+    fetchData();
+
+    // Cleanup function
     return () => {
       mount = false;
     };
-  }, [appState, session]);
+  }, [session, appState, dispatch]);
+
+  if (status === "unauthenticated") {
+    redirect("/api/auth/signin");
+    return null;
+  }
 
   if (isLoading) return <p>Loading...</p>;
-  if (!userData) return <p>No profile data</p>;
+  if (!appState.user) return <p>No profile data</p>;
 
   if (appState.user) {
     console.log("user", appState.user);
