@@ -29,11 +29,21 @@ const Sidebar = () => {
           <div className="sidebar pt-6 block">
             <div className="sidebar-sticky">
               <ul className="nav flex-column">
-                <li className="nav-item pl-1">
-                  <Link href="/dashboard">dashboard</Link>
+                <li className="nav-item pl-1 hover:bg-slate-400 ">
+                  <Link
+                    className="text-capitalize text-decoration-none text-dark d-block hover:text-white "
+                    href="/dashboard"
+                  >
+                    dashboard
+                  </Link>
                 </li>
-                <li className="nav-item pl-1">
-                  <Link href="/users">utilisateur</Link>
+                <li className="nav-item pl-1 hover:bg-slate-400">
+                  <Link
+                    className="text-capitalize text-decoration-none text-dark d-block"
+                    href="/users"
+                  >
+                    utilisateur
+                  </Link>
                 </li>
               </ul>
             </div>
