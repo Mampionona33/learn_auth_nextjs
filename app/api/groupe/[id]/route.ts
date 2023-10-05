@@ -11,7 +11,8 @@ export async function GET(req: NextApiRequest, { params }) {
       const id = params.id;
       const query = { _id: new ObjectId(id) };
       // const groupes = await groupe.fetch(query);
-      return NextResponse.json({ groupes });
+      const oneGroupe = await prisma.groupe.findFirst(query)
+      return NextResponse.json({ oneGroupe });
     } catch (error) {
       return NextResponse.json({ error: error });
     }
