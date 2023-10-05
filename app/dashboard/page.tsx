@@ -32,7 +32,7 @@ const Dashboard = () => {
       {userData ? (
         <div className="col-md-9 ml-sm-auto col-lg-10 p-4">
           {/* <Card /> */}
-          {userGroupe && userGroupe.groupe.name === "responsable" ? (
+          {userGroupe && userGroupe!.groupe.name === "responsable" ? (
             <ResponsableDashboard />
           ) : null}
           {/* <pre>{userGroupe ? JSON.stringify(userGroupe, "", 2) : ""}</pre> */}
