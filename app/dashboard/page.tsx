@@ -16,9 +16,9 @@ const Dashboard = () => {
     error: errorOnGetUserGroupe,
   } = useGetUserLoggedGroupe();
 
-  if (loadingUserData || loadingUserloggedGroupe) {
-    return <p>Loading ...</p>;
-  }
+  // if (loadingUserData || loadingUserloggedGroupe) {
+  //   return <p>Loading ...</p>;
+  // }
 
   if (errorLoadingUserData) {
     return <p>${errorLoadingUserData}</p>;
@@ -33,9 +33,12 @@ const Dashboard = () => {
       {userData ? (
         <div className="col-md-9 ml-sm-auto col-lg-10 p-4">
           <Card />
-          <pre>{JSON.stringify(userGroupe, null, 2)}</pre>
+          <pre>{userGroupe ? JSON.stringify(userGroupe, "", 2) : ""}</pre>
+          {loadingUserData || loadingUserloggedGroupe ? <p>Loading ...</p> : ""}
         </div>
-      ) : null}
+      ) : (
+        ""
+      )}
     </>
   );
 };
