@@ -6,14 +6,15 @@ import prisma from "@/lib/prisma/prisma";
 
 export async function GET(req: NextApiRequest, { params }) {
   // const groupe = new Groupe();
+  const id = params.id;
   if (req.method == "GET") {
     try {
-      const id = params.id;
-      const query = { _id: new ObjectId(id) };
+      const query = { id: new ObjectId(id) };
       // const groupes = await groupe.fetch(query);
-      const oneGroupe = await prisma.groupe.findUnique(id)
-      return NextResponse.json({ oneGroupe });
+      const groupe = await prisma.groupe.findUnique({ where: query });
+      return NextResponse.json({ groupe });
     } catch (error) {
+      console.log(error);
       return NextResponse.json({ error: error });
     }
   } else {

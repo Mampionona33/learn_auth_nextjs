@@ -16,12 +16,12 @@ const useGetUserLoggedGroupe = () => {
       try {
         if (appState?.user?.groupe) {
           // console.log("useGetUserLoggedGroupe",appState.user.groupe);
-          
-          const resp = await fetch(`/api/groupe/`);
-          // const resp = await fetch(`/api/groupe/${appState.user.groupe}`);
+
+          // const resp = await fetch(`/api/groupe/`);
+          const resp = await fetch(`/api/groupe/${appState.user.groupe}`);
           const data = await resp.json();
-          
-          console.log("useGetUserLoggedGroupe",data);
+
+          console.log("useGetUserLoggedGroupe", data);
 
           if (mount) {
             setUserGroupe(data);
@@ -49,6 +49,5 @@ const useGetUserLoggedGroupe = () => {
 
   return { userGroupe, loading, error };
 };
-
 
 export default useGetUserLoggedGroupe;
