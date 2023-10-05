@@ -24,21 +24,21 @@ const Sidebar = () => {
   return (
     <>
       {session && !isLoading ? (
-        <div className="d-flex flex-col bg-light flex-md-nowrap p-0 shadow h-[25rem]">
+        <div className="d-flex flex-col bg-zinc-400 flex-md-nowrap p-0 shadow h-[35rem]">
           <div className="sidebar  block">
             <div className="sidebar-sticky">
               <ul className="nav flex-column text-capitalize">
-                <li className="nav-item pl-1 hover:bg-slate-400">
+                <li className="nav-item pl-2 hover:shadow hover:bg-slate-600">
                   <Link
-                    className=" text-decoration-none text-dark d-block hover:text-white-important py-2.5"
+                    className=" text-decoration-none  text-white d-block hover:text-white-important py-2.5"
                     href="/dashboard"
                   >
                     dashboard
                   </Link>
                 </li>
-                <li className="nav-item pl-1 hover:bg-slate-400">
+                <li className="nav-item pl-2 hover:shadow hover:bg-slate-600">
                   <Link
-                    className="text-decoration-none text-dark d-block hover:text-white-important py-2.5	"
+                    className="text-decoration-none  text-white d-block hover:text-white-important py-2.5	"
                     href="/users"
                   >
                     utilisateur
