@@ -14,7 +14,7 @@ const config: Config = {
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
       textColor: {
-        "text-white-important": "rgba(255, 255, 255, 1) !important",
+        "white-important": "rgba(255, 255, 255, 1) !important",
       },
     },
   },

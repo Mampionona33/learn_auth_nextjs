@@ -30,7 +30,7 @@ export default function RootLayout({
         <main>
           <AuthProvider>
             <AppContextProvider>
-            <div className="d-flex flex-col h-screen">
+            <div className="d-flex flex-col min-h-screen h-screen">
               <Navbar />
               <div className="container-fluid">
                 <div className="row h-full">
