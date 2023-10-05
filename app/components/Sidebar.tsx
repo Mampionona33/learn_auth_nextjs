@@ -25,7 +25,7 @@ const Sidebar = () => {
     <>
       {session && !isLoading ? (
         // <div className="col-md-2 d-none d-md-block bg-light flex flex-col p-0 fixed top-0 ">
-        <div className="bg-light flex-md-nowrap p-0 shadow min-h-min h-[50rem]">
+        <div className="bg-light flex-md-nowrap p-0 shadow min-h-min h-[100rem]">
           <div className="sidebar pt-6 block">
             <div className="sidebar-sticky">
               <ul className="nav flex-column">
