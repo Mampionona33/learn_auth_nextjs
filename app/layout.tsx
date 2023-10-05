@@ -33,7 +33,7 @@ export default function RootLayout({
             <div className="d-flex flex-col h-screen">
               <Navbar />
               <div className="container-fluid">
-                <div className="row ">
+                <div className="row h-full">
                   <div className="col-md-2 d-none d-md-block p-0">
                     <Sidebar />
                   </div>

@@ -1,24 +1,26 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useAppContext } from "../context/AppContext";
+import { useSession } from "next-auth/react";
 
 const Users = () => {
   const { appState } = useAppContext();
   const [isLoading, setLoading] = useState(true);
+  const { data: session, status } = useSession();
 
   const user = appState.user;
 
   useEffect(() => {
     let mount = true;
 
-    if (user) {
+    if (session) {
       setLoading(false);
     }
 
     return () => {
       mount = false;
     };
-  }, [user]);
+  }, [session]);
 
   if (isLoading) return <p>Loading...</p>;
 
