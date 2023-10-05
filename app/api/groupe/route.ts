@@ -4,7 +4,6 @@ import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma/prisma";
 
 export async function GET(req: NextApiRequest) {
-  // const groupe = new Groupe();
   if (req.method == "GET") {
     try {
       const groupes = await prisma.groupe.findMany();
