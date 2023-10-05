@@ -15,13 +15,8 @@ const useGetUserLoggedGroupe = () => {
     async function fetchData() {
       try {
         if (appState?.user?.groupe) {
-          // console.log("useGetUserLoggedGroupe",appState.user.groupe);
-
-          // const resp = await fetch(`/api/groupe/`);
           const resp = await fetch(`/api/groupe/${appState.user.groupe}`);
           const data = await resp.json();
-
-          console.log("useGetUserLoggedGroupe", data);
 
           if (mount) {
             setUserGroupe(data);
