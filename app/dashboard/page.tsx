@@ -5,20 +5,25 @@ import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
 import Card from "../components/Card";
 import { ActionTypes, useAppContext } from "../context/AppContext";
+import useGetUserLoggedGroupe from "../hook/useGetUserLoggedGroupe";
 
 const Dashboard = () => {
   const { data: session, status } = useSession();
   const [userData, setUserData] = useState(null);
   const [isLoading, setLoading] = useState(true);
   const { dispatch, appState } = useAppContext();
+  const { userGroupe, loading, error } = useGetUserLoggedGroupe();
 
   useEffect(() => {
     let mount = true;
 
     const fetchData = async () => {
       try {
-        if (session && session.user?.id && !appState.user) {
+        if (session?.user?.id && !appState.user) {
           const res = await fetch(`/api/users/${session.user.id}`);
+          if (!res.ok) {
+            throw new Error('Failed to fetch user data');
+          }
           const data = await res.json();
 
           if (mount) {
@@ -44,7 +49,6 @@ const Dashboard = () => {
 
     fetchData();
 
-    // Cleanup function
     return () => {
       mount = false;
     };
@@ -56,21 +60,24 @@ const Dashboard = () => {
   }
 
   if (isLoading) return <p>Loading...</p>;
-  if (!appState.user) return <p>No profile data</p>;
 
-  if (appState.user) {
-    console.log("user", appState.user);
+  if (error) {
+    return <p>Error: {error.message}</p>;
   }
+
+  if (!appState.user) return <p>No profile data</p>;
 
   return (
     <>
       {session ? (
         <div className="col-md-9 ml-sm-auto col-lg-10 p-4">
           <Card />
+          <pre>{JSON.stringify(userGroupe, null, 2)}</pre>
         </div>
       ) : null}
     </>
   );
 };
+
 
 export default Dashboard;

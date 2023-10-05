@@ -1,12 +1,14 @@
 import Groupe from "@/lib/mongo/groupe";
 import { NextApiRequest } from "next";
 import { NextResponse } from "next/server";
+import prisma from "@/lib/prisma/prisma";
 
 export async function GET(req: NextApiRequest) {
-  const groupe = new Groupe();
+  // const groupe = new Groupe();
   if (req.method == "GET") {
     try {
-      const groupes = await groupe.fetch();
+      const groupes = await prisma.groupe.findMany();
+      // const groupes = await groupe.fetch();
       return NextResponse.json({ groupes });
     } catch (error) {
       return NextResponse.json({ error: error });
