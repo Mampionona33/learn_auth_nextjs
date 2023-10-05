@@ -5,8 +5,8 @@ import { useAppContext } from "../context/AppContext";
 const useGetUserLoggedGroupe = () => {
   const [userGroupe, setUserGroupe] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const { data: session, status } = useSession();
+  const [error, setError] = useState<unknown|null>(null);
+  // const { data: session, status } = useSession();
   const { dispatch, appState } = useAppContext();
 
   useEffect(() => {
