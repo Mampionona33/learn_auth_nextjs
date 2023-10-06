@@ -1,7 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, use } from "react";
 import { ActionTypes, useAppContext } from "../context/AppContext";
 import { IGroupe } from "../context/interfaceGroupe";
 import { useSession } from "next-auth/react";
+import useGetUserData from "./useGetUserData";
 
 const useGetUserLoggedGroupe = () => {
   const [userGroupe, setUserGroupe] = useState<IGroupe | null>(null);
@@ -14,23 +15,34 @@ const useGetUserLoggedGroupe = () => {
     let mount = true;
 
     async function fetchData() {
-      console.log("appState", appState);
       try {
         if (!appState?.userGroupe) {
-          if (session && session.user) {
-            const resp = await fetch(`/api/groupe/${session.user.groupe}`);
-            const data = await resp.json();
 
-            if (mount) {
-              setUserGroupe(data);
-              setLoading(false);
-              if (!appState.userGroupe) {
-                dispatch({
-                  type: ActionTypes.SET_USER_GROUPE,
-                  payload: data.groupe,
-                });
+          if (session && session.user?.id) {
+            const userFetch = await fetch(`/api/users/${session.user.id}`);
+
+            if (!userFetch.ok) {
+              throw new Error("Failed to fetch user data");
+            }
+
+            const userData = await userFetch.json();
+
+            if (userData) {
+              const res = await fetch(`/api/groupe/${userData.user.groupe}`);
+
+              if (!res.ok) {
+                throw new Error("Failed to fetch user data");
+              }
+
+              const groupe = await res.json();
+              // console.log("groupe",groupe.groupe);
+              
+              if (mount) {
+                setUserGroupe(groupe.groupe);
+                setLoading(false);
               }
             }
+
           }
         } else {
           if (mount) {
@@ -51,9 +63,7 @@ const useGetUserLoggedGroupe = () => {
     return () => {
       mount = false;
     };
-  }, [appState, dispatch]);
-  console.log("session", session);
-  console.log("appState", appState);
+  }, [session,appState, dispatch]);
 
   return { userGroupe, loading, error };
 };

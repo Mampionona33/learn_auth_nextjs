@@ -32,6 +32,7 @@ export const ActionTypes = {
   SET_USER_GROUPE: "SET_USER_GROUPE",
 };
 
+
 const appReducer = (
   state: AppState,
   action: { type: string; payload: any }
@@ -39,9 +40,13 @@ const appReducer = (
   const { type, payload } = action;
   switch (type) {
     case ActionTypes.SET_USER:
-      return { ...state, user: payload };
+      const updatedState = { ...state, user: action.payload };
+      localStorage.setItem("appState", JSON.stringify(updatedState));
+      return updatedState;
     case ActionTypes.SET_USER_GROUPE:
-      return {...state, userGroupe:payload}
+      const updatedStateWithGroupe = { ...state, userGroupe: action.payload };
+      localStorage.setItem("appState", JSON.stringify(updatedStateWithGroupe));
+      return updatedStateWithGroupe;
     default:
       return state;
   }

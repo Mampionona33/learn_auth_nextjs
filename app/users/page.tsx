@@ -14,7 +14,6 @@ const Users = () => {
     error: errorOnLoadingUserGroupe,
   } = useGetUserLoggedGroupe();
 
-  const user = appState.user;
 
   useEffect(() => {
     let mount = true;
@@ -30,8 +29,6 @@ const Users = () => {
 
   if (errorOnLoadingUserGroupe)
     return <h1>String(errorOnLoadingUserGroupe)</h1>;
-
-  console.log(userGroupe);
 
   return (
     <div className="col-md-9 ml-sm-auto col-lg-10 p-4">
@@ -49,4 +46,3 @@ const Users = () => {
 };
 
 export default Users;
-

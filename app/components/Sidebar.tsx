@@ -3,16 +3,33 @@ import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useAppContext } from "../context/AppContext";
+import useGetUserData from "../hook/useGetUserData";
+import useGetUserLoggedGroupe from "../hook/useGetUserLoggedGroupe";
 
 const Sidebar = () => {
   const { data: session, status } = useSession();
   const [isLoading, setLoading] = useState(true);
   const { appState } = useAppContext();
 
+  const {
+    userData,
+    error: errorLoadingUserData,
+    loading: loadingUserData,
+  } = useGetUserData();
+
+  
+  const {
+    userGroupe,
+    loading: loadingUserloggedGroupe,
+    error: errorOnGetUserGroupe,
+  } = useGetUserLoggedGroupe();
+
+
   useEffect(() => {
     let mount = true;
+    console.log("appState", appState);
 
-    if (appState.user) {
+    if (appState && appState.user) {
       setLoading(false);
     }
 
