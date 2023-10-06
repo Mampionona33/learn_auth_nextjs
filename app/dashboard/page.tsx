@@ -2,6 +2,7 @@
 
 import Card from "../components/Card";
 import ResponsableDashboard from "../components/ResponsableDashboard";
+import AdminDashboard from "../components/AdminDashboard";
 import useGetUserLoggedGroupe from "../hook/useGetUserLoggedGroupe";
 import useGetUserData from "../hook/useGetUserData";
 
@@ -34,7 +35,7 @@ const Dashboard = () => {
           {/* <Card /> */}
           {userGroupe && userGroupe.groupe.name === "responsable" ? (
             <ResponsableDashboard />
-          ) : null}
+          ) : userGroupe.groupe.name ==="admin" ? (<AdminDashboard/>): null}
           {/* <pre>{userGroupe ? JSON.stringify(userGroupe, "", 2) : ""}</pre> */}
           {loadingUserData || loadingUserloggedGroupe ? <p>Loading ...</p> : ""}
         </div>
