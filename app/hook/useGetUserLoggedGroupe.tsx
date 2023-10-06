@@ -8,19 +8,19 @@ const useGetUserLoggedGroupe = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<unknown | null>(null);
   const { dispatch, appState } = useAppContext();
-  const {data:session}= useSession()
+  const { data: session } = useSession();
 
   useEffect(() => {
     let mount = true;
 
     async function fetchData() {
-      console.log("appState",appState);
+      console.log("appState", appState);
       try {
-        if (!appState?.user?.groupe ) {
-          if(session && session.user){
+        if (!appState?.userGroupe) {
+          if (session && session.user) {
             const resp = await fetch(`/api/groupe/${session.user.groupe}`);
             const data = await resp.json();
-  
+
             if (mount) {
               setUserGroupe(data);
               setLoading(false);
@@ -52,8 +52,8 @@ const useGetUserLoggedGroupe = () => {
       mount = false;
     };
   }, [appState, dispatch]);
-  console.log("session",session);
-  console.log("appState",appState);
+  console.log("session", session);
+  console.log("appState", appState);
 
   return { userGroupe, loading, error };
 };
