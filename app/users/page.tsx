@@ -7,7 +7,7 @@ import { useAppContext } from "@context/AppContext";
 const Users = () => {
   const { appState } = useAppContext();
   const [isLoading, setLoading] = useState(true);
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const {
     userGroupe,
     loading: loadingUserGroupe,
@@ -17,21 +17,27 @@ const Users = () => {
   const user = appState.user;
 
   useEffect(() => {
+    let mount = true;
+
     if (session) {
       setLoading(false);
     }
+
+    return () => {
+      mount = false;
+    };
   }, [session]);
 
   if (errorOnLoadingUserGroupe)
     return <h1>String(errorOnLoadingUserGroupe)</h1>;
 
-  // console.log(userGroupe);
+  console.log(userGroupe);
 
   return (
     <div className="col-md-9 ml-sm-auto col-lg-10 p-4">
       {isLoading || loadingUserGroupe ? (
         <p>Loading...</p>
-      ) : userGroupe && userGroupe?.groupe.name === "admin" ? (
+      ) : userGroupe && userGroupe?.name === "admin" ? (
         <p>PAGE user liste</p>
       ) : (
         <div className="d-flex">
@@ -43,3 +49,4 @@ const Users = () => {
 };
 
 export default Users;
+

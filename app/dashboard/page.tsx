@@ -33,9 +33,9 @@ const Dashboard = () => {
     <>
       {userData ? (
         <div className="col-md-9 ml-sm-auto col-lg-10 p-4">
-          {userGroupe && userGroupe.groupe.name === "responsable" ? (
+          {userGroupe && userGroupe.name === "responsable" ? (
             <ResponsableDashboard />
-          ) : userGroupe && userGroupe.groupe.name === "admin" ? (
+          ) : userGroupe && userGroupe.name === "admin" ? (
             <AdminDashboard />
           ) : null}
           <pre>{userGroupe ? JSON.stringify(userGroupe, null, 2) : ""}</pre>

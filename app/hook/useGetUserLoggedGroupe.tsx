@@ -1,34 +1,39 @@
 import { useState, useEffect } from "react";
 import { ActionTypes, useAppContext } from "../context/AppContext";
+import { IGroupe } from "../context/interfaceGroupe";
+import { useSession } from "next-auth/react";
 
 const useGetUserLoggedGroupe = () => {
   const [userGroupe, setUserGroupe] = useState<IGroupe | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<unknown | null>(null);
   const { dispatch, appState } = useAppContext();
+  const {data:session}= useSession()
 
   useEffect(() => {
     let mount = true;
 
     async function fetchData() {
+      console.log("appState",appState);
       try {
-        if (appState?.user?.groupe) {
-          const resp = await fetch(`/api/groupe/${appState.user.groupe}`);
-          const data = await resp.json();
-
-          if (mount) {
-            setUserGroupe(data);
-            setLoading(false);
-            if (!appState.userGroupe) {
-              dispatch({
-                type: ActionTypes.SET_USER_GROUPE,
-                payload: data.groupe,
-              });
+        if (!appState?.user?.groupe ) {
+          if(session && session.user){
+            const resp = await fetch(`/api/groupe/${session.user.groupe}`);
+            const data = await resp.json();
+  
+            if (mount) {
+              setUserGroupe(data);
+              setLoading(false);
+              if (!appState.userGroupe) {
+                dispatch({
+                  type: ActionTypes.SET_USER_GROUPE,
+                  payload: data.groupe,
+                });
+              }
             }
           }
         } else {
           if (mount) {
-            console.log(appState.userGroupe);
             setUserGroupe(appState.userGroupe);
             setLoading(false);
           }
@@ -47,7 +52,8 @@ const useGetUserLoggedGroupe = () => {
       mount = false;
     };
   }, [appState, dispatch]);
-  console.log("userGroupe", userGroupe);
+  console.log("session",session);
+  console.log("appState",appState);
 
   return { userGroupe, loading, error };
 };

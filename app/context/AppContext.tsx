@@ -24,6 +24,7 @@ type AppState = {
 
 const initialState = {
   user: null,
+  userGroupe:null,
 };
 
 export const ActionTypes = {
