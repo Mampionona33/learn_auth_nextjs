@@ -26,12 +26,17 @@ import { NextRequestWithAuth } from "next-auth/middleware";
 
 export async function GET(req: NextRequestWithAuth) {
   if (req.method === "GET") {
-    const { email } = req.nextUrl.searchParams
+    const { email } = req.nextUrl.searchParams;
     console.log(email);
-    
 
     if (!email || typeof email !== "string") {
-      return NextResponse.json({ error: "Invalid email parameter" });
+      try {
+        const users = await prisma.users.findMany();
+        const result = NextResponse.json({ users });
+        return result;
+      } catch (error) {
+        return NextResponse.json({ error });
+      }
     }
 
     try {
