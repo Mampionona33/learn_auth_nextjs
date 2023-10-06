@@ -1,10 +1,8 @@
 "use client"
 
 import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
 import ResponsableDashboard from "../components/ResponsableDashboard";
 import AdminDashboard from "../components/AdminDashboard";
-import { RootState } from "../store/store";
 import { getUserLogged } from "../store/userLogged/userLoggedActions";
 import { useSession } from "next-auth/react";
 import useGetUserData from "../hook/useGetUserData";
@@ -13,7 +11,6 @@ import { useAppDispatch, useAppSelector } from "../hook/store";
 
 const Dashboard: React.FC = () => {
   const { data: session } = useSession();
-  // const userLogged = useSelector((state: RootState) => state.userLogged); // comment remplacer par useAppSelector
   const userLogged = useAppSelector((state) => state.userLogged);
   const dispatch = useAppDispatch();
 
