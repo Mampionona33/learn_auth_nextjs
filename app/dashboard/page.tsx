@@ -11,6 +11,8 @@ const Dashboard = () => {
     error: errorLoadingUserData,
     loading: loadingUserData,
   } = useGetUserData();
+
+  
   const {
     userGroupe,
     loading: loadingUserloggedGroupe,
@@ -26,7 +28,6 @@ const Dashboard = () => {
   }
   
   
-  console.log(userGroupe);
 
   return (
     <>
@@ -37,7 +38,7 @@ const Dashboard = () => {
           ) : userGroupe && userGroupe.groupe.name === "admin" ? (
             <AdminDashboard />
           ) : null}
-          {/* <pre>{userGroupe ? JSON.stringify(userGroupe, "", 2) : ""}</pre> */}
+          <pre>{userGroupe ? JSON.stringify(userGroupe, null, 2) : ""}</pre>
           {loadingUserData || loadingUserloggedGroupe ? <p>Loading ...</p> : ""}
         </div>
       ) : (

@@ -1,12 +1,10 @@
 import { useState, useEffect } from "react";
-import { useSession } from "next-auth/react";
-import { useAppContext } from "../context/AppContext";
+import { ActionTypes, useAppContext } from "../context/AppContext";
 
 const useGetUserLoggedGroupe = () => {
-  const [userGroupe, setUserGroupe] = useState(null);
+  const [userGroupe, setUserGroupe] = useState<IGroupe | null>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<unknown|null>(null);
-  // const { data: session, status } = useSession();
+  const [error, setError] = useState<unknown | null>(null);
   const { dispatch, appState } = useAppContext();
 
   useEffect(() => {
@@ -21,9 +19,16 @@ const useGetUserLoggedGroupe = () => {
           if (mount) {
             setUserGroupe(data);
             setLoading(false);
+            if (!appState.userGroupe) {
+              dispatch({
+                type: ActionTypes.SET_USER_GROUPE,
+                payload: data.groupe,
+              });
+            }
           }
         } else {
           if (mount) {
+            setUserGroupe(appState.userGroupe);
             setLoading(false);
           }
         }

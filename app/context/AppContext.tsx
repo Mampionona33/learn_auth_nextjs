@@ -1,29 +1,46 @@
-import { createContext, useContext, useReducer, useMemo, ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useReducer,
+  useMemo,
+  ReactNode,
+} from "react";
 import { IUser } from "./interfaceUser";
+import { IGroupe } from "./interfaceGroupe";
 
 // Définissez un type générique pour createContext
-const AppContext = createContext<{
-  appState: AppState;
-  dispatch: React.Dispatch<any>;
-} | undefined>(undefined);
+const AppContext = createContext<
+  | {
+      appState: AppState;
+      dispatch: React.Dispatch<any>;
+    }
+  | undefined
+>(undefined);
 
 type AppState = {
   user: IUser | null;
+  userGroupe: IGroupe | null;
 };
 
 const initialState = {
-  user: null
+  user: null,
 };
 
 export const ActionTypes = {
   SET_USER: "SET_USER",
+  SET_USER_GROUPE: "SET_USER_GROUPE",
 };
 
-const appReducer = (state: AppState, action: { type: string; payload: any }) => {
+const appReducer = (
+  state: AppState,
+  action: { type: string; payload: any }
+) => {
   const { type, payload } = action;
   switch (type) {
     case ActionTypes.SET_USER:
       return { ...state, user: payload };
+    case ActionTypes.SET_USER_GROUPE:
+      return {...state, userGroupe:payload}
     default:
       return state;
   }
