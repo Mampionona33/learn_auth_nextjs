@@ -1,6 +1,5 @@
 "use client";
 
-import Card from "../components/Card";
 import ResponsableDashboard from "../components/ResponsableDashboard";
 import AdminDashboard from "../components/AdminDashboard";
 import useGetUserLoggedGroupe from "../hook/useGetUserLoggedGroupe";
@@ -23,27 +22,30 @@ const Dashboard = () => {
   }
 
   if (errorOnGetUserGroupe) {
-    return <p>${errorOnGetUserGroupe}</p>;
+    return <p>{String(errorOnGetUserGroupe)}</p>;
   }
-
+  
+  
   console.log(userGroupe);
 
   return (
     <>
       {userData ? (
         <div className="col-md-9 ml-sm-auto col-lg-10 p-4">
-          {/* <Card /> */}
           {userGroupe && userGroupe.groupe.name === "responsable" ? (
             <ResponsableDashboard />
-          ) : userGroupe.groupe.name ==="admin" ? (<AdminDashboard/>): null}
+          ) : userGroupe && userGroupe.groupe.name === "admin" ? (
+            <AdminDashboard />
+          ) : null}
           {/* <pre>{userGroupe ? JSON.stringify(userGroupe, "", 2) : ""}</pre> */}
           {loadingUserData || loadingUserloggedGroupe ? <p>Loading ...</p> : ""}
         </div>
       ) : (
-        ""
+        null
       )}
     </>
   );
+  
 };
 
 export default Dashboard;
