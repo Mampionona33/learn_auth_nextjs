@@ -29,14 +29,15 @@ const Users = () => {
 
   return (
     <div className="col-md-9 ml-sm-auto col-lg-10 p-4">
-      {userGroupe && userGroupe?.groupe.name === "admin" ? (
+      {isLoading || loadingUserGroupe ? (
+        <p>Loading...</p>
+      ) : userGroupe && userGroupe?.groupe.name === "admin" ? (
         <p>PAGE user liste</p>
       ) : (
         <div className="d-flex">
           <h1>Vous n'êtes pas autorisé à accéder à cette page !</h1>
         </div>
       )}
-      {(isLoading || loadingUserGroupe) && <p>Loading...</p>}
     </div>
   );
 };
