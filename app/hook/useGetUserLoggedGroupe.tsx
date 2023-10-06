@@ -28,6 +28,7 @@ const useGetUserLoggedGroupe = () => {
           }
         } else {
           if (mount) {
+            console.log(appState.userGroupe);
             setUserGroupe(appState.userGroupe);
             setLoading(false);
           }
@@ -46,6 +47,7 @@ const useGetUserLoggedGroupe = () => {
       mount = false;
     };
   }, [appState, dispatch]);
+  console.log("userGroupe", userGroupe);
 
   return { userGroupe, loading, error };
 };

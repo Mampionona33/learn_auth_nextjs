@@ -25,7 +25,7 @@ const Users = () => {
   if (errorOnLoadingUserGroupe)
     return <h1>String(errorOnLoadingUserGroupe)</h1>;
 
-  console.log(userGroupe);
+  // console.log(userGroupe);
 
   return (
     <div className="col-md-9 ml-sm-auto col-lg-10 p-4">
