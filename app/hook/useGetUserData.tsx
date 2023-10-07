@@ -15,30 +15,30 @@ const useGetUserData = () => {
     const fetchData = async () => {
       try {
 
-        if (session?.user?.id) {
-          if (!appState.user) {
-            const res = await fetch(`/api/users/${session.user.id}`);
-            if (!res.ok) {
-              throw new Error("Failed to fetch user data");
-            }
-            const data = await res.json();
+        if(!appState.user){
 
-            if (mount) {
-              setUserData(data);
-              setLoading(false);
-              if (!appState.user) {
-                dispatch({ type: ActionTypes.SET_USER, payload: data.user });
+          if (session?.user?.id) {
+            if (!appState.user) {
+              const res = await fetch(`/api/users/${session.user.id}`);
+              if (!res.ok) {
+                throw new Error("Failed to fetch user data");
               }
-            }
-          } else {
-            if (mount) {
-              setUserData(appState.user);
-              setLoading(false);
-            }
+              const data = await res.json();
+  
+              if (mount) {
+                setUserData(data);
+                setLoading(false);
+                if (!appState.user) {
+                  dispatch({ type: ActionTypes.SET_USER, payload: data.user });
+                }
+              }
+            } 
+            
           }
-
+          
         } else {
           if (mount) {
+            setUserData(appState.user);
             setLoading(false);
           }
         }

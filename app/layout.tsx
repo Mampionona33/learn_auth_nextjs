@@ -7,7 +7,8 @@ import { useEffect } from "react";
 import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
 import { AppContextProvider } from "./context/AppContext";
-// import { useState } from "react";
+import { Provider } from "react-redux";
+import { store } from "./store/store";
 
 const inter = Poppins({
   weight: ["300", "500", "600", "700"],
@@ -29,6 +30,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <main>
           <AuthProvider>
+            <Provider store={store}>
             <AppContextProvider>
             <div className="d-flex flex-col min-h-screen h-screen">
               <Navbar />
@@ -42,6 +44,7 @@ export default function RootLayout({
               </div>
             </div>
             </AppContextProvider>
+            </Provider>
           </AuthProvider>
         </main>
       </body>
