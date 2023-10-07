@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useAppContext } from "../context/AppContext";
 
-
 const Sidebar = () => {
   const { data: session, status } = useSession();
   const [isLoading, setLoading] = useState(true);
@@ -32,7 +31,7 @@ const Sidebar = () => {
               <ul className="nav flex-column text-capitalize">
                 <li className="nav-item pl-1 hover:bg-slate-600">
                   <Link
-                    className=" text-decoration-none  text-white d-block hover:text-white-important py-2.5"
+                    className=" text-decoration-none  text-dark d-block hover:text-white-important py-2.5"
                     href="/dashboard"
                   >
                     dashboard
@@ -40,7 +39,7 @@ const Sidebar = () => {
                 </li>
                 <li className="nav-item pl-1 hover:bg-slate-600">
                   <Link
-                    className="text-decoration-none  text-white d-block hover:text-white-important py-2.5	"
+                    className="text-decoration-none  text-dark d-block hover:text-white-important py-2.5	"
                     href="/users"
                   >
                     utilisateur
