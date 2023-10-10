@@ -3,11 +3,14 @@ import React, { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import useGetUserLoggedGroupe from "@hook/useGetUserLoggedGroupe";
 import { useAppContext } from "@context/AppContext";
+import { useAppDispatch, useAppSelector } from "../hook/store";
 
 const Users = () => {
   const { appState } = useAppContext();
   const [isLoading, setLoading] = useState(true);
   const { data: session, status } = useSession();
+  const userLogged = useAppSelector((state)=>state.userLogged)
+
   const {
     userGroupe,
     loading: loadingUserGroupe,
@@ -26,6 +29,10 @@ const Users = () => {
       mount = false;
     };
   }, [session]);
+  if(userLogged){
+    console.log("from user page",userLogged);
+    
+  }
 
   if (errorOnLoadingUserGroupe)
     return <h1>String(errorOnLoadingUserGroupe)</h1>;
