@@ -17,8 +17,12 @@ const inter = Poppins({
 
 export default function RootLayout({
   children,
+  showSidebar = true,
+  showNavbar = true,
 }: {
   children: React.ReactNode;
+  showSidebar?: boolean;
+  showNavbar?: boolean;
 }) {
   // const [isLoginPage, setLoginPage] = useState(false);
   useEffect(() => {
@@ -31,19 +35,21 @@ export default function RootLayout({
         <main>
           <AuthProvider>
             <Provider store={store}>
-            <AppContextProvider>
-            <div className="d-flex flex-col min-h-screen h-screen">
-              <Navbar />
-              <div className="container-fluid">
-                <div className="row h-full">
-                  <div className="col-md-2 d-none d-md-block p-0">
-                    <Sidebar />
+              <AppContextProvider>
+                <div className="d-flex flex-col min-h-screen h-screen">
+                  {showNavbar && <Navbar />}
+                  <div className="container-fluid">
+                    <div className="row h-full">
+                      {showSidebar && (
+                        <div className="col-md-2 d-none d-md-block p-0">
+                          <Sidebar />
+                        </div>
+                      )}
+                      {children}
+                    </div>
                   </div>
-                  {children}
                 </div>
-              </div>
-            </div>
-            </AppContextProvider>
+              </AppContextProvider>
             </Provider>
           </AuthProvider>
         </main>

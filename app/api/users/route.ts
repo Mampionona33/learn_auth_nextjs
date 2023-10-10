@@ -1,6 +1,7 @@
 import { NextResponse } from "@/node_modules/next/server";
 import prisma from "@/lib/prisma/prisma";
 import { NextRequestWithAuth } from "next-auth/middleware";
+import { getSession } from "next-auth/react";
 
 // export async function GET() {
 //   try {
@@ -26,8 +27,9 @@ import { NextRequestWithAuth } from "next-auth/middleware";
 
 export async function GET(req: NextRequestWithAuth) {
   if (req.method === "GET") {
+    const session = await getSession()
     const { email } = req.nextUrl.searchParams;
-    console.log(email);
+    console.log("getUser request in api", session);
 
     if (!email || typeof email !== "string") {
       try {
