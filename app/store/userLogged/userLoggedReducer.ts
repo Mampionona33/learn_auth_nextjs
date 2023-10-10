@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { getUserLogged, getUserLoggedGroupe } from "./userLoggedActions";
+import { getUserLogged, getUserLoggedGroupe, resetUserLogged } from "./userLoggedActions";
 
 const initialState = {
   generalInfo: null,
@@ -29,6 +29,9 @@ const userLoggedSlice = createSlice({
       builder.addCase(getUserLoggedGroupe.fulfilled,(state,{payload})=>{
         state.groupe = payload.groupe;
         state.error= null
+      })
+      builder.addCase(resetUserLogged,()=>{
+        return initialState
       })
   },
 });

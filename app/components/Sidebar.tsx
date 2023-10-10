@@ -26,7 +26,7 @@ const Sidebar = () => {
 
   return (
     <>
-      {userLogged.generalInfo && !isLoading  ? (
+      {userLogged.generalInfo ? (
         <div className="d-flex flex-col bg-zinc-300 flex-md-nowrap p-0 shadow h-[40rem]">
           <div className="sidebar  block">
             <div className="sidebar-sticky">

@@ -1,4 +1,4 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
 
 export const getUserLogged = createAsyncThunk(
   "userLogged/fetch",
@@ -18,3 +18,5 @@ export const getUserLoggedGroupe = createAsyncThunk(
     return data;
   }
 )
+
+export const resetUserLogged  = createAction('RESET_USER_DATA');

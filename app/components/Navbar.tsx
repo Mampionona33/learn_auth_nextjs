@@ -1,13 +1,17 @@
 import { signIn, signOut, useSession } from "next-auth/react";
 import { ActionTypes, useAppContext } from "../context/AppContext";
 import { useEffect, useState } from "react";
+import { useAppDispatch } from "../hook/store";
+import { resetUserLogged } from "../store/userLogged/userLoggedActions";
 
 const Navbar = () => {
   const { data: session, status } = useSession();
   const [isLoading, setLoading] = useState(true);
   const { appState } = useAppContext();
+  const dispatch = useAppDispatch();
 
   const handleLogout = () => {
+    dispatch(resetUserLogged());
     signOut();
   };
 
