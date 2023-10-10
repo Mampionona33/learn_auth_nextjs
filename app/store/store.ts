@@ -1,18 +1,30 @@
 import { combineReducers } from "redux";
 import userLoggedReducer from "./userLogged/userLoggedReducer";
 import { configureStore } from "@reduxjs/toolkit";
-import thunk from "redux-thunk";
-import { useDispatch } from "react-redux";
+import { persistStore, persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
+
+const persistConfig = {
+  key: "root",
+  storage,
+};
 
 const rootReducer = combineReducers({
-  userLogged: userLoggedReducer, 
+  userLogged: userLoggedReducer,
 });
 
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-export const store = configureStore({
-    reducer:rootReducer,
-    middleware:[thunk]
-})
+const configStore = configureStore({
+  reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false, // Désactive la vérification de sérialisation obsolète
+    }),
+});
+
+export const store = configStore;
+export const persistor = persistStore(configStore);
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

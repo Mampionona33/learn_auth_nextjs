@@ -29,10 +29,10 @@ const Users = () => {
       mount = false;
     };
   }, [session]);
-  if(userLogged){
-    console.log("from user page",userLogged);
-    
-  }
+
+  // if(userLogged){
+  //   console.log("from user page",userLogged);
+  // }
 
   if (errorOnLoadingUserGroupe)
     return <h1>String(errorOnLoadingUserGroupe)</h1>;
@@ -41,7 +41,7 @@ const Users = () => {
     <div className="col-md-9 ml-sm-auto col-lg-10 p-4">
       {isLoading || loadingUserGroupe ? (
         <p>Loading...</p>
-      ) : userGroupe && userGroupe?.name === "admin" ? (
+      ) : userLogged.groupe && userLogged.groupe!.name === "admin" ? (
         <p>PAGE user liste</p>
       ) : (
         <div className="d-flex">

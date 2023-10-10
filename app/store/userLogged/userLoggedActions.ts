@@ -8,3 +8,13 @@ export const getUserLogged = createAsyncThunk(
     return data;
   }
 );
+
+export const getUserLoggedGroupe = createAsyncThunk(
+  "userLogged/getGroupe",
+  async (idgroupe:string) => {
+    const res = await fetch(`/api/groupe/${idgroupe}`);
+    const data = await res.json();
+    // console.log(data)
+    return data;
+  }
+)

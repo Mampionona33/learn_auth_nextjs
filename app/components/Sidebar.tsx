@@ -3,28 +3,30 @@ import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useAppContext } from "../context/AppContext";
+import { useAppSelector } from "../hook/store";
 
 const Sidebar = () => {
   const { data: session, status } = useSession();
   const [isLoading, setLoading] = useState(true);
   const { appState } = useAppContext();
+  const userLogged =  useAppSelector((state)=>state.userLogged);
 
   useEffect(() => {
     let mount = true;
-    // console.log("appState", appState);
 
-    if (appState && appState.user) {
+    if (userLogged.generalInfo) {
       setLoading(false);
     }
 
     return () => {
       mount = false;
     };
-  }, [appState]);
+  }, [userLogged.generalInfo]);
+
 
   return (
     <>
-      {session && !isLoading ? (
+      {userLogged.generalInfo && !isLoading  ? (
         <div className="d-flex flex-col bg-zinc-300 flex-md-nowrap p-0 shadow h-[40rem]">
           <div className="sidebar  block">
             <div className="sidebar-sticky">

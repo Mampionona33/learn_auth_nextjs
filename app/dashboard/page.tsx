@@ -1,9 +1,12 @@
-"use client"
+"use client";
 
 import React, { useEffect } from "react";
 import ResponsableDashboard from "../components/ResponsableDashboard";
 import AdminDashboard from "../components/AdminDashboard";
-import { getUserLogged } from "../store/userLogged/userLoggedActions";
+import {
+  getUserLogged,
+  getUserLoggedGroupe,
+} from "../store/userLogged/userLoggedActions";
 import { useSession } from "next-auth/react";
 import useGetUserData from "../hook/useGetUserData";
 import useGetUserLoggedGroupe from "../hook/useGetUserLoggedGroupe";
@@ -19,8 +22,13 @@ const Dashboard: React.FC = () => {
       if (session && session.user) {
         try {
           await dispatch(getUserLogged(session.user.id));
+
+          // await dispatch(getUserLoggedGroupe(session.user?.groupe))
         } catch (error) {
-          console.error("Erreur lors de la récupération des données utilisateur:", error);
+          console.error(
+            "Erreur lors de la récupération des données utilisateur:",
+            error
+          );
         }
       }
     };
@@ -28,7 +36,31 @@ const Dashboard: React.FC = () => {
     fetchData();
   }, [dispatch, session]);
 
-  
+
+useEffect(() => {
+  let mount = true;
+
+  const initializeUserGroupe = async () => {
+    try {
+      await dispatch(getUserLoggedGroupe(userLogged.generalInfo.groupe));
+    } catch (error) {
+      console.log(
+        "Erreur lors de la récupération du groupe de l'utilisateur:",
+        error
+      );
+    }
+  };
+
+  if (mount && userLogged && userLogged?.generalInfo?.groupe && !userLogged.groupe) {
+    initializeUserGroupe();
+  }
+
+  return () => {
+    mount = false;
+  };
+}, [userLogged]);
+
+
 
   const {
     userData,
@@ -62,7 +94,9 @@ const Dashboard: React.FC = () => {
             <AdminDashboard />
           ) : null}
           <pre>{userGroupe ? JSON.stringify(userGroupe, null, 2) : ""}</pre>
-          {loadingUserData || loadingUserloggedGroupe ? <p>Loading ...</p> : null}
+          {loadingUserData || loadingUserloggedGroupe ? (
+            <p>Loading ...</p>
+          ) : null}
         </div>
       ) : null}
     </>
