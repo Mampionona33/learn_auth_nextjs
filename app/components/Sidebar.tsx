@@ -31,7 +31,7 @@ const Sidebar = () => {
           <div className="sidebar  block">
             <div className="sidebar-sticky">
               <ul className="nav flex-column text-capitalize">
-                <li className="nav-item pl-1 hover:bg-slate-600">
+                <li className="nav-item bg-sky-100 shadow-sm pl-1 hover:bg-slate-600">
                   <Link
                     className=" text-decoration-none  text-dark d-block hover:text-white-important py-2.5"
                     href="/dashboard"
@@ -39,7 +39,7 @@ const Sidebar = () => {
                     dashboard
                   </Link>
                 </li>
-                <li className="nav-item pl-1 hover:bg-slate-600">
+                <li className="nav-item bg-sky-100 shadow-sm pl-1 hover:bg-slate-600">
                   <Link
                     className="text-decoration-none  text-dark d-block hover:text-white-important py-2.5	"
                     href="/users"

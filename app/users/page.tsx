@@ -30,9 +30,6 @@ const Users = () => {
     };
   }, [session]);
 
-  // if(userLogged){
-  //   console.log("from user page",userLogged);
-  // }
 
   if (errorOnLoadingUserGroupe)
     return <h1>String(errorOnLoadingUserGroupe)</h1>;
