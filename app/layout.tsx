@@ -38,14 +38,17 @@ export default function RootLayout({
               <AppContextProvider>
                 <div className="d-flex flex-col min-h-screen h-screen">
                   {showNavbar && <Navbar />}
-                  <div className="container-fluid">
-                    <div className="row h-full">
+                  <div className="container-fluid p-0">
+                    <div className="flex h-full">
                       {showSidebar && (
                         <div className="col-md-2 d-none d-md-block p-0">
                           <Sidebar />
                         </div>
                       )}
+                      <div className="flex p-3.5">
+
                       {children}
+                      </div>
                     </div>
                   </div>
                 </div>
