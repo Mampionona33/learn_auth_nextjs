@@ -46,7 +46,7 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="flex h-screen items-center justify-center">
+    <div className="flex h-screen items-center justify-center w-screen">
       <div className="shadow p-3 rounded">
         <form
           className="flex items-center flex-col gap-1"

@@ -6,6 +6,8 @@ import LoginForm from "../../../components/LoginForm";
 function SignIn() {
   const { data: session } = useSession();
 
+
+
   if (session) {
     redirect("/");
     return null;
