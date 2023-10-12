@@ -11,12 +11,37 @@ const Users = () => {
   const [isLoading, setLoading] = useState(true);
   const { data: session, status } = useSession();
   const userLogged = useAppSelector((state) => state.userLogged);
+  const userList = useAppSelector((state) => state.userList);
+  const dispatch = useAppDispatch();
 
   const {
     userGroupe,
     loading: loadingUserGroupe,
     error: errorOnLoadingUserGroupe,
   } = useGetUserLoggedGroupe();
+
+  useEffect(() => {
+    let mount = true;
+
+    const fetchUserList = async () => {
+      try {
+        await dispatch(fetchUserList());
+      } catch (error) {
+        console.error(
+          "Erreur lors de la récupération des données utilisateur:",
+          error
+        );
+      }
+    };
+
+    if (!userList) {
+      fetchUserList();
+    }
+
+    return () => {
+      mount = false;
+    };
+  }, [userList]);
 
   useEffect(() => {
     let mount = true;
@@ -29,7 +54,6 @@ const Users = () => {
       mount = false;
     };
   }, [session]);
-
 
   if (errorOnLoadingUserGroupe)
     return <h1>String(errorOnLoadingUserGroupe)</h1>;
