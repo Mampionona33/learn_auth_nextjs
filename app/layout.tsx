@@ -9,7 +9,7 @@ import Sidebar from "./components/Sidebar";
 import { AppContextProvider } from "./context/AppContext";
 import { Provider } from "react-redux";
 import { store } from "./store/store";
-import { usePathname } from 'next/navigation'
+import { usePathname } from "next/navigation";
 
 const inter = Poppins({
   weight: ["300", "500", "600", "700"],
@@ -18,15 +18,13 @@ const inter = Poppins({
 
 export default function RootLayout({
   children,
- 
 }: {
   children: React.ReactNode;
- 
 }) {
   const pathname = usePathname();
 
-  const showNavbar =  pathname === "/api/auth/signin" ?  false : true ;
-  const showSidebar =  pathname === "/api/auth/signin" ?  false : true ;
+  const showNavbar = pathname === "/api/auth/signin" ? false : true;
+  const showSidebar = pathname === "/api/auth/signin" ? false : true;
 
   useEffect(() => {
     import("bootstrap/dist/js/bootstrap");
@@ -48,7 +46,7 @@ export default function RootLayout({
                           <Sidebar />
                         </div>
                       )}
-                      <div className="flex p-3.5">
+                      <div className="flex p-3.5 w-full justify-between">
                         {children}
                       </div>
                     </div>
