@@ -18,49 +18,56 @@ const Dashboard: React.FC = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
+    let mount = true;
     const fetchData = async () => {
       if (session && session.user) {
         try {
-          await dispatch(getUserLogged(session.user.id));
-
-          // await dispatch(getUserLoggedGroupe(session.user?.groupe))
+          if (!userLogged) {
+            await dispatch(getUserLogged(session.user.id));
+          }
         } catch (error) {
           console.error(
             "Erreur lors de la récupération des données utilisateur:",
-            error
+            error,
           );
         }
       }
     };
-
-    fetchData();
+    if (mount) {
+      fetchData();
+    }
+    return () => {
+      mount = false;
+    };
   }, [dispatch, session]);
 
+  useEffect(() => {
+    let mount = true;
 
-useEffect(() => {
-  let mount = true;
+    const initializeUserGroupe = async () => {
+      try {
+        await dispatch(getUserLoggedGroupe(userLogged.generalInfo.groupe));
+      } catch (error) {
+        console.log(
+          "Erreur lors de la récupération du groupe de l'utilisateur:",
+          error,
+        );
+      }
+    };
 
-  const initializeUserGroupe = async () => {
-    try {
-      await dispatch(getUserLoggedGroupe(userLogged.generalInfo.groupe));
-    } catch (error) {
-      console.log(
-        "Erreur lors de la récupération du groupe de l'utilisateur:",
-        error
-      );
+    if (
+      mount &&
+      userLogged &&
+      userLogged?.generalInfo?.groupe &&
+      !userLogged.groupe
+    ) {
+      initializeUserGroupe();
     }
-  };
 
-  if (mount && userLogged && userLogged?.generalInfo?.groupe && !userLogged.groupe) {
-    initializeUserGroupe();
-  }
-
-  return () => {
-    mount = false;
-  };
-}, [userLogged]);
-
-
+    return () => {
+      mount = false;
+    };
+  }, [userLogged]);
 
   const {
     userData,
@@ -86,7 +93,7 @@ useEffect(() => {
 
   return (
     <>
-      {userData ? (
+      {userLogged ? (
         <div className="col-md-9 ml-sm-auto col-lg-10 p-4">
           {userGroupe && userGroupe.name === "responsable" ? (
             <ResponsableDashboard />
