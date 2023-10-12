@@ -15,7 +15,7 @@ const Users = () => {
   const userList = useAppSelector((state) => state.userList);
   const dispatch = useAppDispatch();
 
-  const users = [userList!.liste!.users].flat();
+  const users = userList!.liste!.users && [userList!.liste!.users].flat();
 
   const {
     userGroupe,
