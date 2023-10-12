@@ -23,7 +23,6 @@ const Sidebar = () => {
     };
   }, [userLogged.generalInfo]);
 
-
   return (
     <>
       {userLogged.generalInfo && !isLoading ? (

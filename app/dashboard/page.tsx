@@ -22,7 +22,7 @@ const Dashboard: React.FC = () => {
     const fetchData = async () => {
       if (session && session.user) {
         try {
-          if (!userLogged) {
+          if (!userLogged.generalInfo) {
             await dispatch(getUserLogged(session.user.id));
           }
         } catch (error) {
