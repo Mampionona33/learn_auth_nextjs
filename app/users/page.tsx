@@ -34,7 +34,7 @@ const Users = () => {
       }
     };
 
-    if (!userList) {
+    if (!userList.liste) {
       fetchUserList();
     }
 
