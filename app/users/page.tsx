@@ -5,6 +5,7 @@ import useGetUserLoggedGroupe from "@hook/useGetUserLoggedGroupe";
 import { useAppContext } from "@context/AppContext";
 import { useAppDispatch, useAppSelector } from "../hook/store";
 import { redirect } from "next/navigation";
+import { fetchUsers } from "../store/users/userActions";
 
 const Users = () => {
   const { appState } = useAppContext();
@@ -13,6 +14,8 @@ const Users = () => {
   const userLogged = useAppSelector((state) => state.userLogged);
   const userList = useAppSelector((state) => state.userList);
   const dispatch = useAppDispatch();
+
+  const users = [userList!.liste!.users].flat();
 
   const {
     userGroupe,
@@ -25,7 +28,7 @@ const Users = () => {
 
     const fetchUserList = async () => {
       try {
-        await dispatch(fetchUserList());
+        await dispatch(fetchUsers());
       } catch (error) {
         console.error(
           "Erreur lors de la récupération des données utilisateur:",
@@ -55,6 +58,34 @@ const Users = () => {
     };
   }, [session]);
 
+  // users.map((el) => console.log(el));
+
+  const Table = () => {
+    return (
+      <table>
+        <thead>
+          <tr>
+            <th>Nom</th>
+            <th>Prénoms</th>
+          </tr>
+        </thead>
+        <tbody>
+          {users && users.length > 0
+            ? users.map((el, index) => {
+              console.log(el)
+                return (
+                  <tr key={index}>
+                    <td>{el.name.firstname}</td>
+                    <td>{el.name.lastname}</td>
+                  </tr>
+                );
+              })
+            : null}
+        </tbody>
+      </table>
+    );
+  };
+
   if (errorOnLoadingUserGroupe)
     return <h1>String(errorOnLoadingUserGroupe)</h1>;
 
@@ -68,7 +99,10 @@ const Users = () => {
       {isLoading || loadingUserGroupe ? (
         <p>Loading...</p>
       ) : userLogged.groupe && userLogged.groupe!.name === "admin" ? (
-        <p>PAGE user liste</p>
+        <>
+          <p>PAGE user liste</p>
+          <Table />
+        </>
       ) : (
         <div className="d-flex">
           <h1>Vous n'êtes pas autorisé à accéder à cette page !</h1>
