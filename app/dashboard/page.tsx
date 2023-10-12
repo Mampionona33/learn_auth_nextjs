@@ -89,7 +89,7 @@ const Dashboard: React.FC = () => {
     return <p>{String(errorOnGetUserGroupe)}</p>;
   }
 
-  console.log("userLogged in dashboard", userLogged);
+  // console.log("userLogged in dashboard", userLogged);
 
   return (
     <>
