@@ -13,7 +13,7 @@ const Card: React.FC<ICard> = (props) => {
     <div className="rounded shadow p-4 flex h-min">
       <Link href={props.link} className="flex  text-decoration-none text-dark">
         <div className="card-body d-flex flex-column">
-          <div className="flex justify-start">
+          <div className="flex justify-between">
             <h5 className="card-title">{props.title}</h5>
             <span className="material-icons-outlined">{props.icon}</span>
           </div>
