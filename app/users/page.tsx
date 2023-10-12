@@ -15,7 +15,7 @@ const Users = () => {
   const userList = useAppSelector((state) => state.userList);
   const dispatch = useAppDispatch();
 
-  const users = userList!.liste!.users && [userList!.liste!.users].flat();
+  const users = [userList?.liste?.users].flat();
 
   const {
     userGroupe,
@@ -32,7 +32,7 @@ const Users = () => {
       } catch (error) {
         console.error(
           "Erreur lors de la récupération des données utilisateur:",
-          error
+          error,
         );
       }
     };
@@ -72,7 +72,7 @@ const Users = () => {
         <tbody>
           {users && users.length > 0
             ? users.map((el, index) => {
-              console.log(el)
+                console.log(el);
                 return (
                   <tr key={index}>
                     <td>{el.name.firstname}</td>
