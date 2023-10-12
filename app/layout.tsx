@@ -46,9 +46,7 @@ export default function RootLayout({
                           <Sidebar />
                         </div>
                       )}
-                      <div className="flex p-3.5 w-full justify-between">
-                        {children}
-                      </div>
+                      <div className="flex p-3.5 w-full">{children}</div>
                     </div>
                   </div>
                 </div>

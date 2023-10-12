@@ -10,10 +10,10 @@ interface ICard {
 
 const Card: React.FC<ICard> = (props) => {
   return (
-    <div className="shadow d-flex p-3 rounded h-100">
-      <Link href={props.link} className="text-decoration-none text-dark">
+    <div className="rounded shadow p-4 flex h-min">
+      <Link href={props.link} className="flex  text-decoration-none text-dark">
         <div className="card-body d-flex flex-column">
-          <div className="d-flex justify-content-between">
+          <div className="flex justify-start">
             <h5 className="card-title">{props.title}</h5>
             <span className="material-icons-outlined">{props.icon}</span>
           </div>

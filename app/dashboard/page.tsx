@@ -94,7 +94,7 @@ const Dashboard: React.FC = () => {
   return (
     <>
       {userLogged ? (
-        <div className="flex justify-between w-100">
+        <div className="flex justify-start w-100 gap-4">
           {userGroupe && userGroupe.name === "responsable" ? (
             <ResponsableDashboard />
           ) : userGroupe && userGroupe.name === "admin" ? (
