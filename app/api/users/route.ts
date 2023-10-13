@@ -27,13 +27,24 @@ import { getSession } from "next-auth/react";
 
 export async function GET(req: NextRequestWithAuth) {
   if (req.method === "GET") {
-    const session = await getSession()
-    const { email } = req.nextUrl.searchParams;
+    const session = await getSession();
+    // const { email, page, limit } = req.nextUrl.searchParams;
+    const searchParams = req.nextUrl.searchParams;
+    const email = searchParams.get("email");
+    const page = parseInt(searchParams.get("page") || "1", 10);
+    const limit = parseInt(searchParams.get("limit") || "5", 10);
     console.log("getUser request in api", session);
+
+    console.log("page:", page);
+    console.log("limit:", limit);
 
     if (!email || typeof email !== "string") {
       try {
-        const users = await prisma.users.findMany();
+        const offset = (page - 1) * limit;
+        const users = await prisma.users.findMany({
+          skip: offset,
+          take: limit,
+        });
         const result = NextResponse.json({ users });
         return result;
       } catch (error) {
