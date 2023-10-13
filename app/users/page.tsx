@@ -156,7 +156,7 @@ const Users = () => {
         <p>Loading...</p>
       ) : userLogged.groupe && userLogged.groupe!.name === "admin" ? (
         <>
-          <p>PAGE user liste</p>
+          <h3>User list</h3>
           <UserTable />
         </>
       ) : (
