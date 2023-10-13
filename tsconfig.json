@@ -22,7 +22,7 @@
       "@/*": ["./*"],
       "@lib/*": ["./lib/*"],
       "@api/*": ["./app/api/*"],
-      "@components/*": ["./app/components"],
+      "@components/*": ["./app/components/*"],
       "@hook/*": ["./app/hook/*"],
       "@context/*": ["./app/context/*"]
     }

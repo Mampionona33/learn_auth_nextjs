@@ -15,6 +15,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import Link from "next/link";
+import DataTable from "@components/DataTable";
 
 const Users = () => {
   const { appState } = useAppContext();
@@ -155,7 +156,8 @@ const Users = () => {
       ) : userLogged.groupe && userLogged.groupe!.name === "admin" ? (
         <>
           <h3>User list</h3>
-          <UserTable />
+          {/* <UserTable /> */}
+          <DataTable data={users} columns={columns} />
         </>
       ) : (
         <div className="d-flex">
