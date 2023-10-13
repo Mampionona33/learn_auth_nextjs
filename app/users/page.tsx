@@ -71,13 +71,11 @@ const Users = () => {
 
     const fetchUserList = async () => {
       try {
-        if (!userList.liste) {
-          await dispatch(fetchUsers());
-        }
+        await dispatch(fetchUsers());
       } catch (error) {
         console.error(
           "Erreur lors de la récupération des données utilisateur:",
-          error
+          error,
         );
       }
     };
@@ -121,7 +119,7 @@ const Users = () => {
                       ? null
                       : flexRender(
                           header.column.columnDef.header,
-                          header.getContext()
+                          header.getContext(),
                         )}
                   </th>
                 ))}
