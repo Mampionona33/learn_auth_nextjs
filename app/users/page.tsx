@@ -6,6 +6,15 @@ import { useAppContext } from "@context/AppContext";
 import { useAppDispatch, useAppSelector } from "../hook/store";
 import { redirect } from "next/navigation";
 import { fetchUsers } from "../store/users/userActions";
+import CustomTable from "../components/TableUsers";
+import { IUser } from "../context/interfaceUser";
+import {
+  createColumnHelper,
+  flexRender,
+  getCoreRowModel,
+  useReactTable,
+} from "@tanstack/react-table";
+import Link from "next/link";
 
 const Users = () => {
   const { appState } = useAppContext();
@@ -14,8 +23,42 @@ const Users = () => {
   const userLogged = useAppSelector((state) => state.userLogged);
   const userList = useAppSelector((state) => state.userList);
   const dispatch = useAppDispatch();
+  const [data, setData] = useState<IUser[]>([]);
 
-  const users = [userList?.liste?.users].flat();
+  const users: IUser[] = [userList?.liste?.users].flat();
+
+  const columnHelper = createColumnHelper<IUser>();
+  const columns = [
+    columnHelper.accessor("name.firstname", {
+      cell: (info) => info.getValue(),
+      header: () => "fistname",
+    }),
+    columnHelper.accessor("name.lastname", {
+      cell: (info) => info.getValue(),
+      header: () => "last name",
+    }),
+    columnHelper.accessor("email", {
+      cell: (info) => info.getValue(),
+      header: () => "email",
+    }),
+    columnHelper.accessor("id", {
+      header: () => "action",
+      cell: (info) => (
+        <Link
+          className="btn btn-primary capitalize "
+          href={`/users/${info.getValue()}`}
+        >
+          edit
+        </Link>
+      ),
+    }),
+  ];
+
+  const table = useReactTable({
+    data: users,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+  });
 
   const {
     userGroupe,
@@ -28,23 +71,25 @@ const Users = () => {
 
     const fetchUserList = async () => {
       try {
-        await dispatch(fetchUsers());
+        if (!userList.liste) {
+          await dispatch(fetchUsers());
+        }
       } catch (error) {
         console.error(
           "Erreur lors de la récupération des données utilisateur:",
-          error,
+          error
         );
       }
     };
 
-    if (!userList.liste) {
+    if (mount) {
       fetchUserList();
     }
 
     return () => {
       mount = false;
     };
-  }, [userList]);
+  }, [userList, dispatch]);
 
   useEffect(() => {
     let mount = true;
@@ -60,29 +105,42 @@ const Users = () => {
 
   // users.map((el) => console.log(el));
 
-  const Table = () => {
+  const UserTable = () => {
+    const headerGroups = table.getHeaderGroups();
+    const rows = table.getRowModel().rows;
+
     return (
-      <table>
-        <thead>
-          <tr>
-            <th>Nom</th>
-            <th>Prénoms</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users && users.length > 0
-            ? users.map((el, index) => {
-                console.log(el);
-                return (
-                  <tr key={index}>
-                    <td>{el.name.firstname}</td>
-                    <td>{el.name.lastname}</td>
-                  </tr>
-                );
-              })
-            : null}
-        </tbody>
-      </table>
+      <>
+        <table className="table table-striped round shadow-sm">
+          <thead className="table-dark">
+            {headerGroups.map((headerGroup) => (
+              <tr key={headerGroup.id}>
+                {headerGroup.headers.map((header) => (
+                  <th className="capitalize" key={header.id}>
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
+                  </th>
+                ))}
+              </tr>
+            ))}
+          </thead>
+          <tbody>
+            {rows.map((row) => (
+              <tr key={row.id}>
+                {row.getVisibleCells().map((cell) => (
+                  <td key={cell.id}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </>
     );
   };
 
@@ -101,7 +159,7 @@ const Users = () => {
       ) : userLogged.groupe && userLogged.groupe!.name === "admin" ? (
         <>
           <p>PAGE user liste</p>
-          <Table />
+          <UserTable />
         </>
       ) : (
         <div className="d-flex">
