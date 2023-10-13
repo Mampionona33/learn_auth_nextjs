@@ -72,7 +72,7 @@ const Users = () => {
 
     const fetchUserList = async () => {
       try {
-        await dispatch(fetchUsers());
+        await dispatch(fetchUsers({ page: 1, limite: 5 }));
       } catch (error) {
         console.error(
           "Erreur lors de la récupération des données utilisateur:",
