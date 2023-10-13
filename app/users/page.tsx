@@ -16,6 +16,7 @@ import {
 } from "@tanstack/react-table";
 import Link from "next/link";
 import DataTable from "@components/DataTable";
+import Pagination from "@components/Pagination";
 
 const Users = () => {
   const { appState } = useAppContext();
@@ -158,6 +159,7 @@ const Users = () => {
           <h3>User list</h3>
           {/* <UserTable /> */}
           <DataTable data={users} columns={columns} />
+          <Pagination />
         </>
       ) : (
         <div className="d-flex">
