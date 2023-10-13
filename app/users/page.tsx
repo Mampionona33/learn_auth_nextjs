@@ -101,8 +101,6 @@ const Users = () => {
     };
   }, [session]);
 
-  // users.map((el) => console.log(el));
-
   const UserTable = () => {
     const headerGroups = table.getHeaderGroups();
     const rows = table.getRowModel().rows;
