@@ -46,12 +46,20 @@ const Users = () => {
     columnHelper.accessor("id", {
       header: () => "action",
       cell: (info) => (
-        <Link
-          className="btn btn-primary capitalize "
-          href={`/users/edit/${info.getValue()}`}
-        >
-          edit
-        </Link>
+        <div className="flex gap-2 justify-center">
+          <Link
+            className="btn capitalize bg-warning "
+            href={`/users/edit/${info.getValue()}`}
+          >
+            Modifier
+          </Link>
+          <Link
+            className="btn capitalize bg-danger text-white"
+            href={`/users/delete/${info.getValue()}`}
+          >
+            Supprimer
+          </Link>
+        </div>
       ),
     }),
   ];
@@ -156,10 +164,18 @@ const Users = () => {
         <p>Loading...</p>
       ) : userLogged.groupe && userLogged.groupe!.name === "admin" ? (
         <>
-          <h3>User list</h3>
-          {/* <UserTable /> */}
-          <DataTable data={users} columns={columns} />
-          <Pagination />
+          <div className="flex flex-col gap-2">
+            
+            <div>
+              <h3>User list</h3>
+              <div className="flex justify-content-end ">
+                <button className="btn btn-primary">Ajouter</button>
+              </div>
+            </div>
+              {/* <UserTable /> */}
+              <DataTable data={users} columns={columns} />
+              <Pagination />
+          </div>
         </>
       ) : (
         <div className="d-flex">
