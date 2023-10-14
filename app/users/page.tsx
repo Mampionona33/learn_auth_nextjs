@@ -17,6 +17,8 @@ import {
 import Link from "next/link";
 import DataTable from "@components/DataTable";
 import Pagination from "@components/Pagination";
+import ModalAddUser from "@components/ModalAddUser";
+
 
 const Users = () => {
   const { appState } = useAppContext();
@@ -165,11 +167,11 @@ const Users = () => {
       ) : userLogged.groupe && userLogged.groupe!.name === "admin" ? (
         <>
           <div className="flex flex-col gap-2">
-            
             <div>
               <h3>User list</h3>
               <div className="flex justify-content-end ">
-                <button className="btn btn-primary">Ajouter</button>
+                <button className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modaAddUser">Ajouter</button>
+                <ModalAddUser/>
               </div>
             </div>
               {/* <UserTable /> */}
