@@ -48,7 +48,7 @@ const Users = () => {
       cell: (info) => (
         <Link
           className="btn btn-primary capitalize "
-          href={`/users/${info.getValue()}`}
+          href={`/users/edit/${info.getValue()}`}
         >
           edit
         </Link>
