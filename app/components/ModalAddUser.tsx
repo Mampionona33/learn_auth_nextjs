@@ -1,4 +1,5 @@
 import CustomModal from "@components/CustomModal";
+import CustomModal_1 from "@components/CustomModal_1";
 
 
 const FormAddUser = ( ) =>{
@@ -49,10 +50,20 @@ const FormAddUser = ( ) =>{
 	)
 }
 
+
+const fields = [
+	{type:'text', id:"name", placeholder:"Name", required:true },
+	{type:'text', id:"username", placeholder:"Username", required:true },
+	{type:'password', id:"password", placeholder:"Password", required:true},
+	{type:'email', id:"email", placeholder:"Email"},
+	{type:'text', id:"phone", placeholder:"Phone"},
+];
+
 const ModalAddUser = () =>{
 	return(
 		<>
-		 <CustomModal title="Ajout utilisateur" body={<FormAddUser/>} id="modaAddUser" />
+		 {/*<CustomModal title="Ajout utilisateur" body={<FormAddUser/>} id="modaAddUser" />*/}
+		 <CustomModal_1 title="Ajout utilisateur" fields={fields} id="modaAddUser" />
 		</>
 	)
 }
