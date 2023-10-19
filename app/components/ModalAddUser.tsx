@@ -105,20 +105,22 @@ const fields = [
 ];
 
 const postData = (data) => {
-  // console.log("test", data);
-  axios
-    .post("/api/users/", {
-      username: data.username,
-      password: data.password,
-      email: data.email,
-      phone: data.phone,
-    })
-    .then(function (resp) {
-      console.log(resp);
-    })
-    .catch(function (err) {
-      console.log(err);
-    });
+  if (data) {
+    console.log("test", data);
+    axios
+      .post("/api/users", {
+        username: data.username,
+        password: data.password,
+        email: data.email,
+        phone: data.phone,
+      })
+      .then(function (resp) {
+        console.log(resp);
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+  }
 };
 
 const ModalAddUser = () => {

@@ -62,7 +62,6 @@ model study {
 
 model users {
   id       String        @id @default(auto()) @map("_id") @db.ObjectId
-  v        Int?          @map("__v")
   address  UsersAddress?
   email    String        @unique
   groupe   String?       @db.ObjectId
