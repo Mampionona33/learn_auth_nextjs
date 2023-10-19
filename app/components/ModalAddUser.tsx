@@ -1,6 +1,9 @@
 import CustomModal from "@components/CustomModal";
 import CustomModal_2 from "@components/CustomModal_2";
 import axios from "axios";
+import { useAppDispatch, useAppSelector } from "../hook/store";
+import { fetchUsers } from "../store/users/userActions";
+
 
 const FormAddUser = () => {
   return (
@@ -114,9 +117,12 @@ const postData = (data) => {
         password: data.password,
         email: data.email,
         phone: data.phone,
+        firstname: data.firstname,
+        lastname: data.lastname
       })
       .then(function (resp) {
         console.log(resp);
+        
       })
       .catch(function (err) {
         console.log(err);
@@ -125,6 +131,8 @@ const postData = (data) => {
 };
 
 const ModalAddUser = () => {
+  const dispatch = useAppDispatch();
+
   return (
     <>
       {/*<CustomModal title="Ajout utilisateur" body={<FormAddUser/>} id="modaAddUser" />*/}
@@ -133,7 +141,7 @@ const ModalAddUser = () => {
         fields={fields}
         id="modaAddUser"
         labelButtonShow="Ajout"
-        handleSubmit={(formData) => postData(formData)}
+        handleSubmit={(formData) => postData( formData)}
       />
     </>
   );

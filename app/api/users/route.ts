@@ -86,18 +86,22 @@ export async function handler(req: NextRequestWithAuth) {
     // si non on obtient du undefined
     const body = await req.json();
     try {
-      const { username, email, password, phone } = body;
+      const { username, email, password, phone , firstname, lastname} = body;
       const user = await prisma?.users.create({
         data: {
           username,
           password,
           phone,
           email,
-          v: 0,
+          name:{
+            firstname,
+            lastname,
+          },
+
         },
       });
-
-      return NextResponse.json({ message: "test" });
+      const users = await prisma.users.findMany();
+      return NextResponse.json({ users});
     } catch (err: any) {
       console.log(err);
       return NextResponse.json({ error: err.message });
