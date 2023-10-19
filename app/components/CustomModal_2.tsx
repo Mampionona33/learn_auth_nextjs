@@ -48,7 +48,9 @@ const CustomModal_2 = ({
         if (element.type === "radio" && element.checked) {
           formData[element.name] = element.value;
         } else if (element.type === "checkbox") {
-          formData[element.id] = checkboxValues[element.id] || "";
+          formData[element.id] = checkboxValues[element.id]
+            ? checkboxValues[element.id]
+            : false;
         } else if (element.type !== "radio") {
           formData[element.id] = element.value;
         }
