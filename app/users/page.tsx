@@ -28,8 +28,20 @@ const Users = () => {
   const dispatch = useAppDispatch();
   const [data, setData] = useState<IUser[]>([]);
 
-  const users: IUser[] = [userList?.liste?.users].flat();
-  console.log(users);
+  const users: IUser[] = userList.liste ? [userList?.liste].flat() : [];
+
+  const [userData,setUserData] = useState([]);
+  // console.log("userList",users);
+
+  // useEffect(()=> {
+  //   let mount = true;
+  //   if(users){
+  //     setUserData(users);
+  //   }
+  //   return ()=>{
+  //     mount = false;
+  //   }
+  // },[users]);
 
   const columnHelper = createColumnHelper<IUser>();
   const columns = [
@@ -72,6 +84,7 @@ const Users = () => {
     getCoreRowModel: getCoreRowModel(),
   });
 
+
   const {
     userGroupe,
     loading: loadingUserGroupe,
@@ -83,7 +96,9 @@ const Users = () => {
 
     const fetchUserList = async () => {
       try {
-        await dispatch(fetchUsers());
+        if(users.length <= 0){
+          await dispatch(fetchUsers());
+        }
       } catch (error) {
         console.error(
           "Erreur lors de la récupération des données utilisateur:",
@@ -99,7 +114,7 @@ const Users = () => {
     return () => {
       mount = false;
     };
-  }, [userList, dispatch]);
+  }, [userList, dispatch,users]);
 
   useEffect(() => {
     let mount = true;
@@ -175,7 +190,7 @@ const Users = () => {
               </div>
             </div>
             {/* <UserTable /> */}
-            {/* <DataTable data={users} columns={columns} /> */}
+            <DataTable data={users} columns={columns} /> 
             <Pagination />
           </div>
         </>
