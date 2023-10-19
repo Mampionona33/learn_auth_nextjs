@@ -5,7 +5,8 @@ type FieldConfig = {
   id: string;
   placeholder: string;
   required?: boolean;
-  name?: string; // Add name property for radio buttons
+  name?: string;
+  options?: string[];
 };
 
 const CustomModal_1 = ({
@@ -68,7 +69,6 @@ const CustomModal_1 = ({
                 {fields && fields.length > 0 ? (
                   <div className="row g-3">
                     {fields.map((item, key) => {
-                      // Initialize selectedOption here
                       if (item.type === "select") {
                         if (!selectedOptions[item.id]) {
                           setSelectedOptions({
@@ -139,31 +139,40 @@ const CustomModal_1 = ({
                                 );
 
                               case "radio":
+                                const defaultOption = item.options[0];
                                 return (
-                                  <div className="input-group mb-3">
-                                    <span className="input-group-text">
-                                      {item.placeholder}
-                                    </span>
-                                    <div className="d-flex gap-2">
-                                      {item.options.map((option, index) => (
-                                        <div key={index} className="form-check">
-                                          <input
-                                            className="form-check-input"
-                                            type="radio"
-                                            name={item.name} // Le nom du groupe de boutons radio
-                                            id={`${item.id}-${index}`}
-                                            value={option}
-                                          />
-                                          <label
-                                            className="form-check-label"
-                                            htmlFor={`${item.id}-${index}`}
+                                  <fieldset className="form-group">
+                                    <div className="row">
+                                      <legend className="col-form-label col-sm-2 pt-0">
+                                        {item.placeholder}
+                                      </legend>
+                                      <div className="col-sm-10">
+                                        {item.options.map((option, index) => (
+                                          <div
+                                            key={index}
+                                            className="form-check"
                                           >
-                                            {option}
-                                          </label>
-                                        </div>
-                                      ))}
+                                            <input
+                                              className="form-check-input"
+                                              type="radio"
+                                              name={item.name}
+                                              id={`${item.id}-${index}`}
+                                              value={option}
+                                              defaultChecked={
+                                                defaultOption === option
+                                              }
+                                            />
+                                            <label
+                                              className="form-check-label"
+                                              htmlFor={`${item.id}-${index}`}
+                                            >
+                                              {option}
+                                            </label>
+                                          </div>
+                                        ))}
+                                      </div>
                                     </div>
-                                  </div>
+                                  </fieldset>
                                 );
 
                               default:
