@@ -29,6 +29,7 @@ const Users = () => {
   const [data, setData] = useState<IUser[]>([]);
 
   const users: IUser[] = [userList?.liste?.users].flat();
+  console.log(users);
 
   const columnHelper = createColumnHelper<IUser>();
   const columns = [
@@ -174,7 +175,7 @@ const Users = () => {
               </div>
             </div>
             {/* <UserTable /> */}
-            <DataTable data={users} columns={columns} />
+            {/* <DataTable data={users} columns={columns} /> */}
             <Pagination />
           </div>
         </>
