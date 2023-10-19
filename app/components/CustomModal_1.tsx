@@ -15,11 +15,13 @@ const CustomModal_1 = ({
   body,
   fields,
   handleSubmit,
+  initialValues,
 }: {
   id: string;
   title: string;
   body: React.ReactNode;
   fields: FieldConfig[];
+  initialValues?: { [key: string]: any };
   handleSubmit: (formData: { [key: string]: string }) => void;
 }) => {
   const formRef = useRef(null);
@@ -94,10 +96,16 @@ const CustomModal_1 = ({
                                 return (
                                   <input
                                     type={item.type}
+                                    name={item.name || ""}
                                     className="form-control"
                                     id={item.id}
                                     placeholder={item.placeholder}
                                     required={item.required}
+                                    defaultValue={
+                                      initialValues
+                                        ? initialValues[item.id]
+                                        : ""
+                                    }
                                   />
                                 );
 
@@ -108,6 +116,7 @@ const CustomModal_1 = ({
                                     id={item.id}
                                     placeholder={item.placeholder}
                                     required={item.required}
+                                    defaultValue={initialValues[item.id] || ""}
                                   />
                                 );
 
@@ -142,7 +151,6 @@ const CustomModal_1 = ({
                                 );
 
                               case "radio":
-                                const defaultOption = item.options[0];
                                 return (
                                   <fieldset className="form-group">
                                     <div className="row">
@@ -162,7 +170,11 @@ const CustomModal_1 = ({
                                               id={`${item.id}-${index}`}
                                               value={option}
                                               defaultChecked={
-                                                defaultOption === option
+                                                initialValues &&
+                                                item.id in initialValues
+                                                  ? initialValues[item.id] ===
+                                                    option
+                                                  : option === item.options[0] // Check le premier bouton par défaut s'il n'y a pas de valeur initiale
                                               }
                                             />
                                             <label
@@ -185,7 +197,12 @@ const CustomModal_1 = ({
                                       className="form-check-input"
                                       type="checkbox"
                                       id={item.id}
-                                      checked={checkboxValues[item.id] || false}
+                                      // checked={checkboxValues[item.id] || false}
+                                      defaultChecked={
+                                        initialValues
+                                          ? initialValues[item.id]
+                                          : false
+                                      }
                                       onChange={(e) => {
                                         setCheckboxValues({
                                           ...checkboxValues,
