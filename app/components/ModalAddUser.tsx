@@ -103,6 +103,10 @@ const fields = [
   },
 ];
 
+const test = (data) => {
+  console.log("test", data);
+};
+
 const ModalAddUser = () => {
   return (
     <>
@@ -112,6 +116,7 @@ const ModalAddUser = () => {
         fields={fields}
         id="modaAddUser"
         labelButtonShow="Ajout"
+        handleSubmit={(formData) => test(formData)}
       />
     </>
   );
