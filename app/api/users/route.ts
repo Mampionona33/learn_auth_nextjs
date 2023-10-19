@@ -85,19 +85,19 @@ export async function handler(req: NextRequestWithAuth) {
   }
   if (req.method == "POST") {
     try {
+      console.log(req);
       const { username, email, password, phone } = req.body;
-      console.log(req.body);
-      const user = await prisma?.users.create({
-        data: {
-          username,
-          password,
-          phone,
-          email,
-          address: null,
-          v: 0,
-        },
-      });
-      return NextResponse.json({ user });
+      // const user = await prisma?.users.create({
+      //   data: {
+      //     username,
+      //     password,
+      //     phone,
+      //     email,
+      //     address: null,
+      //     v: 0,
+      //   },
+      // });
+      return NextResponse.json({ message: "test" });
     } catch (err: any) {
       console.log(err);
       return NextResponse.json({ error: err.message });
