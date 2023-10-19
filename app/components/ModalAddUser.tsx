@@ -1,5 +1,5 @@
 import CustomModal from "@components/CustomModal";
-import CustomModal_1 from "@components/CustomModal_1";
+import CustomModal_2 from "@components/CustomModal_2";
 
 const FormAddUser = () => {
   return (
@@ -107,10 +107,11 @@ const ModalAddUser = () => {
   return (
     <>
       {/*<CustomModal title="Ajout utilisateur" body={<FormAddUser/>} id="modaAddUser" />*/}
-      <CustomModal_1
+      <CustomModal_2
         title="Ajout utilisateur"
         fields={fields}
         id="modaAddUser"
+        labelButtonShow="Ajout"
       />
     </>
   );

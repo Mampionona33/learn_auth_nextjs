@@ -19,7 +19,6 @@ import DataTable from "@components/DataTable";
 import Pagination from "@components/Pagination";
 import ModalAddUser from "@components/ModalAddUser";
 
-
 const Users = () => {
   const { appState } = useAppContext();
   const [isLoading, setLoading] = useState(true);
@@ -170,13 +169,13 @@ const Users = () => {
             <div>
               <h3>User list</h3>
               <div className="flex justify-content-end ">
-                <button className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modaAddUser">Ajouter</button>
-                <ModalAddUser/>
+                {/* <button className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modaAddUser">Ajouter</button> */}
+                <ModalAddUser />
               </div>
             </div>
-              {/* <UserTable /> */}
-              <DataTable data={users} columns={columns} />
-              <Pagination />
+            {/* <UserTable /> */}
+            <DataTable data={users} columns={columns} />
+            <Pagination />
           </div>
         </>
       ) : (
