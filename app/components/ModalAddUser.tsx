@@ -96,6 +96,11 @@ const fields = [
     placeholder: "Sex",
     options: ["Male", "female"],
   },
+  {
+    type: "checkbox",
+    id: "subscribe",
+    placeholder: "Subscribe to newsletter",
+  },
 ];
 
 const ModalAddUser = () => {

@@ -24,6 +24,7 @@ const CustomModal_1 = ({
 }) => {
   const formRef = useRef(null);
   const [selectedOptions, setSelectedOptions] = useState({});
+  const [checkboxValues, setCheckboxValues] = useState({});
 
   const handleFormSubmit = (ev) => {
     ev.preventDefault();
@@ -37,6 +38,8 @@ const CustomModal_1 = ({
       if (element.tagName === "INPUT") {
         if (element.type === "radio" && element.checked) {
           formData[element.name] = element.value;
+        } else if (element.type === "checkbox") {
+          formData[element.id] = checkboxValues[element.id] || "";
         } else if (element.type !== "radio") {
           formData[element.id] = element.value;
         }
@@ -173,6 +176,30 @@ const CustomModal_1 = ({
                                       </div>
                                     </div>
                                   </fieldset>
+                                );
+
+                              case "checkbox":
+                                return (
+                                  <div className="form-check">
+                                    <input
+                                      className="form-check-input"
+                                      type="checkbox"
+                                      id={item.id}
+                                      checked={checkboxValues[item.id] || false}
+                                      onChange={(e) => {
+                                        setCheckboxValues({
+                                          ...checkboxValues,
+                                          [item.id]: e.target.checked,
+                                        });
+                                      }}
+                                    />
+                                    <label
+                                      className="form-check-label"
+                                      htmlFor={item.id}
+                                    >
+                                      {item.placeholder}
+                                    </label>
+                                  </div>
                                 );
 
                               default:
