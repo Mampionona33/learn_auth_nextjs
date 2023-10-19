@@ -1,5 +1,6 @@
 import CustomModal from "@components/CustomModal";
 import CustomModal_2 from "@components/CustomModal_2";
+import axios from "axios";
 
 const FormAddUser = () => {
   return (
@@ -103,8 +104,21 @@ const fields = [
   },
 ];
 
-const test = (data) => {
-  console.log("test", data);
+const postData = (data) => {
+  // console.log("test", data);
+  axios
+    .post("/api/users/", {
+      username: data.username,
+      password: data.password,
+      email: data.email,
+      phone: data.phone,
+    })
+    .then(function (resp) {
+      console.log(resp);
+    })
+    .catch(function (err) {
+      console.log(err);
+    });
 };
 
 const ModalAddUser = () => {
@@ -116,7 +130,7 @@ const ModalAddUser = () => {
         fields={fields}
         id="modaAddUser"
         labelButtonShow="Ajout"
-        handleSubmit={(formData) => test(formData)}
+        handleSubmit={(formData) => postData(formData)}
       />
     </>
   );
