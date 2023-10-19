@@ -52,18 +52,16 @@ export async function handler(req: NextRequestWithAuth) {
     const email = searchParams.get("email");
     const page = parseInt(searchParams.get("page") || "1", 10);
     const limit = parseInt(searchParams.get("limit") || "5", 10);
-    // console.log("getUser request in api", session);
-
-    // console.log("page:", page);
-    // console.log("limit:", limit);
 
     if (!email || typeof email !== "string") {
       try {
         const offset = (page - 1) * limit;
-        const users = await prisma.users.findMany({
-          skip: offset,
-          take: limit,
-        });
+        // Pour gerer la pagination
+        // const users = await prisma.users.findMany({
+        //   skip: offset,
+        //   take: limit,
+        // });
+        const users = await prisma.users.findMany();
         const result = NextResponse.json({ users });
         return result;
       } catch (error) {
@@ -84,19 +82,21 @@ export async function handler(req: NextRequestWithAuth) {
     }
   }
   if (req.method == "POST") {
+    // il faut utiliser await pour recuperer le body
+    // si non on obtient du undefined
+    const body = await req.json();
     try {
-      console.log(req);
-      const { username, email, password, phone } = req.body;
-      // const user = await prisma?.users.create({
-      //   data: {
-      //     username,
-      //     password,
-      //     phone,
-      //     email,
-      //     address: null,
-      //     v: 0,
-      //   },
-      // });
+      const { username, email, password, phone } = body;
+      const user = await prisma?.users.create({
+        data: {
+          username,
+          password,
+          phone,
+          email,
+          v: 0,
+        },
+      });
+
       return NextResponse.json({ message: "test" });
     } catch (err: any) {
       console.log(err);
