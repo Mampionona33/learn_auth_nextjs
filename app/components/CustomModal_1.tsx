@@ -56,16 +56,14 @@ const CustomModal_1 = ({
     console.log(formData);
   };
 
-  const handleClose = () => {};
-
-  useEffect(() => {
-    console.log(modalRef.current);
-  }, [modalRef]);
+  const handleClose = () => {
+    console.log("modal closed");
+  };
 
   return (
     <>
-      {isModalOpen ? (
-        <div className="modal" id={id} ref={modalRef}>
+      <div className="modal" id={id} ref={modalRef}>
+        {isModalOpen ? (
           <div className="modal-dialog modal-dialog-centered">
             <div className="modal-content">
               <div className="modal-header">
@@ -262,8 +260,8 @@ const CustomModal_1 = ({
               </form>
             </div>
           </div>
-        </div>
-      ) : null}
+        ) : null}
+      </div>
     </>
   );
 };
