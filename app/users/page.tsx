@@ -191,7 +191,7 @@ const Users = () => {
             </div>
             {/* <UserTable /> */}
             <DataTable data={users} columns={columns} /> 
-            <Pagination />
+            {/*<Pagination />*/}
           </div>
         </>
       ) : (

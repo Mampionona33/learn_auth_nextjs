@@ -79,7 +79,8 @@ const FormAddUser = () => {
 };
 
 const fields = [
-  { type: "text", id: "name", placeholder: "Name", required: true },
+  { type: "text", id: "firstname", placeholder: "Firstname", required: true },
+  { type: "text", id: "lastname", placeholder: "Lastname", required: true },
   { type: "text", id: "username", placeholder: "Username", required: true },
   { type: "password", id: "password", placeholder: "Password", required: true },
   { type: "email", id: "email", placeholder: "Email" },
