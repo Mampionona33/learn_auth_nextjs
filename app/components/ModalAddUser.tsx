@@ -110,7 +110,7 @@ const fields = [
 
 const postData = (data) => {
   if (data) {
-    console.log("test", data);
+    // console.log("test", data);
     axios
       .post("/api/users", {
         username: data.username,
@@ -121,7 +121,11 @@ const postData = (data) => {
         lastname: data.lastname
       })
       .then(function (resp) {
-        console.log(resp);
+        const users = resp.data.users
+
+        // il faut créer un action synchrone dans store
+        // pour remplacer la valeur de userList
+        console.log("ModalAddUser:", users);
         
       })
       .catch(function (err) {
