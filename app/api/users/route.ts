@@ -107,20 +107,7 @@ export async function handler(req: NextRequestWithAuth) {
     }
   }
 
-  if (req.method == "PUT") {
-    try {
-      const body = await req.json();
-      const user = await prisma?.users.update({
-        where: { id: id },
-        data: body,
-      });
-      const users = await prisma.users.findMany();
-      return NextResponse.json({ users });
-    } catch (error) {
-      console.log(err);
-      return NextResponse.json({ error: err.message });
-    }
-  }
+  
 }
 
-export { handler as GET, handler as POST };
+export { handler as GET, handler as POST, handler as PUT };

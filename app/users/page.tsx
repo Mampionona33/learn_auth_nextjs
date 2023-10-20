@@ -35,11 +35,11 @@ const Users = () => {
 
   const [userData, setUserData] = useState(null);
 
-  const putData = (data, dispatch) => {
+  const putData = (id, data, dispatch) => {
     if (data) {
       // console.log("test", data);
       axios
-        .put("/api/users", {
+        .put(`/api/users/${id}`, {
           username: data.username,
           password: data.password,
           email: data.email,
@@ -105,7 +105,7 @@ const Users = () => {
           fields={fields}
           variantButtonShow="info"
           initialValues={initialValues}
-          handleSubmit={(formData) => putData(formData, dispatch)}
+          handleSubmit={(formData) => putData(id, formData, dispatch)}
         />
       </>
     );

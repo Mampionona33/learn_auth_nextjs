@@ -28,11 +28,34 @@ export async function handler(req: NextApiRequest, { params }) {
     } catch (error) {
       return NextResponse.json({ error: error });
     }
+  }
+  if (req.method == "PUT") {
+    // console.log(req);
+    try {
+      const body = await req.json();
+      const { username, email, password, phone, firstname, lastname } = body;
+      const user = await prisma?.users.update({
+        where: { id: new ObjectId(params).toString() },
+        data: {
+          username,
+          password,
+          phone,
+          email,
+          name: {
+            firstname,
+            lastname,
+          },
+        },
+      });
+      const users = await prisma.users.findMany();
+      return NextResponse.json({ users });
+    } catch (error) {
+      console.log(error);
+      return NextResponse.json({ error: error.message });
+    }
   } else {
     return NextResponse.json({ message: "hello from permission api" });
   }
-
-  
 }
 
 // export async function POST(req: NextApiRequest, { params }) {
@@ -55,4 +78,4 @@ export async function handler(req: NextApiRequest, { params }) {
 //   }
 // }
 
-export { handler as GET, handler as POST };
+export { handler as GET, handler as POST, handler as PUT };
