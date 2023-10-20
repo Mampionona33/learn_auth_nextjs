@@ -111,7 +111,7 @@ export async function handler(req: NextRequestWithAuth) {
     try {
       const body = await req.json();
       const user = await prisma?.users.update({
-        where: { id: Number(id) },
+        where: { id: id },
         data: body,
       });
       const users = await prisma.users.findMany();
