@@ -31,7 +31,6 @@ const DataTable = ({ data, columns }: DataTableProps) => {
   });
 
   useEffect(() => {
-    // Mettez à jour l'état initial du tableau en définissant la page et la taille de page initiales
     table.setState((prev) => ({
       ...prev,
       pagination: {
