@@ -1,11 +1,12 @@
 // DataTable.js
-import React,{ useEffect } from "react";
+import React, { useEffect } from "react";
 import {
   createColumnHelper,
   flexRender,
   getCoreRowModel,
-  useReactTable,  getPaginationRowModel,getFilteredRowModel,
-
+  useReactTable,
+  getPaginationRowModel,
+  getFilteredRowModel,
 } from "@tanstack/react-table";
 
 export interface DataTableProps {
@@ -27,21 +28,19 @@ const DataTable = ({ data, columns }: DataTableProps) => {
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
-
   });
 
- useEffect(() => {
+  useEffect(() => {
     // Mettez à jour l'état initial du tableau en définissant la page et la taille de page initiales
     table.setState((prev) => ({
       ...prev,
       pagination: {
         ...prev.pagination,
         pageIndex: 0, // Index initial de la page
-        pageSize: 3, // Taille de la page initiale
+        pageSize: 4, // Taille de la page initiale
       },
     }));
   }, []);
-
 
   const headerGroups = table.getHeaderGroups();
   const rows = table.getRowModel().rows;
@@ -58,7 +57,7 @@ const DataTable = ({ data, columns }: DataTableProps) => {
                     ? null
                     : flexRender(
                         header.column.columnDef.header,
-                        header.getContext()
+                        header.getContext(),
                       )}
                 </th>
               ))}
@@ -77,7 +76,7 @@ const DataTable = ({ data, columns }: DataTableProps) => {
           ))}
         </tbody>
       </table>
-      
+
       <div className="h-2" />
       <div className="flex items-center gap-2">
         <button
@@ -133,7 +132,7 @@ const DataTable = ({ data, columns }: DataTableProps) => {
             table.setPageSize(Number(e.target.value));
           }}
         >
-          {[3,4,5, 6,7, 8, 40, 50].map((pageSize) => (
+          {[3, 4, 5, 6, 7, 8, 40, 50].map((pageSize) => (
             <option key={pageSize} value={pageSize}>
               Show {pageSize}
             </option>

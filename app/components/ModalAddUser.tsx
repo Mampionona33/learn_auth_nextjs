@@ -1,85 +1,7 @@
 import CustomModal from "@components/CustomModal";
-import CustomModal_2 from "@components/CustomModal_2";
 import axios from "axios";
 import { useAppDispatch, useAppSelector } from "../hook/store";
 import { fetchUsers } from "../store/users/userActions";
-
-
-const FormAddUser = () => {
-  return (
-    <>
-      <div className="row g-3">
-        <div className="col-md-6">
-          <label htmlFor="name" className="visually-hidden">
-            name
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            id="name"
-            placeholder="Name"
-          />
-        </div>
-        <div className="col-md-6">
-          <label htmlFor="lastname" className="visually-hidden">
-            lastname
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            id="lastname"
-            placeholder="Lastname"
-          />
-        </div>
-        <div className="col-md-6">
-          <label htmlFor="username" className="visually-hidden">
-            Username
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            id="username"
-            placeholder="Username"
-          />
-        </div>
-        <div className="col-md-6">
-          <label htmlFor="password" className="visually-hidden">
-            Password
-          </label>
-          <input
-            type="password"
-            className="form-control"
-            id="password"
-            placeholder="Password"
-          />
-        </div>
-        <div className="col-md-6">
-          <label htmlFor="email" className="visually-hidden">
-            Email
-          </label>
-          <input
-            type="email"
-            className="form-control"
-            id="email"
-            placeholder="Email"
-          />
-        </div>
-        <div className="col-md-6">
-          <label htmlFor="phone" className="visually-hidden">
-            Email
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            id="phone"
-            placeholder="Phone"
-          />
-        </div>
-        <div className="col-md-6">{/*placeholder liste groupe*/}</div>
-      </div>
-    </>
-  );
-};
 
 const fields = [
   { type: "text", id: "firstname", placeholder: "Firstname", required: true },
@@ -108,7 +30,7 @@ const fields = [
   },
 ];
 
-const postData = (data) => {
+const postData = (data, dispatch) => {
   if (data) {
     // console.log("test", data);
     axios
@@ -118,15 +40,10 @@ const postData = (data) => {
         email: data.email,
         phone: data.phone,
         firstname: data.firstname,
-        lastname: data.lastname
+        lastname: data.lastname,
       })
       .then(function (resp) {
-        const users = resp.data.users
-
-        // il faut créer un action synchrone dans store
-        // pour remplacer la valeur de userList
-        console.log("ModalAddUser:", users);
-        
+        dispatch(fetchUsers());
       })
       .catch(function (err) {
         console.log(err);
@@ -139,13 +56,12 @@ const ModalAddUser = () => {
 
   return (
     <>
-      {/*<CustomModal title="Ajout utilisateur" body={<FormAddUser/>} id="modaAddUser" />*/}
-      <CustomModal_2
+      <CustomModal
         title="Ajout utilisateur"
         fields={fields}
         id="modaAddUser"
         labelButtonShow="Ajout"
-        handleSubmit={(formData) => postData( formData)}
+        handleSubmit={(formData) => postData(formData, dispatch)}
       />
     </>
   );
