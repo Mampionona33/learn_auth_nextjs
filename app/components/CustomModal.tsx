@@ -10,7 +10,6 @@ const CustomModal = ({
   variantButtonShow,
   fields,
   handleSubmit,
-  initialValues,
   dispatch,
 }: {
   id: string;
@@ -19,7 +18,6 @@ const CustomModal = ({
   labelButtonShow: string;
   body: React.ReactNode;
   fields: any[];
-  initialValues?: { [key: string]: any };
   handleSubmit: (formData: { [key: string]: string }) => void;
   dispatch: any;
 }) => {
@@ -107,9 +105,7 @@ const CustomModal = ({
                                 id={item.id}
                                 placeholder={item.placeholder}
                                 required={item.required}
-                                defaultValue={
-                                  initialValues ? initialValues[item.id] : ""
-                                }
+                                defaultValue={item.defaultValue || ""}
                                 autoComplete={
                                   item.type === "password"
                                     ? "current-password"
@@ -125,7 +121,7 @@ const CustomModal = ({
                                 id={item.id}
                                 placeholder={item.placeholder}
                                 required={item.required}
-                                defaultValue={initialValues[item.id] || ""}
+                                defaultValue={item.defaultValue || ""}
                               />
                             );
 
@@ -142,7 +138,11 @@ const CustomModal = ({
                                   className="form-control"
                                   id={item.id}
                                   required={item.required}
-                                  value={selectedOptions[item.id]}
+                                  value={
+                                    item.defaultValue ||
+                                    selectedOptions[item.id] ||
+                                    ""
+                                  }
                                   onChange={(e) => {
                                     setSelectedOptions({
                                       ...selectedOptions,
@@ -176,10 +176,8 @@ const CustomModal = ({
                                           id={`${item.id}-${index}`}
                                           value={option}
                                           defaultChecked={
-                                            initialValues &&
-                                            item.id in initialValues
-                                              ? initialValues[item.id] ===
-                                                option
+                                            item.defaultValue
+                                              ? item.defaultValue === option
                                               : option === item.options[0]
                                           }
                                         />
@@ -203,11 +201,7 @@ const CustomModal = ({
                                   className="form-check-input"
                                   type="checkbox"
                                   id={item.id}
-                                  defaultChecked={
-                                    initialValues
-                                      ? initialValues[item.id]
-                                      : false
-                                  }
+                                  defaultChecked={item.defaultValue || false}
                                   onChange={(e) => {
                                     setCheckboxValues({
                                       ...checkboxValues,

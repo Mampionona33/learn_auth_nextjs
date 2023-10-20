@@ -4,9 +4,24 @@ import { useAppDispatch, useAppSelector } from "../hook/store";
 import { fetchUsers } from "../store/users/userActions";
 
 export const fields = [
-  { type: "text", id: "firstname", placeholder: "Firstname", required: true },
-  { type: "text", id: "lastname", placeholder: "Lastname", required: true },
-  { type: "text", id: "username", placeholder: "Username", required: true },
+  {
+    type: "text",
+    id: "firstname",
+    placeholder: "Firstname",
+    required: true,
+  },
+  {
+    type: "text",
+    id: "lastname",
+    placeholder: "Lastname",
+    required: true,
+  },
+  {
+    type: "text",
+    id: "username",
+    placeholder: "Username",
+    required: true,
+  },
   { type: "password", id: "password", placeholder: "Password", required: true },
   { type: "email", id: "email", placeholder: "Email" },
   { type: "text", id: "phone", placeholder: "Phone" },
@@ -15,6 +30,7 @@ export const fields = [
     id: "groupe",
     placeholder: "Groupe",
     options: ["admin", "responsable", "student"],
+    defaultValue: "responsable",
   },
   {
     type: "radio",
@@ -22,11 +38,13 @@ export const fields = [
     id: "sex",
     placeholder: "Sex",
     options: ["Male", "female"],
+    defaultValue: "Male",
   },
   {
     type: "checkbox",
     id: "subscribe",
     placeholder: "Subscribe to newsletter",
+    defaultValue: false,
   },
 ];
 
