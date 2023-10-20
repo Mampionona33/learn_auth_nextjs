@@ -2,15 +2,6 @@ import React, { useRef, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 
-export type FieldConfig = {
-  type: string;
-  id: string;
-  placeholder: string;
-  required?: boolean;
-  name?: string;
-  options?: string[];
-};
-
 const CustomModal = ({
   id,
   title,
@@ -25,7 +16,7 @@ const CustomModal = ({
   title: string;
   labelButtonShow: string;
   body: React.ReactNode;
-  fields: FieldConfig[];
+  fields: any[];
   initialValues?: { [key: string]: any };
   handleSubmit: (formData: { [key: string]: string }) => void;
   dispatch: any;
