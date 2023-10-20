@@ -53,7 +53,17 @@ export async function handler(req: NextApiRequest, { params }) {
       console.log(error);
       return NextResponse.json({ error: error.message });
     }
-  } else {
+  } 
+  if(req.method == "DELETE"){
+    try{
+      const res = await prisma?.users.delete({
+        where: {id: new ObjectId(params).toString()}
+      })
+      return NextResponse.json({message: "users delete successfully!!"});
+    }catch(error){
+      return NextResponse.json({error: error.message});
+    }
+  }else {
     return NextResponse.json({ message: "hello from permission api" });
   }
 }
@@ -78,4 +88,4 @@ export async function handler(req: NextApiRequest, { params }) {
 //   }
 // }
 
-export { handler as GET, handler as POST, handler as PUT };
+export { handler as GET, handler as POST, handler as PUT, handler as DELETE };

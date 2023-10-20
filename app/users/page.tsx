@@ -19,6 +19,7 @@ import Link from "next/link";
 import DataTable from "@components/DataTable";
 import Pagination from "@components/Pagination";
 import ModalAddUser from "@components/ModalAddUser";
+import ModalDeleteUser from "@components/ModalDeleteUser";
 import { fields } from "@components/ModalAddUser";
 import CustomModal from "@components/CustomModal";
 
@@ -136,12 +137,13 @@ const Users = () => {
             Modifier
           </Link> */}
           <Modaledit id={info.getValue()} />
-          <Link
+          <ModalDeleteUser id={info.getValue()} />
+          {/*<Link
             className="btn capitalize bg-danger text-white"
             href={`/users/delete/${info.getValue()}`}
           >
             Supprimer
-          </Link>
+          </Link>*/}
         </div>
       ),
     }),
