@@ -33,7 +33,7 @@ const Users = () => {
 
   const users: IUser[] = userList.liste ? [userList?.liste].flat() : [];
 
-  const [userData, setUserData] = useState([]);
+  const [userData, setUserData] = useState(null);
 
   const Modaledit = ({ id }) => {
     const dispatch = useAppDispatch();
@@ -47,7 +47,6 @@ const Users = () => {
           axios
             .get(`/api/users/${id}`)
             .then((resp) => {
-              // console.log(resp.data.user);
               setUser(resp.data.user);
             })
             .catch(function (err) {
@@ -61,6 +60,20 @@ const Users = () => {
       };
     }, [id]);
 
+    const initialValues = user
+      ? {
+          firstname: user?.name?.firstname,
+          lastname: user?.name?.lastname,
+          username: user?.username,
+          password: user?.password,
+          email: user?.email,
+          phone: user?.phone,
+          groupe: user?.groupe,
+          sex: user?.sex,
+          subscribe: user?.subscribe,
+        }
+      : {};
+
     return (
       <>
         <CustomModal
@@ -72,7 +85,7 @@ const Users = () => {
           labelButtonShow="Modifier"
           fields={fields}
           variantButtonShow="info"
-          initialValues={user}
+          initialValues={initialValues}
         />
       </>
     );
