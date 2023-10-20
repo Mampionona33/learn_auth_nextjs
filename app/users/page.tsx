@@ -8,6 +8,7 @@ import { redirect } from "next/navigation";
 import { fetchUsers } from "../store/users/userActions";
 import CustomTable from "../components/TableUsers";
 import { IUser } from "../context/interfaceUser";
+import axios from "axios";
 import {
   createColumnHelper,
   flexRender,
@@ -34,12 +35,36 @@ const Users = () => {
 
   const [userData, setUserData] = useState([]);
 
-  const Modaledit = (id: string) => {
+  const Modaledit = ({ id }) => {
     const dispatch = useAppDispatch();
+    const [user, setUser] = useState([]);
+
+    useEffect(() => {
+      let mount = true;
+
+      if (id) {
+        if (mount) {
+          axios
+            .get(`/api/users/${id}`)
+            .then((resp) => {
+              console.log(resp);
+              // setUser(resp.data);
+            })
+            .catch(function (err) {
+              console.log(err);
+            });
+        }
+      }
+
+      return () => {
+        mount = false;
+      };
+    }, [id]);
+
     return (
       <>
         <CustomModal
-          body={<div className="flex justify-center">user id : {id.id}</div>}
+          body={<div className="flex justify-center">user id : {id}</div>}
           title="Modifier utilisateur"
           id="modalEdit"
           labelButtonShow="Modifier"
