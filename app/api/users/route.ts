@@ -86,23 +86,37 @@ export async function handler(req: NextRequestWithAuth) {
     // si non on obtient du undefined
     const body = await req.json();
     try {
-      const { username, email, password, phone , firstname, lastname} = body;
+      const { username, email, password, phone, firstname, lastname } = body;
       const user = await prisma?.users.create({
         data: {
           username,
           password,
           phone,
           email,
-          name:{
+          name: {
             firstname,
             lastname,
           },
-
         },
       });
       const users = await prisma.users.findMany();
-      return NextResponse.json({ users});
+      return NextResponse.json({ users });
     } catch (err: any) {
+      console.log(err);
+      return NextResponse.json({ error: err.message });
+    }
+  }
+
+  if (req.method == "PUT") {
+    try {
+      const body = await req.json();
+      const user = await prisma?.users.update({
+        where: { id: Number(id) },
+        data: body,
+      });
+      const users = await prisma.users.findMany();
+      return NextResponse.json({ users });
+    } catch (error) {
       console.log(err);
       return NextResponse.json({ error: err.message });
     }
