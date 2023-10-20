@@ -3,7 +3,7 @@ import axios from "axios";
 import { useAppDispatch, useAppSelector } from "../hook/store";
 import { fetchUsers } from "../store/users/userActions";
 
-const fields = [
+export const fields = [
   { type: "text", id: "firstname", placeholder: "Firstname", required: true },
   { type: "text", id: "lastname", placeholder: "Lastname", required: true },
   { type: "text", id: "username", placeholder: "Username", required: true },

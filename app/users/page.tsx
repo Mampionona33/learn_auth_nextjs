@@ -18,6 +18,8 @@ import Link from "next/link";
 import DataTable from "@components/DataTable";
 import Pagination from "@components/Pagination";
 import ModalAddUser from "@components/ModalAddUser";
+import { fields } from "@components/ModalAddUser";
+import CustomModal from "@components/CustomModal";
 
 const Users = () => {
   const { appState } = useAppContext();
@@ -30,18 +32,22 @@ const Users = () => {
 
   const users: IUser[] = userList.liste ? [userList?.liste].flat() : [];
 
-  const [userData,setUserData] = useState([]);
-  // console.log("userList",users);
+  const [userData, setUserData] = useState([]);
 
-  // useEffect(()=> {
-  //   let mount = true;
-  //   if(users){
-  //     setUserData(users);
-  //   }
-  //   return ()=>{
-  //     mount = false;
-  //   }
-  // },[users]);
+  const Modaledit = () => {
+    const dispatch = useAppDispatch();
+    return (
+      <>
+        <CustomModal
+          title="Modifier utilisateur"
+          id="modalEdit"
+          labelButtonShow="Modifier"
+          fields={fields}
+          variantButtonShow="info"
+        />
+      </>
+    );
+  };
 
   const columnHelper = createColumnHelper<IUser>();
   const columns = [
@@ -61,12 +67,13 @@ const Users = () => {
       header: () => "action",
       cell: (info) => (
         <div className="flex gap-2 justify-center">
-          <Link
+          {/* <Link
             className="btn capitalize bg-warning "
             href={`/users/edit/${info.getValue()}`}
           >
             Modifier
-          </Link>
+          </Link> */}
+          <Modaledit />
           <Link
             className="btn capitalize bg-danger text-white"
             href={`/users/delete/${info.getValue()}`}
@@ -84,7 +91,6 @@ const Users = () => {
     getCoreRowModel: getCoreRowModel(),
   });
 
-
   const {
     userGroupe,
     loading: loadingUserGroupe,
@@ -96,7 +102,7 @@ const Users = () => {
 
     const fetchUserList = async () => {
       try {
-        if(users.length <= 0){
+        if (users.length <= 0) {
           await dispatch(fetchUsers());
         }
       } catch (error) {
@@ -114,7 +120,7 @@ const Users = () => {
     return () => {
       mount = false;
     };
-  }, [userList, dispatch,users]);
+  }, [userList, dispatch, users]);
 
   useEffect(() => {
     let mount = true;
@@ -190,7 +196,7 @@ const Users = () => {
               </div>
             </div>
             {/* <UserTable /> */}
-            <DataTable data={users} columns={columns} /> 
+            <DataTable data={users} columns={columns} />
             {/*<Pagination />*/}
           </div>
         </>

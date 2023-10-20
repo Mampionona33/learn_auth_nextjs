@@ -7,6 +7,7 @@ const CustomModal = ({
   title,
   body,
   labelButtonShow,
+  variantButtonShow,
   fields,
   handleSubmit,
   initialValues,
@@ -14,6 +15,7 @@ const CustomModal = ({
 }: {
   id: string;
   title: string;
+  variantButtonShow?: string;
   labelButtonShow: string;
   body: React.ReactNode;
   fields: any[];
@@ -62,7 +64,10 @@ const CustomModal = ({
 
   return (
     <>
-      <Button variant="primary" onClick={handleShow}>
+      <Button
+        variant={!variantButtonShow ? "primary" : variantButtonShow}
+        onClick={handleShow}
+      >
         {labelButtonShow}
       </Button>
       <Modal show={show} onHide={handleClose} animation={false} centered>
