@@ -34,11 +34,12 @@ const Users = () => {
 
   const [userData, setUserData] = useState([]);
 
-  const Modaledit = () => {
+  const Modaledit = (id: string) => {
     const dispatch = useAppDispatch();
     return (
       <>
         <CustomModal
+          body={id.id}
           title="Modifier utilisateur"
           id="modalEdit"
           labelButtonShow="Modifier"
@@ -73,7 +74,7 @@ const Users = () => {
           >
             Modifier
           </Link> */}
-          <Modaledit />
+          <Modaledit id={info.getValue()} />
           <Link
             className="btn capitalize bg-danger text-white"
             href={`/users/delete/${info.getValue()}`}
