@@ -39,7 +39,7 @@ const Users = () => {
     return (
       <>
         <CustomModal
-          body={id.id}
+          body={`user id : ${id.id}`}
           title="Modifier utilisateur"
           id="modalEdit"
           labelButtonShow="Modifier"
