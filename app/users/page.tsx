@@ -134,45 +134,6 @@ const Users = () => {
     };
   }, [session]);
 
-  // const UserTable = () => {
-  //   const headerGroups = table.getHeaderGroups();
-  //   const rows = table.getRowModel().rows;
-
-  //   return (
-  //     <>
-  //       <table className="table table-striped round shadow-sm">
-  //         <thead className="table-dark">
-  //           {headerGroups.map((headerGroup) => (
-  //             <tr key={headerGroup.id}>
-  //               {headerGroup.headers.map((header) => (
-  //                 <th className="capitalize" key={header.id}>
-  //                   {header.isPlaceholder
-  //                     ? null
-  //                     : flexRender(
-  //                         header.column.columnDef.header,
-  //                         header.getContext(),
-  //                       )}
-  //                 </th>
-  //               ))}
-  //             </tr>
-  //           ))}
-  //         </thead>
-  //         <tbody>
-  //           {rows.map((row) => (
-  //             <tr key={row.id}>
-  //               {row.getVisibleCells().map((cell) => (
-  //                 <td key={cell.id}>
-  //                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
-  //                 </td>
-  //               ))}
-  //             </tr>
-  //           ))}
-  //         </tbody>
-  //       </table>
-  //     </>
-  //   );
-  // };
-
   if (errorOnLoadingUserGroupe)
     return <h1>String(errorOnLoadingUserGroupe)</h1>;
 
