@@ -39,7 +39,7 @@ const Users = () => {
     return (
       <>
         <CustomModal
-          body={`user id : ${id.id}`}
+          body={<div className="flex justify-center">user id : {id.id}</div>}
           title="Modifier utilisateur"
           id="modalEdit"
           labelButtonShow="Modifier"
