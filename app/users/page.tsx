@@ -47,8 +47,8 @@ const Users = () => {
           axios
             .get(`/api/users/${id}`)
             .then((resp) => {
-              console.log(resp);
-              // setUser(resp.data);
+              // console.log(resp.data.user);
+              setUser(resp.data.user);
             })
             .catch(function (err) {
               console.log(err);
@@ -64,12 +64,15 @@ const Users = () => {
     return (
       <>
         <CustomModal
-          body={<div className="flex justify-center">user id : {id}</div>}
+          body={
+            <div className="flex justify-center">user id : {user.email}</div>
+          }
           title="Modifier utilisateur"
           id="modalEdit"
           labelButtonShow="Modifier"
           fields={fields}
           variantButtonShow="info"
+          initialValues={user}
         />
       </>
     );
