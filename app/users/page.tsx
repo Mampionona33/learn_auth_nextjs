@@ -35,6 +35,27 @@ const Users = () => {
 
   const [userData, setUserData] = useState(null);
 
+  const putData = (data, dispatch) => {
+    if (data) {
+      // console.log("test", data);
+      axios
+        .put("/api/users", {
+          username: data.username,
+          password: data.password,
+          email: data.email,
+          phone: data.phone,
+          firstname: data.firstname,
+          lastname: data.lastname,
+        })
+        .then(function (resp) {
+          dispatch(fetchUsers());
+        })
+        .catch(function (err) {
+          console.log(err);
+        });
+    }
+  };
+
   const Modaledit = ({ id }) => {
     const dispatch = useAppDispatch();
     const [user, setUser] = useState([]);
@@ -86,6 +107,7 @@ const Users = () => {
           fields={fields}
           variantButtonShow="info"
           initialValues={initialValues}
+          handleSubmit={(formData) => putData(formData, dispatch)}
         />
       </>
     );
