@@ -27,7 +27,7 @@ const CustomModal = ({
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const formRef = useRef(null);
-  const [selectedOptions, setSelectedOptions] = useState({});
+  const [selectedOptions, setSelectedOptions] = useState(initialValues || {});
   const [checkboxValues, setCheckboxValues] = useState({});
 
   const handleFormSubmit = (ev) => {
@@ -144,11 +144,7 @@ const CustomModal = ({
                                   className="form-control"
                                   id={item.id}
                                   required={item.required}
-                                  value={
-                                    initialValue ||
-                                    selectedOptions[item.id] ||
-                                    ""
-                                  }
+                                  value={selectedOptions[item.id] || ""}
                                   onChange={(e) => {
                                     setSelectedOptions({
                                       ...selectedOptions,
@@ -162,6 +158,7 @@ const CustomModal = ({
                                     </option>
                                   ))}
                                 </select>
+
                               </div>
                             );
 
