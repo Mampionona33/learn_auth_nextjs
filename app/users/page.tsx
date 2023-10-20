@@ -152,11 +152,9 @@ const Users = () => {
             <div>
               <h3>User list</h3>
               <div className="flex justify-content-end ">
-                {/* <button className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modaAddUser">Ajouter</button> */}
                 <ModalAddUser />
               </div>
             </div>
-            {/* <UserTable /> */}
             <DataTable data={users} columns={columns} />
             {/*<Pagination />*/}
           </div>
